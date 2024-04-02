@@ -1,22 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
-export class LoginPageComponent {
-
-  https: any;
-  constructor(private authService: AuthenticationService) { }
-  token!: string;
-
-  login(username: string, password: string) {
-    this.authService.login(username, password).subscribe((data: any) => {
-      this.token = data.token;
-    });
-  }
+export class LoginPageComponent implements OnInit {
 
   
+  username = '';
+  password = '';
+  rol: string[] = [];
+  id = '';
+
+  constructor(private authService: AuthenticationService, private router: Router) { }
+  ngOnInit(): void {
+    let token = localStorage.getItem('token');
+
+    if (token != null) {
+      this.router.navigateByUrl('admin/me');
+    }
+  }
+
+  logIn() {
+    this.authService.login(this.username, this.password).subscribe(resp => {
+      localStorage.setItem('token', resp.token);
+      localStorage.setItem('account_id', resp.id);
+      this.rol = resp.roles;
+      this.id = resp.id;
+
+      if (this.rol.includes('ADMIN')) {
+        this.router.navigateByUrl('/admin/user-profile');
+      } else {
+        this.router.navigateByUrl('/client-user');
+      }
+    });
+  }
 }

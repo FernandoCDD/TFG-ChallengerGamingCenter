@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-lg navbarStile sticky-top container-fluid text-orange">
+    <div class="collapse navbar-collapse d-flex justify-content-between navbar" id="navbar">
+        <div class="nav-item">
+            <a class="nav-link active" [routerLink]="['/']" aria-current="page" [routerLinkActive]="['active']">
+                <img src="https://cdn-icons-png.flaticon.com/512/11390/11390281.png">
+            </a>
+        </div>
+        <div class="nav-item d-flex justitfy-content-center">
+            <a [routerLink]="['/admin/trabajador']" class="nav-link">Usuarios</a>
+            <a [routerLink]="['/admin/categorias']" class="nav-link">Reservas</a>
+            <a [routerLink]="['/admin/pedidos']" class="nav-link">Productos</a>
+            <a [routerLink]="['/admin/cliente']" class="nav-link">Categorías</a>
+        </div>
+    </div>
+</nav>
