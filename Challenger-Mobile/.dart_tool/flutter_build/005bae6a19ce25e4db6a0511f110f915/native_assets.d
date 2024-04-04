@@ -1,0 +1,1 @@
+ C:\\Users\\ferna\\OneDrive\\Escritorio\\2DAM\\challenger_api\\challenger_api_front\\.dart_tool\\flutter_build\\005bae6a19ce25e4db6a0511f110f915\\native_assets.yaml: 

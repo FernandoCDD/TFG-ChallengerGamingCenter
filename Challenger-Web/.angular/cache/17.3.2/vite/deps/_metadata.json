@@ -1,0 +1,70 @@
+{
+  "hash": "a439e642",
+  "configHash": "2c6e2e73",
+  "lockfileHash": "0aecfa9a",
+  "browserHash": "44b35aff",
+  "optimized": {
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "5d0f1dc4",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "2edda3b1",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "e8868f98",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "b264cc38",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "69b67aa6",
+      "needsInterop": false
+    },
+    "@ng-bootstrap/ng-bootstrap": {
+      "src": "../../../../../node_modules/@ng-bootstrap/ng-bootstrap/fesm2022/ng-bootstrap.mjs",
+      "file": "@ng-bootstrap_ng-bootstrap.js",
+      "fileHash": "049d4994",
+      "needsInterop": false
+    },
+    "express": {
+      "src": "../../../../../node_modules/express/index.js",
+      "file": "express.js",
+      "fileHash": "80f433f6",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-Y3KURIDF": {
+      "file": "chunk-Y3KURIDF.js"
+    },
+    "chunk-JRBTEBSA": {
+      "file": "chunk-JRBTEBSA.js"
+    },
+    "chunk-SEHCEE6X": {
+      "file": "chunk-SEHCEE6X.js"
+    },
+    "chunk-KME7YAAK": {
+      "file": "chunk-KME7YAAK.js"
+    },
+    "chunk-32DEKK37": {
+      "file": "chunk-32DEKK37.js"
+    },
+    "chunk-X6JV76XL": {
+      "file": "chunk-X6JV76XL.js"
+    }
+  }
+}
