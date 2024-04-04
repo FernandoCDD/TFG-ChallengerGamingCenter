@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ClientPageComponent } from './ui/client-page/client-page.component';
 import { UserProfilePageComponent } from './ui/user-profile-page/user-profile-page.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { UserProfilePageComponent } from './ui/user-profile-page/user-profile-pa
     LoginPageComponent,
     ClientPageComponent,
     UserProfilePageComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

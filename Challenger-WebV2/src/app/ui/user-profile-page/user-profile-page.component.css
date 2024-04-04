@@ -1,0 +1,9 @@
+.color{
+    width: 1920px;
+    height: 150px;
+}
+
+a:hover{
+    cursor: pointer;
+    color: orange;
+}
