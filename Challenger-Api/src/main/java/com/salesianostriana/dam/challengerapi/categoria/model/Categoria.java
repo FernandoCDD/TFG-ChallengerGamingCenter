@@ -37,6 +37,8 @@ public class Categoria {
 
     private String nombre;
 
+    private String imagenUrl;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

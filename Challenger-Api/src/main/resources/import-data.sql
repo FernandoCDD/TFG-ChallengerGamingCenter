@@ -11,8 +11,8 @@ INSERT INTO torneo (id, juego, imagen_url, fecha) VALUES ('ce6758f1-5da3-4069-8e
 INSERT INTO torneo (id, juego, imagen_url, fecha) VALUES ('aaeffbb6-5dfe-432f-b02e-8f02cdd54770', 'Fortnite', 'https://static-00.iconduck.com/assets.00/games-fortnite-icon-256x256-slab131e.png', '2024-03-28 13:00:00');
 INSERT INTO torneo (id, juego, imagen_url, fecha) VALUES ('1139eed6-b5ec-4407-a39b-c15520c7c323', 'Smash', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/SmashBall.svg/2048px-SmashBall.svg.png', '2024-03-27 12:00:00');
 
-INSERT INTO categoria (id, nombre) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0', 'Funko-Pops')
-INSERT INTO categoria (id, nombre) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1', 'Periféricos')
+INSERT INTO categoria (id, nombre, imagen_url) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0', 'Funko-Pops', 'https://drimjuguetes.vtexassets.com/arquivos/ids/767973/Funko-POP-Pokemon-Pikachu.jpg?v=637486128611200000');
+INSERT INTO categoria (id, nombre, imagen_url) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1', 'Periféricos', 'https://m.media-amazon.com/images/I/61UxfXTUyvL._AC._SR360,460.jpg');
 
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, categoria_id) VALUES ('3300c13e-cbd5-4870-8738-71bfceb2ba67', 'Funko-Pop: Pikachu', 'https://drimjuguetes.vtexassets.com/arquivos/ids/767973/Funko-POP-Pokemon-Pikachu.jpg?v=637486128611200000', 'Funko-Pop de pikachu', 19.99, 4.2, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0');
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, categoria_id) VALUES ('07bf149e-0701-41bd-b73d-977848b06d9e', 'Gaming Mouse Logitech G203', 'https://m.media-amazon.com/images/I/61UxfXTUyvL._AC._SR360,460.jpg', 'Logitech G203 LIGHTSYNC Ratón USB Gaming con Iluminación RGB Personalizable, 6 Botones Programables, Captor 8K para Gaming, Seguimiento de hasta 8,000 DPI, Ultra-ligero - Negro', 24.99, 4.6, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1');

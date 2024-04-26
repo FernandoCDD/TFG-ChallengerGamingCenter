@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,4 +26,13 @@ public interface ProductoRepository extends JpaRepository<Producto, UUID> {
             WHERE cast(p.id as string)=?1
             """)
     Optional<Producto> getProductoDetail(String idProducto);
+
+    @Query("""
+            SELECT p
+            FROM Producto p
+            WHERE p.categoria.id = ?1
+            """)
+    List<Producto> findByCategoriaId(UUID categoriaId);
+
+
 }
