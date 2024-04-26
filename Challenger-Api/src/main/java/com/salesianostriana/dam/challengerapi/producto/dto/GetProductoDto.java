@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record GetProductoDto(
 
-        UUID uuid,
+        UUID id,
 
         String nombre,
 

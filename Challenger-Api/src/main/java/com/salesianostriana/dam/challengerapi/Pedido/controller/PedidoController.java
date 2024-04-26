@@ -34,92 +34,42 @@ public class PedidoController {
         return pedidoService.getAllPedidos(pageable);
     }
 
+    @GetMapping("/carrito")
+    public GetPedidoDetailsDto getCarrito(@AuthenticationPrincipal Usuario user){ //Funciona
+        return pedidoService.getPedidoDetailsDto(pedidoService.getCarritoDelUsuario(user).getId());
+    }
+
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Añadir producto al carrito", content = {
                     @Content(mediaType = "application/json",
                             examples = {@ExampleObject(
                                     value = """
                                             {
-                                                "id": "c0a84001-8c1a-1778-818c-1a47b92a0011",
-                                                "direccion": "c/Evangelista, 3",
-                                                "telefono": "334665121",
-                                                "estadoPedido": "ABIERTO",
-                                                "horaLlegada": "29-11-2023 09:52",
-                                                "lineasPedido": [
-                                                    {
-                                                        "nombreProducto": "Patatas Bravas",
-                                                        "cantidadProductos": 2,
-                                                        "precioUnit": 2.3,
-                                                        "subtotal": 4.6
-                                                    },
-                                                    {
-                                                        "nombreProducto": "Tarta de queso",
-                                                        "cantidadProductos": 6,
-                                                        "precioUnit": 4.3,
-                                                        "subtotal": 25.799999999999997
-                                                    },
-                                                    {
-                                                        "nombreProducto": "Hamburguesa Queso",
-                                                        "cantidadProductos": 3,
-                                                        "precioUnit": 3.55,
-                                                        "subtotal": 10.649999999999999
-                                                    }
-                                                ],
-                                                "total": 41.05
-                                            }
+                                                 "id": "c0a83801-8f19-1bbd-818f-192ece060000",
+                                                 "usuario": "9cd0c43a-6a72-4967-a629-5f51bfbe5105",
+                                                 "fecha": "26-04-2024 08:54",
+                                                 "estadoPedido": "PENDIENTE",
+                                                 "lineasPedido": [
+                                                     {
+                                                         "nombreProducto": "Funko-Pop: Pikachu",
+                                                         "cantidad": 1,
+                                                         "precioUnitario": 19.99,
+                                                         "subtotal": 19.99
+                                                     }
+                                                 ],
+                                                 "total": 19.99
+                                             }
                                             """
                             )}
                     )}),
             @ApiResponse(responseCode = "500", description = "Producto no encontrado", content = @Content),
     })
     @Operation(summary = "addProductoToCarrito", description = "Añadir producto al carrito")
-    @PostMapping("/addProducto/{idProducto}")
+    @PostMapping("/addProducto/{idProducto}") //Funciona
     public GetPedidoDetailsDto addProductoToCarrito(@PathVariable String idProducto, @AuthenticationPrincipal Usuario u){
         return pedidoService.getPedidoDetailsDto(pedidoService.addProductoToCarrito(idProducto, u).getId());
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Obtener el pedido pendiente", content = {
-                    @Content(mediaType = "application/json",
-                            examples = {@ExampleObject(
-                                    value = """
-                                            {
-                                                "id": "c0a84001-8c1a-1778-818c-1a47b92a0011",
-                                                "direccion": "c/Evangelista, 3",
-                                                "telefono": "334665121",
-                                                "estadoPedido": "ABIERTO",
-                                                "horaLlegada": "29-11-2023 09:52",
-                                                "lineasPedido": [
-                                                    {
-                                                        "nombreProducto": "Patatas Bravas",
-                                                        "cantidadProductos": 2,
-                                                        "precioUnit": 2.3,
-                                                        "subtotal": 4.6
-                                                    },
-                                                    {
-                                                        "nombreProducto": "Tarta de queso",
-                                                        "cantidadProductos": 6,
-                                                        "precioUnit": 4.3,
-                                                        "subtotal": 25.799999999999997
-                                                    },
-                                                    {
-                                                        "nombreProducto": "Hamburguesa Queso",
-                                                        "cantidadProductos": 3,
-                                                        "precioUnit": 3.55,
-                                                        "subtotal": 10.649999999999999
-                                                    }
-                                                ],
-                                                "total": 41.05
-                                            }
-                                            """
-                            )}
-                    )}),
-            @ApiResponse(responseCode = "500", description = "Obtener el pedido pendiente", content = @Content),
-    })
-    @Operation(summary = "getPedidoPendiente", description = "Añadir producto al carrito")
 
-    @GetMapping("/pedido/carrito")
-    public GetPedidoDetailsDto getOpenPedido(@AuthenticationPrincipal Usuario user) {
-        return pedidoService.getPedidoDetailsDto(pedidoService.getCarritoDelUsuario(user).getId());
-    }
+
 }

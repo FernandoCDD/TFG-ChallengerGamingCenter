@@ -34,5 +34,11 @@ public interface ProductoRepository extends JpaRepository<Producto, UUID> {
             """)
     List<Producto> findByCategoriaId(UUID categoriaId);
 
+    @Query("""
+            SELECT p
+            FROM Producto p
+            WHERE p.categoria.id = ?1
+            """)
+    Page<GetProductoDto> getAllProductosDeUnaCategoria (UUID idCategoria, Pageable pageable);
 
 }

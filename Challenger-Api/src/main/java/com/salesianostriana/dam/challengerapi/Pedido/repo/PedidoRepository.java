@@ -15,15 +15,15 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
 
     @Query("""
             select new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
-                cast(p.id as string),
-                 p.fecha,
-                  (select u.username from Usuario u where cast(u.id as string) = p.usuario),
-                  cast(p.estadoPedido as string), 
-                  (select sum(l.precioUnitario * l.cantidad) from LineaPedido l where l.pedido.id = p.id)                
-                )
+            cast(p.id as string),
+            p.fecha,
+             (select u.username from Usuario u where cast(u.id as string) = p.usuario),
+             cast(p.estadoPedido as string),
+             (select sum(l.precioUnitario * l.cantidad) from LineaPedido l where l.pedido.id = p.id)
+            )
             from Pedido p
             """)
-    Page<GetPedidoDto> getAllPedidosConClientes (Pageable pageable);
+    Page<GetPedidoDto> getAllPedidosConClientes(Pageable pageable);
 
     @Query("""
             SELECT p
@@ -40,7 +40,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
             WHERE p.usuario = ?1
             AND p.estadoPedido = 'PENDIENTE'
             """)
-    Optional<Pedido> getPedidoPendienteDeUnUsuarioById(String idUsuario);
+    Optional<Pedido> getCarritoDelUsuario(String idUsuario);
 
     @Query("""
             SELECT l
@@ -52,12 +52,4 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
             """)
     Optional<LineaPedido> findLineaPedidoByPedidoYProductos(UUID idPedido, UUID idProducto);
 
-    @Query("""
-            SELECT p
-            FROM Pedido p
-            JOIN FETCH p.lineasPedido
-            WHERE p.usuario = ?1
-            AND p.estadoPedido = 'PENDIENTE'
-            """)
-    Optional<Pedido> findPedidoPendienteByIdUSuario(String idUsuario);
 }

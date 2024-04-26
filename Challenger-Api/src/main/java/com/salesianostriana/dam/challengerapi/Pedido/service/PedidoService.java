@@ -40,7 +40,7 @@ public class PedidoService {
     }
 
     public GetPedidoDetailsDto getPedidoDetailsDto(UUID idPedido) {
-        Pedido pedido = pedidoRepository.getPedidoById(idPedido).orElseThrow(() -> new PedidoNotFoundException());
+        Pedido pedido = pedidoRepository.getPedidoById(idPedido).orElseThrow(PedidoNotFoundException::new);
         Usuario usuario = userService.findUsuarioByIdString(pedido.getUsuario());
 
         return new GetPedidoDetailsDto(
@@ -55,10 +55,10 @@ public class PedidoService {
     }
 
     public Pedido addProductoToCarrito(String idProducto, Usuario u) {
-        Optional <Pedido> pedidoPendiente = pedidoRepository.getPedidoPendienteDeUnUsuarioById(u.getId().toString());
+        Optional <Pedido> pedidoPendiente = pedidoRepository.getCarritoDelUsuario(u.getId().toString());
 
         Producto productoToAdd = productoRepository.getProductoDetail(idProducto)
-                .orElseThrow(() -> new ProductoNotFoundException());
+                .orElseThrow(ProductoNotFoundException::new);
 
         if(pedidoPendiente.isEmpty()){
             LineaPedido nuevaLineaPedido = LineaPedido.builder()
@@ -79,22 +79,26 @@ public class PedidoService {
 
             Optional<LineaPedido> lineaEncontrada = pedidoRepository.findLineaPedidoByPedidoYProductos(pedidoPendiente.get().getId(), productoToAdd.getId());
 
-            if (lineaEncontrada.isPresent()) {
-                lineaEncontrada.get().setCantidad(lineaEncontrada.get().getCantidad() + 1);
-            } else {
+            if (lineaEncontrada.isEmpty()) {
                 LineaPedido nuevaLineaPedido = LineaPedido.builder()
                         .precioUnitario(productoToAdd.getPrecio())
                         .cantidad(1)
                         .producto(productoToAdd)
                         .build();
                 pedidoPendiente.get().addLineaPedido(nuevaLineaPedido);
+            } else {
+                lineaEncontrada.get().setCantidad(lineaEncontrada.get().getCantidad() + 1);
+                pedidoPendiente.get().removeLineaPedido(lineaEncontrada.get());
+                pedidoPendiente.get().addLineaPedido(lineaEncontrada.get());
             }
 
         return pedidoRepository.save(pedidoPendiente.get());
     }
 
-    public Pedido getCarritoDelUsuario(Usuario user){
-        return pedidoRepository.getPedidoPendienteDeUnUsuarioById(user.getId().toString())
-                .orElseThrow(() -> new PedidoNotFoundException());
+    public Pedido getCarritoDelUsuario(Usuario user){ //Funciona
+        return pedidoRepository.getCarritoDelUsuario(user.getId().toString())
+                .orElseThrow(PedidoNotFoundException::new);
     }
+
+
 }

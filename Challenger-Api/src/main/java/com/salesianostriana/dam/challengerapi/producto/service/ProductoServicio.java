@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class ProductoServicio {
@@ -23,5 +25,22 @@ public class ProductoServicio {
         return productoRepository.getProductoDetail(idProducto).orElseThrow(RuntimeException::new);
     }
 
+    public Page<GetProductoDto> getAllProductosDeUnaCategoria(UUID idCategoria, Pageable pageable){
 
+        return productoRepository.getAllProductosDeUnaCategoria(idCategoria, pageable);
+    }
+
+    public Producto addProducto (GetProductoDetailsDto nuevoProducto){
+
+        Producto prod = new Producto();
+
+        prod.setNombre(nuevoProducto.nombre());
+        prod.setImagen(nuevoProducto.imagen());
+        prod.setDescripcion(nuevoProducto.descripcion());
+        prod.setPrecio(nuevoProducto.precio());
+        prod.setValoracion(nuevoProducto.valoracion());
+        prod.setCategoria(nuevoProducto.categoria());
+
+        return productoRepository.save(prod);
+    }
 }
