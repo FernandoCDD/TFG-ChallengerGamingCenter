@@ -6,6 +6,8 @@ public record GetLineaPedidoDetailsDto(
 
         String nombreProducto,
 
+        String urlImagen,
+
         int cantidad,
 
         double precioUnitario,
@@ -17,6 +19,7 @@ public record GetLineaPedidoDetailsDto(
 
         return new GetLineaPedidoDetailsDto(
                 ln.getProducto().getNombre(),
+                ln.getProducto().getImagen(),
                 ln.getCantidad(),
                 ln.getPrecioUnitario(),
                 ln.getCantidad() * ln.getPrecioUnitario()
