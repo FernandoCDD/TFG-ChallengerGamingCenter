@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:challenger_api_front/models/response/my_profile_response.dart';
 import 'package:challenger_api_front/repositories/user_profile/user_profile_repo.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 part 'user_profile_event.dart';
 part 'user_profile_state.dart';

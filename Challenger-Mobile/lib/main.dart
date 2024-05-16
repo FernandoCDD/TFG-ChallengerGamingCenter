@@ -1,4 +1,3 @@
-import 'package:challenger_api_front/ui/pages/home_page.dart';
 import 'package:challenger_api_front/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 

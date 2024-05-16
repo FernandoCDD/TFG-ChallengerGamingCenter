@@ -6,11 +6,9 @@ import 'package:challenger_api_front/models/response/login_response.dart';
 import 'package:challenger_api_front/models/response/register_response.dart';
 import 'package:challenger_api_front/repositories/auth/auth_repo.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final Client _httpClient = Client();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Future<LoginResponse> login(LoginDto loginDto) async {

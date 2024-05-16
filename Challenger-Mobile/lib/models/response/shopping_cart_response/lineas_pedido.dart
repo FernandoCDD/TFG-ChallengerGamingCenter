@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class LineasPedido {
+  String? id;
   String? nombreProducto;
   String? urlImagen;
   int? cantidad;
@@ -8,6 +9,7 @@ class LineasPedido {
   double? subtotal;
 
   LineasPedido({
+    this.id,
     this.nombreProducto,
     this.urlImagen,
     this.cantidad,
@@ -16,6 +18,7 @@ class LineasPedido {
   });
 
   factory LineasPedido.fromMap(Map<String, dynamic> data) => LineasPedido(
+        id: data['id'] as String?,
         nombreProducto: data['nombreProducto'] as String?,
         urlImagen: data['urlImagen'] as String?,
         cantidad: data['cantidad'] as int?,
@@ -24,6 +27,7 @@ class LineasPedido {
       );
 
   Map<String, dynamic> toMap() => {
+        'id': id,
         'nombreProducto': nombreProducto,
         'urlImagen': urlImagen,
         'cantidad': cantidad,

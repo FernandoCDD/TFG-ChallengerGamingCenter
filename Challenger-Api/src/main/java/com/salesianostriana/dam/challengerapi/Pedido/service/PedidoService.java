@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.Pedido.service;
 import com.salesianostriana.dam.challengerapi.Pedido.dto.GetLineaPedidoDetailsDto;
 import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDetailsDto;
 import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto;
+import com.salesianostriana.dam.challengerapi.Pedido.exception.CarritoVacioException;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.PedidoNotFoundException;
 import com.salesianostriana.dam.challengerapi.Pedido.model.EstadoPedido;
 import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
@@ -97,7 +98,7 @@ public class PedidoService {
 
     public Pedido getCarritoDelUsuario(Usuario user){ //Funciona
         return pedidoRepository.getCarritoDelUsuario(user.getId().toString())
-                .orElseThrow(PedidoNotFoundException::new);
+                .orElseThrow(CarritoVacioException::new);
     }
 
 

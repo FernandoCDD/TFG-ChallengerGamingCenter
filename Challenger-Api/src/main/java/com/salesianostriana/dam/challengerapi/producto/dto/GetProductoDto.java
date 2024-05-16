@@ -4,7 +4,7 @@ import com.salesianostriana.dam.challengerapi.producto.model.Producto;
 
 import java.util.UUID;
 
-public record GetProductoDto(
+public record  GetProductoDto(
 
         UUID id,
 

@@ -5,12 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductoDetailRepositoryImpl extends ProductDetailRepository {
   final Client _httpClient = Client();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Future<ProductDetailResponse> getProductDetail(String productId) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    String? token = _prefs.getString('token');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
 
     final response = await _httpClient.get(
         //Uri.parse('http://localhost:8080/producto/detail/$productId'),

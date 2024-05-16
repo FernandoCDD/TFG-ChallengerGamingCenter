@@ -4,6 +4,8 @@ import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
 
 public record GetLineaPedidoDetailsDto(
 
+        String idProducto,
+
         String nombreProducto,
 
         String urlImagen,
@@ -18,6 +20,7 @@ public record GetLineaPedidoDetailsDto(
     public static GetLineaPedidoDetailsDto of (LineaPedido ln){
 
         return new GetLineaPedidoDetailsDto(
+                ln.getProducto().getId().toString(),
                 ln.getProducto().getNombre(),
                 ln.getProducto().getImagen(),
                 ln.getCantidad(),

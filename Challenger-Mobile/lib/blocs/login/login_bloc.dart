@@ -4,9 +4,6 @@ import 'package:challenger_api_front/repositories/auth/auth_repo.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../models/response/login_response.dart';
-
 part 'login_event.dart';
 part 'login_state.dart';
 

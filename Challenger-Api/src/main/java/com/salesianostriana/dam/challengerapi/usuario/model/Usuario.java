@@ -57,6 +57,7 @@ public class Usuario implements UserDetails {
     private Torneo torneoActual;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(value = EnumType.STRING)
     private Set<TipoUsuario> roles;
 
     @CreatedDate

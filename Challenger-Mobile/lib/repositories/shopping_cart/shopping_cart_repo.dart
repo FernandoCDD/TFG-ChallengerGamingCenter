@@ -2,4 +2,5 @@ import 'package:challenger_api_front/models/response/shopping_cart_response/shop
 
 abstract class ShoppingCartRepository {
   Future<ShoppingCartResponse> getCarrito();
+  Future<ShoppingCartResponse> addProductoToCarrito(String productId);
 }

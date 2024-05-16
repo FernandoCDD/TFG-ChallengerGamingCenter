@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ShoppingCartRepoImpl extends ShoppingCartRepository {
   final Client _httpClient = Client();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Future<ShoppingCartResponse> getCarrito() async {
@@ -13,7 +12,6 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
     String? token = _prefs.getString('token');
 
     final response = await _httpClient.get(
-        //Uri.parse('http://localhost:8080/producto/todos'),
         Uri.parse('http://localhost:8080/pedido/carrito'),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -26,6 +24,27 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
     } else {
       throw Exception(
           'Error al obtener los productos: ${response.reasonPhrase}');
+    }
+  }
+
+  @override
+  Future<ShoppingCartResponse> addProductoToCarrito(String productId) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await _httpClient.post(
+        Uri.parse('http://localhost:8080/pedido/addProducto/$productId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
+
+    if (response.statusCode == 201) {
+      return ShoppingCartResponse.fromJson(response.body);
+    } else {
+      throw Exception(
+          'Error al agregar el producto al carrito: ${response.reasonPhrase}');
     }
   }
 }

@@ -14,14 +14,16 @@ import java.util.UUID;
 public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
 
     @Query("""
-            select new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
-            cast(p.id as string),
+            SELECT new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
+            CAST(p.id AS string),
             p.fecha,
-             (select u.username from Usuario u where cast(u.id as string) = p.usuario),
-             cast(p.estadoPedido as string),
-             (select sum(l.precioUnitario * l.cantidad) from LineaPedido l where l.pedido.id = p.id)
+             (SELECT u.username FROM Usuario u WHERE CAST(u.id AS string) = p.usuario),
+             CAST(p.estadoPedido AS string),
+             (SELECT CASE WHEN SUM(l.precioUnitario * l.cantidad) IS NULL THEN 0 ELSE SUM(l.precioUnitario * l.cantidad) END
+              FROM LineaPedido l WHERE l.pedido.id = p.id)
             )
-            from Pedido p
+            FROM Pedido p
+            WHERE p.estadoPedido = 'CONFIRMADO'
             """)
     Page<GetPedidoDto> getAllPedidosConClientes(Pageable pageable);
 

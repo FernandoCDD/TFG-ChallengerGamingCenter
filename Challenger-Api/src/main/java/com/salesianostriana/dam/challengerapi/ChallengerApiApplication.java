@@ -11,7 +11,5 @@ public class ChallengerApiApplication {
 		SpringApplication.run(ChallengerApiApplication.class, args);
 	}
 
-
-
 }
 

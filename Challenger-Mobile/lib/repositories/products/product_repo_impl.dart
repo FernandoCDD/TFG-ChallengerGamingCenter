@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRepositoryImpl extends ProductRepository {
   final Client _httpClient = Client();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   @override
   Future<ProductListResponse> getAllProducts() async {

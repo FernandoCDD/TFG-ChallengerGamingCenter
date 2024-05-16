@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:challenger_api_front/models/response/product_list_response/product_list_response.dart';
-import 'package:challenger_api_front/models/response/products_response.dart';
 import 'package:challenger_api_front/repositories/products/product_repo.dart';
 import 'package:meta/meta.dart';
 

@@ -26,4 +26,5 @@ class ProductDetailBloc extends Bloc<ProductDetailEvent, ProductDetailState> {
       emit(DoProductDetailError(e.toString()));
     }
   }
+  
 }

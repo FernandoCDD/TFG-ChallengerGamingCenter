@@ -1,7 +1,6 @@
 import 'package:challenger_api_front/ui/pages/map.dart';
 import 'package:challenger_api_front/ui/pages/shopping_cart_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class InfoPage extends StatelessWidget {
   InfoPage({Key? key}) : super(key: key);

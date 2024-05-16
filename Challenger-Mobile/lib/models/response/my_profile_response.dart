@@ -21,12 +21,12 @@ class MyProfileResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['avatar'] = this.avatar;
-    data['horasDisponibles'] = this.horasDisponibles;
-    data['createdAt'] = this.createdAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['username'] = username;
+    data['email'] = email;
+    data['avatar'] = avatar;
+    data['horasDisponibles'] = horasDisponibles;
+    data['createdAt'] = createdAt;
     return data;
   }
 }
