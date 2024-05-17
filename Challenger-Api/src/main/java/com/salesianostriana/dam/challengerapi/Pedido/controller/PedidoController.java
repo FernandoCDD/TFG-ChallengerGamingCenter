@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
@@ -65,11 +66,17 @@ public class PedidoController {
             @ApiResponse(responseCode = "500", description = "Producto no encontrado", content = @Content),
     })
     @Operation(summary = "addProductoToCarrito", description = "Añadir producto al carrito")
-    @PostMapping("/addProducto/{idProducto}") //Funciona
+    @PostMapping("carrito/addProducto/{idProducto}") //Funciona
     public GetPedidoDetailsDto addProductoToCarrito(@PathVariable String idProducto, @AuthenticationPrincipal Usuario u){
         return pedidoService.getPedidoDetailsDto(pedidoService.addProductoToCarrito(idProducto, u).getId());
     }
 
+    @DeleteMapping("/carrito/deleteProducto/{idProducto}")
+    public ResponseEntity<?> deleteProductoDelCarrito(@PathVariable String idProducto, @AuthenticationPrincipal Usuario u){
 
+        pedidoService.eliminarProductoDelCarrito(idProducto, u);
+
+        return ResponseEntity.noContent().build();
+    }
 
 }

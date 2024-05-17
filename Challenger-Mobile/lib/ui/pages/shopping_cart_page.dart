@@ -46,7 +46,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       itemCount: shoppingCart.lineasPedido!.length,
                       itemBuilder: (context, index) {
                         final lineaPedido = shoppingCart.lineasPedido![index];
-                        return ItemCardCarrito(lineasPedido: lineaPedido);
+                        return ItemCardCarrito(lineasPedido: lineaPedido, index: index);
                       },
                     ),
                   ),
@@ -75,7 +75,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                             ),
                           ),
                           onPressed: () {
-                            // Aquí puedes manejar la lógica para el botón
+
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(12.0),

@@ -29,7 +29,7 @@ INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, categ
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, categoria_id) VALUES ('b56ee8a7-6c3d-419f-819a-3e3a7e05e5e5', 'Alfombrilla Razer Goliathus Speed', 'https://m.media-amazon.com/images/I/51yXvPIasAL._AC_SY355_.jpg', 'Razer Goliathus Speed (Extended) Alfombrilla Gaming con Superficie de Tela, Ratones con Sensor óptico, Dimensiones compactas, Tamaño Mediano', 33.99, 4.5, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1');
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, categoria_id) VALUES ('6c5c8a58-7e45-437e-ba82-298a78d107ae', 'Monitor Gaming ASUS VG248QG', 'https://m.media-amazon.com/images/I/71rjPlnmiXL._AC_SY450_.jpg', 'ASUS VG248QG - Monitor de Gaming de 24" Full-HD (1920x1080, 0.5 ms, 165 Hz) Color Negro', 199.99, 4.6, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1');
 
-INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('5fe3b57c-57b3-487b-8b0d-68e8d0ffb07c', '2024-02-28', 'CONFIRMADO', '9cd0c43a-6a72-4967-a629-5f51bfbe5105');
+INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('5fe3b57c-57b3-487b-8b0d-68e8d0ffb07c', '2024-02-28', 'CONFIRMADO', '9cd0c43a-6a72-4967-a629-5f51bfbe5106');
 INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('fcbc72c9-9190-436e-b651-ff9f4bab6120', '2024-03-10', 'PENDIENTE', '9cd0c43a-6a72-4967-a629-5f51bfbe5107');
 INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('617c63fd-e79b-44e9-956a-ac3852a66300', '2024-03-15', 'PENDIENTE', '9cd0c43a-6a72-4967-a629-5f51bfbe5107');
 

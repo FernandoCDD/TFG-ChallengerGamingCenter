@@ -119,7 +119,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           onPressed: () {
                             _shoppingCartRepository = ShoppingCartRepoImpl();
                             _addProductoToCarritoBloc = AddProductoToCarritoBloc(_shoppingCartRepository)..add(DoAddProductoToCarritoEvent(widget.productId));
-                            _addProductoToCarritoBloc.add(DoAddProductoToCarritoEvent(widget.productId));
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {

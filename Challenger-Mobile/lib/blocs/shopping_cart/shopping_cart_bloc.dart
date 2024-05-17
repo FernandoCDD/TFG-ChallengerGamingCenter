@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:bloc/bloc.dart';
 import 'package:challenger_api_front/models/response/shopping_cart_response/shopping_cart_response.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo.dart';

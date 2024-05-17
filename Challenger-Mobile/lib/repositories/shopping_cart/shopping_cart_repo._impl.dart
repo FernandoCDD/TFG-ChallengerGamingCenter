@@ -33,7 +33,7 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
     String? token = prefs.getString('token');
 
     final response = await _httpClient.post(
-        Uri.parse('http://localhost:8080/pedido/addProducto/$productId'),
+        Uri.parse('http://localhost:8080/pedido/carrito/addProducto/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',
@@ -45,6 +45,27 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
     } else {
       throw Exception(
           'Error al agregar el producto al carrito: ${response.reasonPhrase}');
+    }
+  }
+
+  @override
+  Future<ShoppingCartResponse> eliminarProductoDelCarrito(String productId) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await _httpClient.delete(
+        Uri.parse('http://localhost:8080/pedido/carrito/deleteProducto/$productId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
+
+    if (response.statusCode == 204) {
+      return ShoppingCartResponse.fromJson(response.body);
+    } else {
+      throw Exception(
+          'Error al eliminar el producto del carrito: ${response.reasonPhrase}');
     }
   }
 }

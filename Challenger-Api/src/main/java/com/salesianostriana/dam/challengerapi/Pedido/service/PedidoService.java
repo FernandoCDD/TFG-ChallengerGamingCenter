@@ -5,6 +5,7 @@ import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDetailsDto;
 import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.CarritoVacioException;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.PedidoNotFoundException;
+import com.salesianostriana.dam.challengerapi.Pedido.exception.ProductoNoEstaEnCarritoException;
 import com.salesianostriana.dam.challengerapi.Pedido.model.EstadoPedido;
 import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
 import com.salesianostriana.dam.challengerapi.Pedido.model.Pedido;
@@ -99,6 +100,29 @@ public class PedidoService {
     public Pedido getCarritoDelUsuario(Usuario user){ //Funciona
         return pedidoRepository.getCarritoDelUsuario(user.getId().toString())
                 .orElseThrow(CarritoVacioException::new);
+    }
+
+    public Pedido eliminarProductoDelCarrito(String idProducto, Usuario u) {
+
+        Pedido carrito = pedidoRepository.getCarritoDelUsuario(u.getId().toString())
+                .orElseThrow(() -> new CarritoVacioException());
+
+        Producto productoEliminado = productoRepository.getProductoDetail(idProducto)
+                .orElseThrow(ProductoNotFoundException::new);
+
+
+        LineaPedido lineaPedido = pedidoRepository.findLineaPedidoByPedidoYProductos(
+                carrito.getId(), productoEliminado.getId()).orElseThrow(() -> new ProductoNoEstaEnCarritoException());
+
+        if (lineaPedido.getCantidad() > 1) {
+            lineaPedido.setCantidad(lineaPedido.getCantidad() - 1);
+            carrito.removeLineaPedido(lineaPedido);
+            carrito.addLineaPedido(lineaPedido);
+        } else {
+            carrito.removeLineaPedido(lineaPedido);
+        }
+
+        return pedidoRepository.save(carrito);
     }
 
 

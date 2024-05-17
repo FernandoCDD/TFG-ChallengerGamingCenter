@@ -10,6 +10,6 @@ public class ProductoNotFoundException extends EntityNotFoundException {
         super("The product could not be found");
     }
     public ProductoNotFoundException(UUID id){
-        super(String.format("The product with the id %s could not be found", id.toString()));
+        super(String.format("El producto con el id: %s no se ha encontrado.", id.toString()));
     }
 }

@@ -1,4 +1,6 @@
+import 'package:challenger_api_front/blocs/shopping_cart/eliminarProductoDelCarrito/eliminar_producto_del_carrito_bloc.dart';
 import 'package:challenger_api_front/blocs/shopping_cart/shopping_cart_bloc.dart';
+import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo._impl.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +9,9 @@ import 'package:challenger_api_front/models/response/shopping_cart_response/line
 
 class ItemCardCarrito extends StatefulWidget {
   final LineasPedido lineasPedido;
+  final int index;
   
-  const ItemCardCarrito({Key? key, required this.lineasPedido}) : super(key: key);
+  const ItemCardCarrito({Key? key, required this.lineasPedido, required this.index}) : super(key: key);
 
   @override
   _ItemCardCarritoState createState() => _ItemCardCarritoState();
@@ -16,12 +19,25 @@ class ItemCardCarrito extends StatefulWidget {
 
 class _ItemCardCarritoState extends State<ItemCardCarrito> {
   late int _cantidad;
-
+  late AddProductoToCarritoBloc _addProductoToCarritoBloc;
+  late EliminarProductoDelCarritoBloc _eliminarProductoDelCarritoBloc;
+  late ShoppingCartRepository _shoppingCartRepository;
 
   @override
   void initState() {
     super.initState();
     _cantidad = widget.lineasPedido.cantidad!;
+  }
+
+  void actualizarCarrito(){
+
+    final nuevaCantidad = _cantidad;
+    final nuevoSubtotal = widget.lineasPedido.precioUnitario! * nuevaCantidad;
+
+    setState(() {
+      widget.lineasPedido.cantidad = nuevaCantidad;
+      widget.lineasPedido.subtotal = nuevoSubtotal;
+    });
   }
 
   @override
@@ -86,6 +102,10 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                             if (_cantidad > 0) {
                               setState(() {
                                 _cantidad--;
+                                _shoppingCartRepository = ShoppingCartRepoImpl();
+                                _eliminarProductoDelCarritoBloc = EliminarProductoDelCarritoBloc(_shoppingCartRepository)
+                                ..add(DoEliminarProductoDelCarritoEvent(widget.lineasPedido.idProducto!));
+                                actualizarCarrito();
                               });
                             }
                           },
@@ -98,7 +118,11 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              _cantidad++;
+                              _cantidad++; 
+                              _shoppingCartRepository = ShoppingCartRepoImpl();
+                              _addProductoToCarritoBloc = AddProductoToCarritoBloc(_shoppingCartRepository)
+                              ..add(DoAddProductoToCarritoEvent(widget.lineasPedido.idProducto!));
+                              actualizarCarrito();
                             });
                           },
                           icon: const Icon(Icons.add),
@@ -110,7 +134,7 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '${(widget.lineasPedido.subtotal! * _cantidad).toString()}€',
+                          '${(widget.lineasPedido.subtotal!).toString()}€',
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

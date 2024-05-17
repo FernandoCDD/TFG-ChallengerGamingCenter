@@ -15,6 +15,5 @@ final class DoShoppingCartSuccess extends ShoppingCartState {
 
 final class DoShoppingCartError extends ShoppingCartState {
   final String errorMessage;
-
   DoShoppingCartError(this.errorMessage);
 }
