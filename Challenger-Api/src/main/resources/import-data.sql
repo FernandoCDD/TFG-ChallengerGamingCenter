@@ -33,16 +33,7 @@ INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('5fe3b57c-57b3-48
 INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('fcbc72c9-9190-436e-b651-ff9f4bab6120', '2024-03-10', 'PENDIENTE', '9cd0c43a-6a72-4967-a629-5f51bfbe5107');
 INSERT INTO pedido (id, fecha, estado_pedido, usuario) VALUES ('617c63fd-e79b-44e9-956a-ac3852a66300', '2024-03-15', 'PENDIENTE', '9cd0c43a-6a72-4967-a629-5f51bfbe5107');
 
-
 INSERT INTO linea_pedido (cod_linea, pedido_id, cantidad, precio_unitario, producto_id) VALUES ('039fc705-f328-411c-b3e5-350ae380195c', '5fe3b57c-57b3-487b-8b0d-68e8d0ffb07c', 1, 19.99, '3300c13e-cbd5-4870-8738-71bfceb2ba67');
 
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520471', 1, 'ORDENADOR', true);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520472', 2, 'ORDENADOR', true);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520473', 3, 'ORDENADOR', true);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520474', 4, 'ORDENADOR', false);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520475', 5, 'ORDENADOR', true);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520476', 6, 'PS4', true);
-INSERT INTO dispositivo (id, num_dispositivo, tipo_dispositivo, disponible) VALUES ('d13b50ed-29a8-414e-88e3-ee5ff2520477', 7, 'PS4', true);
-
-INSERT INTO reserva (id, desde, hasta, id_usuario, id_dispositivo) VALUES ('cd7e3872-5699-48dc-bead-38566365f759', '2024-03-20 17:00:00', '2024-03-20 20:00:00', '9cd0c43a-6a72-4967-a629-5f51bfbe5105', 'd13b50ed-29a8-414e-88e3-ee5ff2520471');
+INSERT INTO reserva (id, desde, hasta, usuario, tipo_dispositivo) VALUES ('cd7e3872-5699-48dc-bead-38566365f759', '2024-03-20 17:00:00', '2024-03-20 20:00:00', '9cd0c43a-6a72-4967-a629-5f51bfbe5105', 'ORDENADOR');
 

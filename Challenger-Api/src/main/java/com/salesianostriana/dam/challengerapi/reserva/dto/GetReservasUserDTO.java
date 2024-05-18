@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.challengerapi.reserva.dto;
 
-import com.salesianostriana.dam.challengerapi.Dispositivo.model.TipoDispositivo;
+import com.salesianostriana.dam.challengerapi.reserva.model.Reserva;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.UUID;
 @Builder
 public record GetReservasUserDTO(
 
-        UUID id,
+        UUID idReserva,
 
         String username,
 
@@ -17,6 +17,5 @@ public record GetReservasUserDTO(
 
         LocalDateTime hasta,
 
-        TipoDispositivo tipoDispositivo
-) {
-}
+        String tipoDispositivo
+) { }

@@ -10,13 +10,4 @@ import java.util.UUID;
 
 public interface ReservaRepository extends JpaRepository<Reserva, UUID> {
 
-    @Query("""
-            SELECT r
-            FROM Reserva r
-            WHERE r.id_usuario = ?1
-            """)
-    Page<Reserva> getReservasDelCliente(String id_usuario, Pageable pageable);
-
-
-
 }
