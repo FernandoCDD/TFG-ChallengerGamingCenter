@@ -79,7 +79,8 @@ public class PedidoService {
             return pedidoRepository.save(newPedidoOpen);
         }
 
-            Optional<LineaPedido> lineaEncontrada = pedidoRepository.findLineaPedidoByPedidoYProductos(pedidoPendiente.get().getId(), productoToAdd.getId());
+            Optional<LineaPedido> lineaEncontrada = pedidoRepository.findLineaPedidoByPedidoYProductos
+                    (pedidoPendiente.get().getId(), productoToAdd.getId());
 
             if (lineaEncontrada.isEmpty()) {
                 LineaPedido nuevaLineaPedido = LineaPedido.builder()
@@ -125,5 +126,20 @@ public class PedidoService {
         return pedidoRepository.save(carrito);
     }
 
+    public GetPedidoDto guardarPedido (Usuario u){
 
+        Pedido carritoDelUsuario = getCarritoDelUsuario(u);
+
+        carritoDelUsuario.setEstadoPedido(EstadoPedido.CONFIRMADO);
+        carritoDelUsuario.setFecha(LocalDateTime.now());
+
+        pedidoRepository.save(carritoDelUsuario);
+
+        return GetPedidoDto.of(carritoDelUsuario);
+    }
+
+    public Page<GetPedidoDto> getAllPedidosConfirmadosDelUsuario(Usuario user, Pageable pageable){
+
+        return pedidoRepository.getAllPedidosDelUsuario(user.getId().toString(), pageable);
+    }
 }

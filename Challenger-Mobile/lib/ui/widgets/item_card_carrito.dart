@@ -10,8 +10,10 @@ import 'package:challenger_api_front/models/response/shopping_cart_response/line
 class ItemCardCarrito extends StatefulWidget {
   final LineasPedido lineasPedido;
   final int index;
-  
-  const ItemCardCarrito({Key? key, required this.lineasPedido, required this.index}) : super(key: key);
+
+  const ItemCardCarrito(
+      {Key? key, required this.lineasPedido, required this.index})
+      : super(key: key);
 
   @override
   _ItemCardCarritoState createState() => _ItemCardCarritoState();
@@ -29,8 +31,7 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
     _cantidad = widget.lineasPedido.cantidad!;
   }
 
-  void actualizarCarrito(){
-
+  void actualizarCarrito() {
     final nuevaCantidad = _cantidad;
     final nuevoSubtotal = widget.lineasPedido.precioUnitario! * nuevaCantidad;
 
@@ -47,7 +48,8 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
       surfaceTintColor: Colors.white,
       elevation: 2,
       shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Color.fromARGB(255, 255, 102, 0), width: 2),
+        side:
+            const BorderSide(color: Color.fromARGB(255, 255, 102, 0), width: 2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
@@ -66,7 +68,8 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -102,9 +105,13 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                             if (_cantidad > 0) {
                               setState(() {
                                 _cantidad--;
-                                _shoppingCartRepository = ShoppingCartRepoImpl();
-                                _eliminarProductoDelCarritoBloc = EliminarProductoDelCarritoBloc(_shoppingCartRepository)
-                                ..add(DoEliminarProductoDelCarritoEvent(widget.lineasPedido.idProducto!));
+                                _shoppingCartRepository =
+                                    ShoppingCartRepoImpl();
+                                _eliminarProductoDelCarritoBloc =
+                                    EliminarProductoDelCarritoBloc(
+                                        _shoppingCartRepository)
+                                      ..add(DoEliminarProductoDelCarritoEvent(
+                                          widget.lineasPedido.idProducto!));
                                 actualizarCarrito();
                               });
                             }
@@ -118,10 +125,13 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                         IconButton(
                           onPressed: () {
                             setState(() {
-                              _cantidad++; 
+                              _cantidad++;
                               _shoppingCartRepository = ShoppingCartRepoImpl();
-                              _addProductoToCarritoBloc = AddProductoToCarritoBloc(_shoppingCartRepository)
-                              ..add(DoAddProductoToCarritoEvent(widget.lineasPedido.idProducto!));
+                              _addProductoToCarritoBloc =
+                                  AddProductoToCarritoBloc(
+                                      _shoppingCartRepository)
+                                    ..add(DoAddProductoToCarritoEvent(
+                                        widget.lineasPedido.idProducto!));
                               actualizarCarrito();
                             });
                           },

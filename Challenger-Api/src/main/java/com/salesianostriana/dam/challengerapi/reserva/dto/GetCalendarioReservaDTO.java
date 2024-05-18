@@ -8,17 +8,9 @@ import java.util.UUID;
 @Builder
 public record GetCalendarioReservaDTO(
 
-    UUID id,
-
-    String nombreUsuario,
-
     LocalDateTime desde,
 
-    LocalDateTime hasta,
-
-    Integer OrdenadoresDisponibles,
-
-    Integer PS4Disponibles
+    LocalDateTime hasta
 
 ){
 

@@ -6,21 +6,24 @@ import 'package:meta/meta.dart';
 part 'add_producto_to_carrito_event.dart';
 part 'add_producto_to_carrito_state.dart';
 
-class AddProductoToCarritoBloc extends Bloc<AddProductoToCarritoEvent, AddProductoToCarritoState> {
-
+class AddProductoToCarritoBloc
+    extends Bloc<AddProductoToCarritoEvent, AddProductoToCarritoState> {
   final ShoppingCartRepository shoppingCartRepository;
-  
-  AddProductoToCarritoBloc(this.shoppingCartRepository) : super(AddProductoToCarritoInitial()) {
-    on<DoAddProductoToCarritoEvent>(_doAddProductoToCarrito); {
-    };
+
+  AddProductoToCarritoBloc(this.shoppingCartRepository)
+      : super(AddProductoToCarritoInitial()) {
+    on<DoAddProductoToCarritoEvent>(_doAddProductoToCarrito);
+    {}
+    ;
   }
 
-  void _doAddProductoToCarrito(
-    DoAddProductoToCarritoEvent event, Emitter<AddProductoToCarritoState> emit) async {
+  void _doAddProductoToCarrito(DoAddProductoToCarritoEvent event,
+      Emitter<AddProductoToCarritoState> emit) async {
     emit(AddProductoToCarritoLoading());
 
     try {
-      final response = await shoppingCartRepository.addProductoToCarrito(event.productId);
+      final response =
+          await shoppingCartRepository.addProductoToCarrito(event.productId);
       emit(AddProductoToCarritoSuccess(response));
     } on Exception catch (e) {
       emit(AddProductoToCarritoError(e.toString()));

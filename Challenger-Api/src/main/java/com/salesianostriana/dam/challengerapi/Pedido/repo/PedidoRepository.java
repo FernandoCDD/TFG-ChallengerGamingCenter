@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.Pedido.repo;
 import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto;
 import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
 import com.salesianostriana.dam.challengerapi.Pedido.model.Pedido;
+import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,6 +27,21 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
             WHERE p.estadoPedido = 'CONFIRMADO'
             """)
     Page<GetPedidoDto> getAllPedidosConClientes(Pageable pageable);
+
+    @Query("""
+            SELECT new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
+            CAST(p.id AS string),
+            p.fecha,
+            p.usuario,
+            CAST(p.estadoPedido AS string),
+            (SELECT CASE WHEN SUM(l.precioUnitario * l.cantidad) IS NULL THEN 0 ELSE SUM(l.precioUnitario * l.cantidad) END
+             FROM LineaPedido l WHERE l.pedido.id = p.id)
+            )
+            FROM Pedido p
+            WHERE p.estadoPedido = 'CONFIRMADO'
+            AND p.usuario = ?1
+            """)
+    Page<GetPedidoDto> getAllPedidosDelUsuario(String idUsuario, Pageable pageable);
 
     @Query("""
             SELECT p

@@ -28,12 +28,13 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
   }
 
   @override
-  Future<ShoppingCartResponse> addProductoToCarrito(String productId) async{
+  Future<ShoppingCartResponse> addProductoToCarrito(String productId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await _httpClient.post(
-        Uri.parse('http://localhost:8080/pedido/carrito/addProducto/$productId'),
+        Uri.parse(
+            'http://localhost:8080/pedido/carrito/addProducto/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',
@@ -49,12 +50,14 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
   }
 
   @override
-  Future<ShoppingCartResponse> eliminarProductoDelCarrito(String productId) async{
+  Future<ShoppingCartResponse> eliminarProductoDelCarrito(
+      String productId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await _httpClient.delete(
-        Uri.parse('http://localhost:8080/pedido/carrito/deleteProducto/$productId'),
+        Uri.parse(
+            'http://localhost:8080/pedido/carrito/deleteProducto/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',

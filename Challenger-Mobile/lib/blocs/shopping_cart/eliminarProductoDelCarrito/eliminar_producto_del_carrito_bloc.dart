@@ -6,24 +6,25 @@ import 'package:meta/meta.dart';
 part 'eliminar_producto_del_carrito_event.dart';
 part 'eliminar_producto_del_carrito_state.dart';
 
-class EliminarProductoDelCarritoBloc extends Bloc<EliminarProductoDelCarritoEvent, EliminarProductoDelCarritoState> {
-
+class EliminarProductoDelCarritoBloc extends Bloc<
+    EliminarProductoDelCarritoEvent, EliminarProductoDelCarritoState> {
   final ShoppingCartRepository shoppingCartRepository;
 
-  EliminarProductoDelCarritoBloc(this.shoppingCartRepository) : super(EliminarProductoDelCarritoInitial()) {
+  EliminarProductoDelCarritoBloc(this.shoppingCartRepository)
+      : super(EliminarProductoDelCarritoInitial()) {
     on<DoEliminarProductoDelCarritoEvent>(_doEliminarProductoDelCarrito);
   }
 
-  void _doEliminarProductoDelCarrito(
-    DoEliminarProductoDelCarritoEvent event, Emitter<EliminarProductoDelCarritoState> emit) async {
-      emit(EliminarProductoDelCarritoLoading());
+  void _doEliminarProductoDelCarrito(DoEliminarProductoDelCarritoEvent event,
+      Emitter<EliminarProductoDelCarritoState> emit) async {
+    emit(EliminarProductoDelCarritoLoading());
 
-      try {
-        final response = await shoppingCartRepository.eliminarProductoDelCarrito(event.productId);
-        emit(EliminarProductoDelCarritoSuccess(response));
-      } on Exception catch (e) {
-        emit(EliminarProductoDelCarritoError(e.toString()));
-      }
+    try {
+      final response = await shoppingCartRepository
+          .eliminarProductoDelCarrito(event.productId);
+      emit(EliminarProductoDelCarritoSuccess(response));
+    } on Exception catch (e) {
+      emit(EliminarProductoDelCarritoError(e.toString()));
     }
+  }
 }
-

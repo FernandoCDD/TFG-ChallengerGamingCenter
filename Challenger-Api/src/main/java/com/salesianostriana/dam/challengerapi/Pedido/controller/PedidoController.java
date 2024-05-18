@@ -79,4 +79,17 @@ public class PedidoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/guardarPedido")
+    public GetPedidoDto guardarPedidoDelCarrito (@AuthenticationPrincipal Usuario user){
+
+        return pedidoService.guardarPedido(user);
+    }
+
+    @GetMapping("/pedidosDelUsuario")
+    public Page<GetPedidoDto> getAllPedidosConfirmadosDelUsuario(@AuthenticationPrincipal Usuario user,
+                                                                 @PageableDefault(page=0, size = 4)Pageable pageable){
+
+        return pedidoService.getAllPedidosConfirmadosDelUsuario(user, pageable);
+    }
+
 }

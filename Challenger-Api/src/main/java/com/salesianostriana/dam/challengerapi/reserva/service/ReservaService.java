@@ -23,57 +23,19 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ReservaService {
+public class   ReservaService {
 
     private final ReservaRepository repository;
     private final UserService userService;
     private final DispositivoService dispositivoService;
 
-    private Pageable createPageRequestUsing(int page, int size) {
-        return PageRequest.of(page, size);
-    }
-
-    @Transactional
-    public Page<GetReservasUserDTO> getAllPedidosDeUnClienteById(String id_usuario, Pageable pageable){
-
-       Page<Reserva> reservas = repository.getReservasDelCliente(id_usuario, pageable);
-
-       int page = 0;
-       int size = 5;
-
-        Pageable pageRequest = createPageRequestUsing(page, size);
-
-        List<GetReservasUserDTO> reservasDTO = reservas.stream().map(
-                x -> {
-                    return GetReservasUserDTO.builder()
-                            .id(x.getId())
-                            .desde(x.getDesde())
-                            .hasta(x.getHasta())
-                            .build();
-
-                }
-        ).toList();
-
-        int start = (int) pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), reservasDTO.size());
-
-        List<GetReservasUserDTO> list = reservasDTO.subList(start, end);
-
-        return new PageImpl<>(list, pageRequest, list.size());
-    }
-
-    public Reserva addReservaOrdenador (UUID id_cliente, NewReservaDTO nuevaReserva){
-
-        Usuario user = userService.findById(id_cliente).orElseThrow(() -> new UserNotFoundException());
-
-        Dispositivo disp = dispositivoService.getRandomOrdenadorDisponible();
+    public Reserva addReservaOrdenador (Usuario user, NewReservaDTO nuevaReserva){
 
         Reserva reserva = new Reserva();
 
         reserva.setDesde(nuevaReserva.desde());
         reserva.setHasta(nuevaReserva.hasta());
         reserva.setId_usuario(user.getId().toString());
-        reserva.setId_dispositivo(disp.getId().toString());
 
         return repository.save(reserva);
     }

@@ -1,5 +1,9 @@
+import 'package:challenger_api_front/blocs/shopping_cart/guardarPedidoDelCarrito/guardar_pedido_del_carrito_bloc.dart';
+import 'package:challenger_api_front/repositories/pedido/pedido_repo.dart';
+import 'package:challenger_api_front/repositories/pedido/pedido_repo_impl.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo._impl.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo.dart';
+import 'package:challenger_api_front/ui/pages/pedido_confirmado_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:challenger_api_front/blocs/shopping_cart/shopping_cart_bloc.dart';
@@ -15,6 +19,8 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   late ShoppingCartBloc _shoppingCartBloc;
   late ShoppingCartRepository _shoppingCartRepository;
+  late PedidoRepository _pedidoRepository;
+  late GuardarPedidoDelCarritoBloc _guardarPedidoDelCarritoBloc;
 
   @override
   void initState() {
@@ -22,6 +28,50 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     _shoppingCartBloc = ShoppingCartBloc(_shoppingCartRepository)
       ..add(GetShoppingCartEvent());
     super.initState();
+  }
+
+  void _showConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirmar pedido"),
+          content: const Text("¿Deseas confirmar el pedido?"),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Color.fromARGB(255, 255, 102, 0),
+              width: 2,
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('No',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 255, 102, 0), fontSize: 20)),
+            ),
+            TextButton(
+              onPressed: () {
+                _pedidoRepository = PedidoRepositoryImpl();
+                _guardarPedidoDelCarritoBloc = GuardarPedidoDelCarritoBloc(_pedidoRepository)
+                  ..add(DoGuardarPedidoDelCarrito());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PedidoConfirmadoPage()),
+                );
+              },
+              child: const Text('Sí',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 255, 102, 0), fontSize: 20)),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -46,7 +96,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       itemCount: shoppingCart.lineasPedido!.length,
                       itemBuilder: (context, index) {
                         final lineaPedido = shoppingCart.lineasPedido![index];
-                        return ItemCardCarrito(lineasPedido: lineaPedido, index: index);
+                        return ItemCardCarrito(
+                            lineasPedido: lineaPedido, index: index);
                       },
                     ),
                   ),
@@ -68,20 +119,20 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 255, 102, 0)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
                           ),
-                          onPressed: () {
-
-                          },
+                          onPressed: _showConfirmationDialog,
                           child: const Padding(
                             padding: EdgeInsets.all(12.0),
                             child: Text(
                               'Finalizar compra',
-                              style: TextStyle(color: Colors.white, fontSize: 17),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 17),
                             ),
                           ),
                         ),
@@ -91,8 +142,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                 ],
               );
             } else if (state is DoShoppingCartError) {
-              return Center(
-                child: Text('Algo ha fallado... ${state.errorMessage}'),
+              return const Center(
+                child: Text('Tu carrito está vacío...', style: TextStyle(fontSize: 20)),
               );
             } else {
               return const SizedBox();

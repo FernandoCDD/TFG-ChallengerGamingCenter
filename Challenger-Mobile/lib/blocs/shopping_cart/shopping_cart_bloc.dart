@@ -26,5 +26,4 @@ class ShoppingCartBloc extends Bloc<ShoppingCartEvent, ShoppingCartState> {
       emit(DoShoppingCartError(e.toString()));
     }
   }
-
 }

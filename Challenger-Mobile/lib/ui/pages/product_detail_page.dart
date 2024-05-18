@@ -28,7 +28,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   void initState() {
     super.initState();
     _productDetailRepo = ProductoDetailRepositoryImpl();
-    _productDetailBloc = ProductDetailBloc(_productDetailRepo)..add(GetProductDetailEvent (widget.productId));
+    _productDetailBloc = ProductDetailBloc(_productDetailRepo)
+      ..add(GetProductDetailEvent(widget.productId));
   }
 
   @override
@@ -79,7 +80,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
-                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemPadding:
+                            const EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
@@ -89,7 +91,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         },
                       ),
                       Text("(${product.valoracion})",
-                          style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                          style: const TextStyle(
+                              fontSize: 16, color: Colors.grey)),
                     ],
                   ),
                   const SizedBox(height: 15),
@@ -104,13 +107,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Row(
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(
-                            left: 8.0),
+                        margin: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
                                 const Color.fromARGB(255, 255, 102, 0)),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -118,12 +121,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           ),
                           onPressed: () {
                             _shoppingCartRepository = ShoppingCartRepoImpl();
-                            _addProductoToCarritoBloc = AddProductoToCarritoBloc(_shoppingCartRepository)..add(DoAddProductoToCarritoEvent(widget.productId));
+                            _addProductoToCarritoBloc =
+                                AddProductoToCarritoBloc(
+                                    _shoppingCartRepository)
+                                  ..add(DoAddProductoToCarritoEvent(
+                                      widget.productId));
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: const Text("¡Producto agregado al carrito!"),
+                                  title: const Text(
+                                      "¡Producto agregado al carrito!"),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                     side: const BorderSide(
@@ -138,7 +146,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       },
                                       child: const Text('OK',
                                           style: TextStyle(
-                                              color: Color.fromARGB(255, 255, 102, 0))),
+                                              color: Color.fromARGB(
+                                                  255, 255, 102, 0))),
                                     ),
                                   ],
                                 );
@@ -149,7 +158,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             padding: EdgeInsets.all(12.0),
                             child: Text(
                               'Agregar al carrito',
-                              style: TextStyle(color: Colors.white, fontSize: 20),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),
