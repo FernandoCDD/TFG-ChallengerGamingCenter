@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=D:\Dowloads\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\ferna\OneDrive\Escritorio\2ºDAM\challenger-api\challenger_api_front"
+export "FLUTTER_APPLICATION_PATH=C:\Users\ferna\OneDrive\Escritorio\TFG-ChallengerGamingCenter\Challenger-Mobile"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

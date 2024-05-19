@@ -56,8 +56,9 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             TextButton(
               onPressed: () {
                 _pedidoRepository = PedidoRepositoryImpl();
-                _guardarPedidoDelCarritoBloc = GuardarPedidoDelCarritoBloc(_pedidoRepository)
-                  ..add(DoGuardarPedidoDelCarrito());
+                _guardarPedidoDelCarritoBloc =
+                    GuardarPedidoDelCarritoBloc(_pedidoRepository)
+                      ..add(DoGuardarPedidoDelCarrito());
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -143,7 +144,8 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               );
             } else if (state is DoShoppingCartError) {
               return const Center(
-                child: Text('Tu carrito está vacío...', style: TextStyle(fontSize: 20)),
+                child: Text('Tu carrito está vacío...',
+                    style: TextStyle(fontSize: 20)),
               );
             } else {
               return const SizedBox();

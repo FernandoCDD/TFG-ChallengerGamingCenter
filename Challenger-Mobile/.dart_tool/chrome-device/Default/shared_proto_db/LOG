@@ -1,11 +1,4 @@
-2024/05/08-17:57:20.533 99c Reusing MANIFEST C:\Users\ferna\AppData\Local\Temp\flutter_tools.44b19f9a\flutter_tools_chrome_device.94a85676\Default\shared_proto_db/MANIFEST-000001
-2024/05/08-17:57:20.534 99c Recovering log #13
-2024/05/08-17:57:20.538 99c Reusing old log C:\Users\ferna\AppData\Local\Temp\flutter_tools.44b19f9a\flutter_tools_chrome_device.94a85676\Default\shared_proto_db/000013.log 
-2024/05/08-17:57:20.539 99c Delete type=0 #3
-2024/05/08-17:57:20.539 99c Delete type=0 #4
-2024/05/08-17:57:20.540 99c Delete type=0 #7
-2024/05/08-17:57:20.540 99c Delete type=0 #10
-2024/05/08-17:57:20.540 99c Delete type=2 #14
-2024/05/08-17:57:34.656 4988 Level-0 table #16: started
-2024/05/08-17:57:34.662 4988 Level-0 table #16: 135676 bytes OK
-2024/05/08-17:57:34.664 4988 Delete type=0 #13
+2024/05/19-22:03:13.048 5dc0 Reusing MANIFEST C:\Users\ferna\AppData\Local\Temp\flutter_tools.a8b60576\flutter_tools_chrome_device.2a0023b5\Default\shared_proto_db/MANIFEST-000001
+2024/05/19-22:03:13.049 5dc0 Recovering log #4
+2024/05/19-22:03:13.051 5dc0 Reusing old log C:\Users\ferna\AppData\Local\Temp\flutter_tools.a8b60576\flutter_tools_chrome_device.2a0023b5\Default\shared_proto_db/000004.log 
+2024/05/19-22:03:13.052 5dc0 Delete type=0 #3

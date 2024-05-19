@@ -2,7 +2,6 @@ import 'package:challenger_api_front/ui/pages/info_page.dart';
 import 'package:challenger_api_front/ui/pages/my_profile_page.dart';
 import 'package:challenger_api_front/ui/pages/reservas_page.dart';
 import 'package:challenger_api_front/ui/pages/shop_page.dart';
-import 'package:challenger_api_front/ui/pages/torneos_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   static final List<Widget> _widgetOptions = <Widget>[
     InfoPage(),
     const ReservasPage(),
-    const TorneosPage(),
     const ShopPage(),
     const UserProfilePage()
   ];
@@ -49,10 +47,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.gamepad),
             label: 'RESERVAR',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wine_bar_outlined),
-            label: 'TORNEOS',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_bag),

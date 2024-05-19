@@ -8,15 +8,15 @@ part 'guardar_pedido_del_carrito_state.dart';
 
 class GuardarPedidoDelCarritoBloc
     extends Bloc<GuardarPedidoDelCarritoEvent, GuardarPedidoDelCarritoState> {
+  final PedidoRepository pedidoRepository;
 
-      final PedidoRepository pedidoRepository;
-
-  GuardarPedidoDelCarritoBloc(this.pedidoRepository) : super(GuardarPedidoDelCarritoInitial()) {
+  GuardarPedidoDelCarritoBloc(this.pedidoRepository)
+      : super(GuardarPedidoDelCarritoInitial()) {
     on<GuardarPedidoDelCarritoEvent>(_doGuardarPedidoDelCarrito);
   }
 
-  void _doGuardarPedidoDelCarrito(
-      GuardarPedidoDelCarritoEvent event, Emitter<GuardarPedidoDelCarritoState> emit) async {
+  void _doGuardarPedidoDelCarrito(GuardarPedidoDelCarritoEvent event,
+      Emitter<GuardarPedidoDelCarritoState> emit) async {
     emit(GuardarPedidoDelCarritoLoading());
 
     try {
