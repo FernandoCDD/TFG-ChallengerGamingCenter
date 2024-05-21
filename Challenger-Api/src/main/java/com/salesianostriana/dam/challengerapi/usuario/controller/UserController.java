@@ -12,7 +12,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.Page;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -110,14 +112,14 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/me")
-    public ResponseEntity<GetUserDetailDto> getLoggedUser(@AuthenticationPrincipal Usuario user) {
-        return ResponseEntity.ok(GetUserDetailDto.of(user));
+    public GetUserDetailDto getLoggedUser(@AuthenticationPrincipal Usuario user) {
+        return GetUserDetailDto.of(user);
     }
 
-    @GetMapping("/user/")
-    public List<Usuario> getAllUsers(){
+    @GetMapping("/admin/users")
+    public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 4) Pageable pageable){
 
-        return userService.findAll();
+        return userService.getAllUsuarios(pageable);
     }
 
 }

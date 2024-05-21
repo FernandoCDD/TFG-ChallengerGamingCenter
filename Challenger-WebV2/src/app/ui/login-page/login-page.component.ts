@@ -33,11 +33,8 @@ export class LoginPageComponent implements OnInit {
       this.rol = resp.roles;
       this.id = resp.id;
 
-      console.log(this.id);
-      console.log(this.rol);
-
       if (this.rol.includes('ADMIN')) {
-        this.router.navigateByUrl('me')
+        this.router.navigateByUrl('admin/me')
       } else {
         this.router.navigateByUrl('/client-user')
       }

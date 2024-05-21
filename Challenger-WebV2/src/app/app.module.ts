@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import { ClientPageComponent } from './ui/client-page/client-page.component';
 import { UserProfilePageComponent } from './ui/user-profile-page/user-profile-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { UsersListPageComponent } from './ui/users-list-page/users-list-page.component';
+import { SectionComponent } from './section/section.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     ClientPageComponent,
     UserProfilePageComponent,
     NavbarComponent,
+    UsersListPageComponent,
+    SectionComponent,
   ],
   imports: [
     BrowserModule,

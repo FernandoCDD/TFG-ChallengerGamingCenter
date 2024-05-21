@@ -1,0 +1,10 @@
+body {
+    background-color: #5f3e33;
+    height: 100%;
+    margin: 0;
+}
+.contenedor {
+    width: 80%;
+    height: 60%;
+    background-color: #ff0000;
+}
