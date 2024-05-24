@@ -31,7 +31,7 @@ public class PedidoController {
     }
 
     @GetMapping("/admin/")
-    public Page<GetPedidoDto> getAllPedidos(@PageableDefault(page=0, size = 4)Pageable pageable){
+    public Page<GetPedidoDto> getAllPedidos(@PageableDefault(page=0, size = 10)Pageable pageable){
         return pedidoService.getAllPedidos(pageable);
     }
 
@@ -87,7 +87,7 @@ public class PedidoController {
 
     @GetMapping("/pedidosDelUsuario")
     public Page<GetPedidoDto> getAllPedidosConfirmadosDelUsuario(@AuthenticationPrincipal Usuario user,
-                                                                 @PageableDefault(page=0, size = 4)Pageable pageable){
+                                                                 @PageableDefault(page=0, size = 20)Pageable pageable){
 
         return pedidoService.getAllPedidosConfirmadosDelUsuario(user, pageable);
     }

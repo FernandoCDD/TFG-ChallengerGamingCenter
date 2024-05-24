@@ -126,4 +126,13 @@ public class UserService {
 
         return new PageImpl<>(usuariosDto, pageable, usuariosPage.getTotalElements());
     }
+
+    public Usuario editarHorasDisponiblesDelUsuario (UUID idUsuario, EditUsuarioDTO editUser){
+
+        Usuario user = userRepository.findById(idUsuario).orElseThrow(() -> new UserNotFoundException());
+
+        user.setHorasDisponibles(editUser.horasDisponibles());
+
+        return userRepository.save(user);
+    }
 }

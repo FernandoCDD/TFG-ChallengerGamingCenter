@@ -37,6 +37,7 @@ public class Producto {
     private String descripcion;
     private double precio;
     private double valoracion;
+    private boolean enVenta;
 
     @ManyToOne
     private Categoria categoria;

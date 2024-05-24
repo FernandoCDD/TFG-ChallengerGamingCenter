@@ -6,11 +6,12 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record GetUserDetailDto(String username, String email, String avatar,
+public record GetUserDetailDto(String idUsuario, String username, String email, String avatar,
                                int horasDisponibles, LocalDate createdAt) {
 
     public static GetUserDetailDto of(Usuario u){
         return new GetUserDetailDto(
+                u.getId().toString(),
                 u.getUsername(),
                 u.getEmail(),
                 u.getAvatar(),

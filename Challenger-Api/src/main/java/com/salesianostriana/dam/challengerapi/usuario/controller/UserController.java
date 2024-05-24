@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -116,10 +117,18 @@ public class UserController {
         return GetUserDetailDto.of(user);
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/admin/users") //Funciona
     public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 4) Pageable pageable){
 
         return userService.getAllUsuarios(pageable);
+    }
+
+    @PutMapping("admin/editHoras/{userID}") //Funciona
+    public GetUserDetailDto editarHorasDelUsuario (@PathVariable UUID userID, @Valid @RequestBody EditUsuarioDTO editUser){
+
+        Usuario user = userService.editUsuario(editUser, userID);
+
+        return GetUserDetailDto.of(user);
     }
 
 }

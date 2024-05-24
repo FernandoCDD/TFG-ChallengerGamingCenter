@@ -10,9 +10,9 @@ import java.util.UUID;
 @Builder
 public record GetReservasUserDTO(
 
-        UUID idReserva,
+        String idReserva,
 
-        String username,
+        String usuario,
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime desde,
@@ -21,4 +21,16 @@ public record GetReservasUserDTO(
         LocalDateTime hasta,
 
         String tipoDispositivo
-) { }
+) {
+
+        public static GetReservasUserDTO of (Reserva res){
+
+                return new GetReservasUserDTO(
+                        res.getId().toString(),
+                        res.getUsuario(),
+                        res.getDesde(),
+                        res.getHasta(),
+                        res.getTipoDispositivo().toString()
+                );
+        }
+}

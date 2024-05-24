@@ -1,10 +1,11 @@
 package com.salesianostriana.dam.challengerapi.producto.dto;
 
+import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.producto.model.Producto;
 
 import java.util.UUID;
 
-public record  GetProductoDto(
+public record NewProductoDto(
 
         UUID id,
 
@@ -12,23 +13,25 @@ public record  GetProductoDto(
 
         String imagen,
 
+        String descripcion,
+
         double precio,
 
         boolean enVenta,
 
-        String categoria
+        UUID idCategoria
 ) {
 
-    public static GetProductoDto of (Producto p){
-        return new GetProductoDto(
+    public static NewProductoDto of (Producto p){
+        return new NewProductoDto(
                 p.getId(),
                 p.getNombre(),
                 p.getImagen(),
+                p.getDescripcion(),
                 p.getPrecio(),
                 p.isEnVenta(),
-                p.getCategoria().getNombre()
+                p.getCategoria().getId()
         );
     }
 }
-
 
