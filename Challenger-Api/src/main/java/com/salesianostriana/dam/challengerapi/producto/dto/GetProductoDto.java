@@ -4,7 +4,7 @@ import com.salesianostriana.dam.challengerapi.producto.model.Producto;
 
 import java.util.UUID;
 
-public record GetProductoDto(
+public record  GetProductoDto(
 
         UUID id,
 
@@ -14,7 +14,9 @@ public record GetProductoDto(
 
         double precio,
 
-        double valoracion
+        boolean enVenta,
+
+        String categoria
 ) {
 
     public static GetProductoDto of (Producto p){
@@ -23,7 +25,8 @@ public record GetProductoDto(
                 p.getNombre(),
                 p.getImagen(),
                 p.getPrecio(),
-                p.getValoracion()
+                p.isEnVenta(),
+                p.getCategoria().getNombre()
         );
     }
 }

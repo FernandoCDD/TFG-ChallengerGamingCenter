@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.challengerapi.reserva.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -41,8 +38,9 @@ public class Reserva {
     private LocalDateTime hasta;
 
     @CreatedBy
-    private String id_usuario;
+    private String usuario;
 
-    private String id_dispositivo;
+    @Enumerated(value = EnumType.STRING)
+    private TipoDispositivo tipoDispositivo;
 
 }

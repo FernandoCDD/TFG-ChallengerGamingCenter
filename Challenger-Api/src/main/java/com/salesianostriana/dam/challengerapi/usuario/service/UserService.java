@@ -1,11 +1,18 @@
 package com.salesianostriana.dam.challengerapi.usuario.service;
 
+import com.salesianostriana.dam.challengerapi.categoria.repo.CategoriaRepository;
 import com.salesianostriana.dam.challengerapi.usuario.dto.CreateUserDto;
+import com.salesianostriana.dam.challengerapi.usuario.dto.EditUsuarioDTO;
+import com.salesianostriana.dam.challengerapi.usuario.dto.GetUserDetailDto;
 import com.salesianostriana.dam.challengerapi.usuario.exception.UserNotFoundException;
 import com.salesianostriana.dam.challengerapi.usuario.model.TipoUsuario;
 import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
 import com.salesianostriana.dam.challengerapi.usuario.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +23,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +31,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final CategoriaRepository categoriaRepository;
 
     public Usuario createUser(CreateUserDto createUserDto, EnumSet<TipoUsuario> roles) {
 
@@ -99,4 +108,31 @@ public class UserService {
         return passwordEncoder.matches(clearPassword, user.getPassword());
     }
 
+    public Usuario editUsuario (EditUsuarioDTO user, UUID idUsuario){
+
+        Usuario usuarioEdited = findById(idUsuario).orElseThrow(() -> new UserNotFoundException());
+
+        usuarioEdited.setHorasDisponibles(user.horasDisponibles());
+
+        return userRepository.save(usuarioEdited);
+    }
+
+    public Page<GetUserDetailDto> getAllUsuarios(Pageable pageable) {
+        Page<Usuario> usuariosPage = userRepository.findAll(pageable);
+
+        List<GetUserDetailDto> usuariosDto = usuariosPage.getContent().stream()
+                .map(GetUserDetailDto::of)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(usuariosDto, pageable, usuariosPage.getTotalElements());
+    }
+
+    public Usuario editarHorasDisponiblesDelUsuario (UUID idUsuario, EditUsuarioDTO editUser){
+
+        Usuario user = userRepository.findById(idUsuario).orElseThrow(() -> new UserNotFoundException());
+
+        user.setHorasDisponibles(editUser.horasDisponibles());
+
+        return userRepository.save(user);
+    }
 }
