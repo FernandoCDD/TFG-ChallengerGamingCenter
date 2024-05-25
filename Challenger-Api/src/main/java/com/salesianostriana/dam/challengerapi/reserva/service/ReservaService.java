@@ -7,7 +7,13 @@ import com.salesianostriana.dam.challengerapi.reserva.model.TipoDispositivo;
 import com.salesianostriana.dam.challengerapi.reserva.repo.ReservaRepository;
 import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,13 +32,17 @@ public class ReservaService {
 
         reservaRepository.save(res);
 
-        return new GetReservasUserDTO(
-                res.getId(),
-                user.getUsername(),
-                res.getDesde(),
-                res.getHasta(),
-                res.getTipoDispositivo().toString()
-        );
+        return GetReservasUserDTO.of(res);
     }
 
+    public Page<GetReservasUserDTO> getAllReservas (Pageable pageable){
+
+        Page <Reserva> reservasPage = reservaRepository.findAll(pageable);
+
+        List<GetReservasUserDTO> reservasDto = reservasPage.getContent().stream()
+                .map( GetReservasUserDTO::of).collect(Collectors.toList());
+
+        return new PageImpl<>(reservasDto, pageable, reservasPage.getTotalElements());
+
+    }
 }

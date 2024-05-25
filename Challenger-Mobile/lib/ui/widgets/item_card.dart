@@ -76,7 +76,7 @@ class ItemCard extends StatelessWidget {
                               color: Color.fromARGB(255, 255, 115, 22)),
                           const SizedBox(width: 4),
                           Text(
-                            productos.valoracion!.toString(),
+                            (productos.valoracion ?? 0).toString(),
                             style: const TextStyle(fontSize: 16),
                           ),
                         ],

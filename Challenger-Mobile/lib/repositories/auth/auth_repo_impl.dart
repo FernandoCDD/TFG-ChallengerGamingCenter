@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:challenger_api_front/models/dto/login_dto.dart';
 import 'package:challenger_api_front/models/dto/register_dto.dart';
 import 'package:challenger_api_front/models/response/login_response.dart';
@@ -14,8 +13,8 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<LoginResponse> login(LoginDto loginDto) async {
     // final SharedPreferences prefs = await _prefs;
     final jsonBody = jsonEncode(loginDto.toJson());
-    final response = //await _httpClient.post(Uri.parse('http://localhost:8080/auth/login'),
-        await _httpClient.post(Uri.parse('http://localhost:8080/auth/login'),
+    final response = //await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/login'),
+        await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/login'),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -31,8 +30,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<RegisterResponse> register(RegisterDto registerDto) async {
     final jsonBody = jsonEncode(registerDto.toJson());
-    final response = //await _httpClient.post(Uri.parse('http://localhost:8080/auth/register'),
-        await _httpClient.post(Uri.parse('http://localhost:8080/auth/register'),
+    final response = //await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/register'),
+        await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/register'),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

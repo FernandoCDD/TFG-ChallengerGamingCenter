@@ -15,7 +15,7 @@ class ReservaRepositoryImpl implements ReservaRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     
-    final response = await _httpClient.post(Uri.parse('http://localhost:8080/reserva/nuevaReserva'),
+    final response = await _httpClient.post(Uri.parse('http://10.0.2.2:8080/reserva/nuevaReserva'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',

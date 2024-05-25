@@ -15,8 +15,8 @@ class UserProfileRepositoryImpl extends UserProfileRepository {
     String? token = _prefs.getString('token');
 
     final response = await _httpClient
-        .get(Uri.parse('http://localhost:8080/me'), headers: <String, String>{
-      //.get(Uri.parse('http://localhost:8080/me'), headers: <String, String>{
+        .get(Uri.parse('http://10.0.2.2:8080/me'), headers: <String, String>{
+      //.get(Uri.parse('http://10.0.2.2:8080/me'), headers: <String, String>{
       'Content-Type': 'application/json',
       'accept': 'application/json',
       'Authorization': 'Bearer $token'
@@ -38,8 +38,8 @@ class UserProfileRepositoryImpl extends UserProfileRepository {
     String? token = _prefs.getString('token');
 
     final response = await _httpClient.put(
-      //Uri.parse('http://localhost:8080/user/changePassword'),
-      Uri.parse('http://localhost:8080/user/changePassword'),
+      //Uri.parse('http://10.0.2.2:8080/user/changePassword'),
+      Uri.parse('http://10.0.2.2:8080/user/changePassword'),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'accept': 'application/json',

@@ -12,7 +12,7 @@ class PedidoRepositoryImpl extends PedidoRepository {
     String? token = _prefs.getString('token');
 
     final response = await _httpClient.post(
-        Uri.parse('http://localhost:8080/pedido/guardarPedido'),
+        Uri.parse('http://10.0.2.2:8080/pedido/guardarPedido'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',

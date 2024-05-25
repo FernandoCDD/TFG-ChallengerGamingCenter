@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:challenger_api_front/blocs/shopping_cart/eliminarProductoDelCarrito/eliminar_producto_del_carrito_bloc.dart';
 import 'package:challenger_api_front/blocs/shopping_cart/shopping_cart_bloc.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo._impl.dart';
 import 'package:challenger_api_front/repositories/shopping_cart/shopping_cart_repo.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:challenger_api_front/blocs/shopping_cart/addProductoToCarrito/bloc/add_producto_to_carrito_bloc.dart';
 import 'package:challenger_api_front/models/response/shopping_cart_response/lineas_pedido.dart';
 
@@ -55,7 +55,7 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -73,12 +73,13 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // Columna para el nombre y el precio
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // Nombre con longitud limitada y puntos suspensivos
                         Text(
-                          widget.lineasPedido.nombreProducto!,
+                          limitarLongitudNombre(widget.lineasPedido.nombreProducto!),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -93,56 +94,58 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                             color: Color.fromARGB(255, 255, 102, 0),
                           ),
                         ),
-                        const SizedBox(height: 8),
                       ],
                     ),
+                    // Columna para la cantidad, botones y subtotal
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(
-                          onPressed: () {
-                            if (_cantidad > 0) {
-                              setState(() {
-                                _cantidad--;
-                                _shoppingCartRepository =
-                                    ShoppingCartRepoImpl();
-                                _eliminarProductoDelCarritoBloc =
-                                    EliminarProductoDelCarritoBloc(
-                                        _shoppingCartRepository)
-                                      ..add(DoEliminarProductoDelCarritoEvent(
-                                          widget.lineasPedido.idProducto!));
-                                actualizarCarrito();
-                              });
-                            }
-                          },
-                          icon: const Icon(Icons.remove),
+                        // Fila para los botones y la cantidad
+                        Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                if (_cantidad > 0) {
+                                  setState(() {
+                                    _cantidad--;
+                                    _shoppingCartRepository =
+                                        ShoppingCartRepoImpl();
+                                    _eliminarProductoDelCarritoBloc =
+                                        EliminarProductoDelCarritoBloc(
+                                            _shoppingCartRepository)
+                                          ..add(
+                                              DoEliminarProductoDelCarritoEvent(
+                                                  widget.lineasPedido
+                                                      .idProducto!));
+                                    actualizarCarrito();
+                                  });
+                                }
+                              },
+                              icon: const Icon(Icons.remove),
+                            ),
+                            Text(
+                              _cantidad.toString(),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  _cantidad++;
+                                  _shoppingCartRepository =
+                                      ShoppingCartRepoImpl();
+                                  _addProductoToCarritoBloc =
+                                      AddProductoToCarritoBloc(
+                                          _shoppingCartRepository)
+                                        ..add(DoAddProductoToCarritoEvent(
+                                            widget.lineasPedido.idProducto!));
+                                  actualizarCarrito();
+                                });
+                              },
+                              icon: const Icon(Icons.add),
+                            ),
+                          ],
                         ),
-                        Text(
-                          _cantidad.toString(),
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _cantidad++;
-                              _shoppingCartRepository = ShoppingCartRepoImpl();
-                              _addProductoToCarritoBloc =
-                                  AddProductoToCarritoBloc(
-                                      _shoppingCartRepository)
-                                    ..add(DoAddProductoToCarritoEvent(
-                                        widget.lineasPedido.idProducto!));
-                              actualizarCarrito();
-                            });
-                          },
-                          icon: const Icon(Icons.add),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                        // Texto del subtotal
                         Text(
                           '${(widget.lineasPedido.subtotal!).toString()}€',
                           style: const TextStyle(
@@ -151,7 +154,6 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                             color: Color.fromARGB(255, 255, 102, 0),
                           ),
                         ),
-                        const SizedBox(height: 8),
                       ],
                     ),
                   ],
@@ -162,5 +164,12 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
         ),
       ),
     );
+  }
+
+  String limitarLongitudNombre(String nombre) {
+    const maxLength = 15; 
+    return nombre.length > maxLength
+        ? '${nombre.substring(0, maxLength)}...' 
+        : nombre;
   }
 }

@@ -41,6 +41,7 @@ public class CategoriaService {
         final Page<GetCategoriaDto> categoriasPageada = new PageImpl<>(categoriasDto.subList(start, end), pageable, categoriasDto.size());
 
         return categoriasPageada;
+
     }
 
     public Categoria createCategoria (GetCategoriaDto nuevaCategoria){

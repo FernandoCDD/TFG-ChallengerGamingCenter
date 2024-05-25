@@ -12,7 +12,7 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
     String? token = _prefs.getString('token');
 
     final response = await _httpClient.get(
-        Uri.parse('http://localhost:8080/pedido/carrito'),
+        Uri.parse('http://10.0.2.2:8080/pedido/carrito'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',
@@ -34,7 +34,7 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
 
     final response = await _httpClient.post(
         Uri.parse(
-            'http://localhost:8080/pedido/carrito/addProducto/$productId'),
+            'http://10.0.2.2:8080/pedido/carrito/addProducto/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',
@@ -57,7 +57,7 @@ class ShoppingCartRepoImpl extends ShoppingCartRepository {
 
     final response = await _httpClient.delete(
         Uri.parse(
-            'http://localhost:8080/pedido/carrito/deleteProducto/$productId'),
+            'http://10.0.2.2:8080/pedido/carrito/deleteProducto/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',

@@ -17,12 +17,6 @@ public interface ProductoRepository extends JpaRepository<Producto, UUID> {
     @Query("""
             SELECT p
             FROM Producto p
-            """)
-    Page<GetProductoDto> getAllProductos(Pageable pageable);
-
-    @Query("""
-            SELECT p
-            FROM Producto p
             WHERE cast(p.id as string)=?1
             """)
     Optional<Producto> getProductoDetail(String idProducto);

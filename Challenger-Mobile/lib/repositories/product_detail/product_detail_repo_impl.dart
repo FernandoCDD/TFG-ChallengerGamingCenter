@@ -12,8 +12,8 @@ class ProductoDetailRepositoryImpl extends ProductDetailRepository {
     String? token = prefs.getString('token');
 
     final response = await _httpClient.get(
-        //Uri.parse('http://localhost:8080/producto/detail/$productId'),
-        Uri.parse('http://localhost:8080/producto/detail/$productId'),
+        //Uri.parse('http://10.0.2.2:8080/producto/detail/$productId'),
+        Uri.parse('http://10.0.2.2:8080/producto/detail/$productId'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'accept': 'application/json',

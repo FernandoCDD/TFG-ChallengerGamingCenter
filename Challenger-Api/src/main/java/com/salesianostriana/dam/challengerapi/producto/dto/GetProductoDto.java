@@ -14,7 +14,11 @@ public record  GetProductoDto(
 
         double precio,
 
-        double valoracion
+        double valoracion,
+
+        boolean enVenta,
+
+        String categoria
 ) {
 
     public static GetProductoDto of (Producto p){
@@ -23,7 +27,9 @@ public record  GetProductoDto(
                 p.getNombre(),
                 p.getImagen(),
                 p.getPrecio(),
-                p.getValoracion()
+                p.getValoracion(),
+                p.isEnVenta(),
+                p.getCategoria().getNombre()
         );
     }
 }
