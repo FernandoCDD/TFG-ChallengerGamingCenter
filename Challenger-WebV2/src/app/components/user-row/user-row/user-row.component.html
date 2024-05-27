@@ -1,0 +1,50 @@
+<div class="mt-3">
+    <div class="row py-2 linea" [ngClass]="{'usuario-baneado':!usuario!.activo }">
+        <div class="col-2 text-center mt-2">
+            <span class="fs-5">{{ usuario?.username }}</span>
+        </div>
+        <div class="col-2 text-center mt-2">
+            <span class=" fs-5">{{ usuario?.createdAt ? (usuario?.createdAt | date:'dd/MM/yyyy') : 'Desconocido' }}</span>
+        </div>
+        <div class="col-2 text-center mt-2">
+            <span class="fs-5">{{ usuario?.email }}</span>
+        </div>
+        <div class="col-2 text-center mt-2">
+            <span class="fs-5">{{ usuario?.horasDisponibles }}</span>
+        </div>
+        <div class="col-2 text-center mt-2">
+            <span class="fs-5">{{ usuario?.rol }}</span>
+        </div>
+        <div class="col-2 text-center">
+            <button class="btn btn-link" alt="Editar" (click)="abrirModal(usuario!)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                </svg>
+            </button>
+            <button class="btn btn-link" alt="Banear Usuario" (click)="banearUsuario()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-ban" viewBox="0 0 16 16">
+                    <path d="M15 8a6.97 6.97 0 0 0-1.71-4.584l-9.874 9.875A7 7 0 0 0 15 8M2.71 12.584l9.874-9.875a7 7 0 0 0-9.874 9.874ZM16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<ng-template #editModal let-modal>
+    <div class="modal-header bg-orange text-white">
+        <h5 class="modal-title">Editar Horas</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="horasInput" class="form-label fw-bold" style="color: #E96C26;">Nuevo número de horas</label>
+                <input type="number" class="form-control" id="nuevasHoras" name="nuevasHoras" [(ngModel)]="nuevasHoras">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Atrás</button>
+        <button type="button" class="btn text-white" style="background-color: #E96C26;" (click)="guardarHoras()">Aceptar</button>
+    </div>
+</ng-template>

@@ -5,6 +5,8 @@ import { ClientPageComponent } from './ui/client-page/client-page.component';
 import { UserProfilePageComponent } from './ui/user-profile-page/user-profile-page.component';
 import { UsersListPageComponent } from './ui/users-list-page/users-list-page.component';
 import { SectionComponent } from './section/section.component';
+import { ReservasPageComponent } from './ui/reservas-page/reservas-page.component';
+import { ProductosPageComponent } from './ui/productos-page/productos-page.component';
 
 const routes: Routes = [
 
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'admin', component: SectionComponent, children: [
     { path: 'me', component: UserProfilePageComponent},
     { path: 'client-user', component: ClientPageComponent},
-    { path: 'users', component: UsersListPageComponent}
+    { path: 'users', component: UsersListPageComponent},
+    { path: 'reservas', component: ReservasPageComponent},
+    { path: 'productos', component: ProductosPageComponent}
   ]},
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },

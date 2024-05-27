@@ -12,6 +12,14 @@ import { UserProfilePageComponent } from './ui/user-profile-page/user-profile-pa
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UsersListPageComponent } from './ui/users-list-page/users-list-page.component';
 import { SectionComponent } from './section/section.component';
+import { UserRowComponent } from './components/user-row/user-row/user-row.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { ReservasPageComponent } from './ui/reservas-page/reservas-page.component';
+import { ReservasRowComponent } from './components/reservas-row/reservas-row.component';
+import { ReservasListComponent } from './components/reservas-list/reservas-list.component';
+import { ProductosRowComponent } from './components/productos-row/productos-row.component';
+import { ProductosListComponent } from './components/productos-list/productos-list.component';
+import { ProductosPageComponent } from './ui/productos-page/productos-page.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +30,14 @@ import { SectionComponent } from './section/section.component';
     NavbarComponent,
     UsersListPageComponent,
     SectionComponent,
+    UserRowComponent,
+    UserListComponent,
+    ReservasPageComponent,
+    ReservasRowComponent,
+    ReservasListComponent,
+    ProductosRowComponent,
+    ProductosListComponent,
+    ProductosPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -118,17 +118,24 @@ public class UserController {
     }
 
     @GetMapping("/admin/users") //Funciona
-    public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 4) Pageable pageable){
+    public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 7) Pageable pageable){
 
         return userService.getAllUsuarios(pageable);
+    }
+
+    @GetMapping("admin/user/{userID}")
+    public GetUserDetailDto getUserDetail (@PathVariable UUID userID){
+
+        return userService.getUsuarioDetails(userID);
     }
 
     @PutMapping("admin/editHoras/{userID}") //Funciona
     public GetUserDetailDto editarHorasDelUsuario (@PathVariable UUID userID, @Valid @RequestBody EditUsuarioDTO editUser){
 
-        Usuario user = userService.editUsuario(editUser, userID);
+        Usuario user = userService.editHorasDelUsuario(editUser, userID);
 
         return GetUserDetailDto.of(user);
     }
+
 
 }

@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    --bs-pagination-active-color: #ffffff;
+    --bs-pagination-color: #E96C26;
+    --bs-pagination-active-bg: #E96C26;
+    --bs-pagination-bg: #ffffff;
+    --bs-pagination-active-border-color: #ffffff;
+}

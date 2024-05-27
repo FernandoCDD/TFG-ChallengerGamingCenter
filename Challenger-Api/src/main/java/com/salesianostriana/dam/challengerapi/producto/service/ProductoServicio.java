@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.producto.service;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaNotFoundException;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.repo.CategoriaRepository;
+import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoAdminDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDetailsDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.NewProductoDto;
@@ -38,6 +39,16 @@ public class ProductoServicio {
 
     }
 
+    public Page<GetProductoAdminDto> getAllProductosAdmin (Pageable pageable){
+
+        Page<Producto> productosPage = productoRepository.findAll(pageable);
+
+        List<GetProductoAdminDto> productosDto = productosPage.getContent().stream()
+                .map(GetProductoAdminDto::of).collect(Collectors.toList());
+
+        return new PageImpl<>(productosDto, pageable, productosPage.getTotalElements());
+    }
+
     public Producto getProductoDetails(String idProducto){
         return productoRepository.getProductoDetail(idProducto).orElseThrow(RuntimeException::new);
     }
@@ -57,7 +68,6 @@ public class ProductoServicio {
         prod.setImagen(nuevoProducto.imagen());
         prod.setDescripcion(nuevoProducto.descripcion());
         prod.setPrecio(nuevoProducto.precio());
-        prod.setEnVenta(nuevoProducto.enVenta());
         prod.setCategoria(catEscogida);
 
         return productoRepository.save(prod);
@@ -75,7 +85,6 @@ public class ProductoServicio {
         prodAEditar.setImagen(productoEditado.imagen());
         prodAEditar.setDescripcion(productoEditado.descripcion());
         prodAEditar.setPrecio(productoEditado.precio());
-        prodAEditar.setEnVenta(productoEditado.enVenta());
         prodAEditar.setCategoria(catEscogida);
 
         return productoRepository.save(prodAEditar);

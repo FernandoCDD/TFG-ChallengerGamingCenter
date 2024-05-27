@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.producto.controller;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.service.CategoriaService;
+import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoAdminDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDetailsDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.NewProductoDto;
@@ -33,11 +34,14 @@ public class ProductoController {
 
     private final ProductoServicio productoServicio;
 
-    private final CategoriaService categoriaService;
-
     @GetMapping("/todos") //FUNCIONA
     public Page<GetProductoDto> getAllProductos(@PageableDefault(page=0, size = 50)Pageable pageable){
         return  productoServicio.getAllProductos(pageable);
+    }
+
+    @GetMapping("/admin/todos") //FUNCIONA
+    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 7)Pageable pageable){
+        return  productoServicio.getAllProductosAdmin(pageable);
     }
 
     @GetMapping("/detail/{idProducto}") //FUNCIONA
@@ -47,7 +51,7 @@ public class ProductoController {
 
     @GetMapping("/todos/{idCategoria}") //FUNCIONA
     public Page<GetProductoDto> getAllProductosDeUnaCategoria(@PathVariable UUID idCategoria,
-                                                              @PageableDefault(page=0, size = 6)Pageable pageable){
+                                                              @PageableDefault(page=0, size = 50)Pageable pageable){
 
         return productoServicio.getAllProductosDeUnaCategoria(idCategoria, pageable);
 

@@ -108,7 +108,7 @@ public class UserService {
         return passwordEncoder.matches(clearPassword, user.getPassword());
     }
 
-    public Usuario editUsuario (EditUsuarioDTO user, UUID idUsuario){
+    public Usuario editHorasDelUsuario (EditUsuarioDTO user, UUID idUsuario){
 
         Usuario usuarioEdited = findById(idUsuario).orElseThrow(() -> new UserNotFoundException());
 
@@ -127,12 +127,11 @@ public class UserService {
         return new PageImpl<>(usuariosDto, pageable, usuariosPage.getTotalElements());
     }
 
-    public Usuario editarHorasDisponiblesDelUsuario (UUID idUsuario, EditUsuarioDTO editUser){
+    public GetUserDetailDto getUsuarioDetails (UUID idUsuario){
 
-        Usuario user = userRepository.findById(idUsuario).orElseThrow(() -> new UserNotFoundException());
+        Usuario user = userRepository.findById(idUsuario)
+                .orElseThrow(() -> new UserNotFoundException());
 
-        user.setHorasDisponibles(editUser.horasDisponibles());
-
-        return userRepository.save(user);
+        return GetUserDetailDto.of(user);
     }
 }

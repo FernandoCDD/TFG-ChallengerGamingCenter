@@ -8,13 +8,6 @@ a{
 
 li{
     font-size: x-large;
-    margin-right: 100px;
-    padding: 20px;
-}
-
-.UserProfilePic{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 120px;
+    padding: 5px;
 }

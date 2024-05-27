@@ -47,7 +47,7 @@ public class CategoriaController {
     })
     @Operation(summary = "getAllCategorias", description = "Obtener una lista de categorías")
     @GetMapping("/")
-    public Page<GetCategoriaDto> getAllCategoriasConCantidadDeProductos(@PageableDefault(page=0, size =4) Pageable pageable){
+    public Page<GetCategoriaDto> getAllCategoriasConCantidadDeProductos(@PageableDefault(page=0, size =7) Pageable pageable){
 
         return categoriaService.getCategoriasConCantidadProductos(pageable);
     }

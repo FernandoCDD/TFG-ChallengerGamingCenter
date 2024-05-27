@@ -5,5 +5,5 @@ export interface UserDetailsResponse {
     email:            string;
     avatar?:           string;
     horasDisponibles?: number;
-    createdAt?:        null;
+    createdAt?:        Date;
 }

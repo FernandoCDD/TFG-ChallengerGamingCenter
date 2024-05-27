@@ -1,5 +1,5 @@
 export interface UserListResponse {
-    content:          Users[];
+    content:          Usuarios[];
     pageable:         Pageable;
     last:             boolean;
     totalElements:    number;
@@ -12,12 +12,15 @@ export interface UserListResponse {
     empty:            boolean;
 }
 
-export interface Users {
+export interface Usuarios {
+    idUsuario:        string;
     username:         string;
     email:            string;
     avatar:           string;
     horasDisponibles: number;
-    createdAt:        Date | null;
+    createdAt?:        Date;
+    rol:              string;
+    activo:           boolean;
 }
 
 export interface Pageable {
@@ -25,12 +28,12 @@ export interface Pageable {
     pageSize:   number;
     sort:       Sort;
     offset:     number;
-    unpaged:    boolean;
     paged:      boolean;
+    unpaged:    boolean;
 }
 
 export interface Sort {
     empty:    boolean;
-    sorted:   boolean;
     unsorted: boolean;
+    sorted:   boolean;
 }
