@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center align-items-center vh-100 fondo">
+    <div class="contenedor">
+      <div class="titulo">
+        <div class="row">
+          <div class="col-6 p-5 fw-bold">
+            <h2>Lista de Categorías</h2>
+          </div>
+          <div class="col-6 p-5 d-flex align-items-end justify-content-end">
+            <form class="d-flex">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-search mt-2" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+              </svg>
+              <input class="form-control form-control-lg me-5 border border-orange ms-3" type="search" placeholder="Search" aria-label="Search"/>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="btnAddProducto">
+        <button type="button" class="btn btn-block text-white fw-bold" (click)="abrirModal()">Añadir Categoría</button>
+      </div>
+      <div class="atributos mt-5">
+        <div class="row">
+          <div class="col-4 text-center mt-2">
+            <p>Nombre</p>
+          </div>
+          <div class="col-4 text-center mt-2">
+            <p>Cantidad de productos</p>
+          </div>
+          <div class="col-4 text-center mt-2">
+            <p>Acciones</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <app-categoria-list [categoriasList]="categoriasList"></app-categoria-list>
+      </div>
+      <nav class="d-flex justify-content-center mt-5">
+        <ngb-pagination [collectionSize]="totalCategorias" [pageSize]="productosPorPagina" [maxSize]="3" [rotate]="true"
+          [(page)]="numPagina" (pageChange)="cargarPagina()" class="align-self-centers paginacion" style="color: #E96C26;"
+          aria-label="Default pagination"></ngb-pagination>
+      </nav>
+    </div>
+  </div>
+
+  <ng-template #addModal let-modal>
+    <div class="modal-header bg-orange text-white">
+      <h5 class="modal-title">Añadir una nueva Categoría</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button> 
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="nombreCategoria" class="form-label fw-bold" style="color: #E96C26;">Nombre de la categoría</label>
+          <input type="text" class="form-control" id="nombreCategoria" name="nombreCategoria" [(ngModel)]="nombreCategoria">
+        </div>
+        <div class="mb-3">
+          <label for="imagenURLInput" class="form-label fw-bold" style="color: #E96C26;">URL de la Imagen de la categoría</label>
+          <input type="text" class="form-control" id="imagenURL" name="imagenURL" [(ngModel)]="imagenURL">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Atrás</button>
+      <button type="button" class="btn text-white" style="background-color: #E96C26;" (click)="addCategoria()">Aceptar</button>
+    </div>
+  </ng-template>

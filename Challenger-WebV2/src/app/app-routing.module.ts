@@ -7,6 +7,7 @@ import { UsersListPageComponent } from './ui/users-list-page/users-list-page.com
 import { SectionComponent } from './section/section.component';
 import { ReservasPageComponent } from './ui/reservas-page/reservas-page.component';
 import { ProductosPageComponent } from './ui/productos-page/productos-page.component';
+import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.component';
 
 const routes: Routes = [
 
@@ -17,7 +18,8 @@ const routes: Routes = [
     { path: 'client-user', component: ClientPageComponent},
     { path: 'users', component: UsersListPageComponent},
     { path: 'reservas', component: ReservasPageComponent},
-    { path: 'productos', component: ProductosPageComponent}
+    { path: 'productos', component: ProductosPageComponent},
+    { path: 'categorias', component: CategoriasPageComponent}
   ]},
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },

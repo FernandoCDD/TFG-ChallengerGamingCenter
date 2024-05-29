@@ -40,7 +40,7 @@ public class ProductoController {
     }
 
     @GetMapping("/admin/todos") //FUNCIONA
-    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 7)Pageable pageable){
+    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 6)Pageable pageable){
         return  productoServicio.getAllProductosAdmin(pageable);
     }
 

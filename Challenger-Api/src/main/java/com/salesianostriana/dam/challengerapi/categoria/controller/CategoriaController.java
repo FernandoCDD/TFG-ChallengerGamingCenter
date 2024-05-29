@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.categoria.controller;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaSinProductosDto;
+import com.salesianostriana.dam.challengerapi.categoria.dto.NewCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -69,7 +70,7 @@ public class CategoriaController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @PostMapping("/admin/add")
-    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestBody GetCategoriaDto nuevaCategoria){
+    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestBody NewCategoriaDto nuevaCategoria){
         Categoria cat = categoriaService.createCategoria(nuevaCategoria);
 
         return ResponseEntity.status(201).body(GetCategoriaSinProductosDto.of(cat));
@@ -99,7 +100,7 @@ public class CategoriaController {
             )
     })
     @PutMapping("/admin/edit/{idCategoria}")
-    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestBody GetCategoriaDto categoriaEditada,
+    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestBody NewCategoriaDto categoriaEditada,
                                          @PathVariable UUID idCategoria){
 
         Categoria cat = categoriaService.editCategoria(categoriaEditada, idCategoria);

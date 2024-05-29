@@ -11,5 +11,9 @@ public record GetCategoriaConProductosDto (
 
         String nombre,
 
+        String imagenUrl,
+
         List<GetProductoDto> productos
+
+
 ){}

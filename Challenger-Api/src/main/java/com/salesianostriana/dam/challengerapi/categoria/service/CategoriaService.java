@@ -2,6 +2,7 @@ package com.salesianostriana.dam.challengerapi.categoria.service;
 
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
+import com.salesianostriana.dam.challengerapi.categoria.dto.NewCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaConProductosException;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaNotFoundException;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
@@ -44,21 +45,21 @@ public class CategoriaService {
 
     }
 
-    public Categoria createCategoria (GetCategoriaDto nuevaCategoria){
+    public Categoria createCategoria (NewCategoriaDto nuevaCategoria){
 
         Categoria cat = new Categoria();
 
-        cat.setNombre(nuevaCategoria.nombre());
+        cat.setNombre(nuevaCategoria.nombreCategoria());
 
         return categoriaRepository.save(cat);
     }
 
-    public Categoria editCategoria (GetCategoriaDto editCategoria, UUID idCategoria) {
+    public Categoria editCategoria (NewCategoriaDto editCategoria, UUID idCategoria) {
 
         Categoria cat = categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new CategoriaNotFoundException(idCategoria.toString()));
 
-        cat.setNombre(editCategoria.nombre());
+        cat.setNombre(editCategoria.nombreCategoria());
 
         return categoriaRepository.save(cat);
 

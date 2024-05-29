@@ -20,6 +20,9 @@ import { ReservasListComponent } from './components/reservas-list/reservas-list.
 import { ProductosRowComponent } from './components/productos-row/productos-row.component';
 import { ProductosListComponent } from './components/productos-list/productos-list.component';
 import { ProductosPageComponent } from './ui/productos-page/productos-page.component';
+import { CategoriaRowComponent } from './components/categoria-row/categoria-row.component';
+import { CategoriaListComponent } from './components/categoria-list/categoria-list.component';
+import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { ProductosPageComponent } from './ui/productos-page/productos-page.compo
     ProductosRowComponent,
     ProductosListComponent,
     ProductosPageComponent,
+    CategoriaRowComponent,
+    CategoriaListComponent,
+    CategoriasPageComponent,
   ],
   imports: [
     BrowserModule,
