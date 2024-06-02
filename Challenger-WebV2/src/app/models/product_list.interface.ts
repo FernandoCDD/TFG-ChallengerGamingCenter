@@ -1,29 +1,26 @@
 export interface ProductListResponse {
     content:          Productos[];
     pageable:         Pageable;
-    totalElements:    number;
-    totalPages:       number;
     last:             boolean;
+    totalPages:       number;
+    totalElements:    number;
+    first:            boolean;
     size:             number;
     number:           number;
     sort:             Sort;
     numberOfElements: number;
-    first:            boolean;
     empty:            boolean;
 }
 
 export interface Productos {
-    idProducto: string;
-    nombre:     string;
-    valoracion: number;
-    precio:     number;
-    enVenta:    boolean;
-    categoria:  Categoria;
-}
-
-export enum Categoria {
-    FunkoPops = "Funko-Pops",
-    Periféricos = "Periféricos",
+    id:          string;
+    nombre:      string;
+    imagen:      string;
+    descripcion: string;
+    precio:      number;
+    valoracion:  number;
+    enVenta:     boolean;
+    categoria:   string;
 }
 
 export interface Pageable {
@@ -31,8 +28,8 @@ export interface Pageable {
     pageSize:   number;
     sort:       Sort;
     offset:     number;
-    paged:      boolean;
     unpaged:    boolean;
+    paged:      boolean;
 }
 
 export interface Sort {

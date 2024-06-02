@@ -8,6 +8,7 @@ import { SectionComponent } from './section/section.component';
 import { ReservasPageComponent } from './ui/reservas-page/reservas-page.component';
 import { ProductosPageComponent } from './ui/productos-page/productos-page.component';
 import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.component';
+import { PedidosPageComponent } from './ui/pedidos-page/pedidos-page.component';
 
 const routes: Routes = [
 
@@ -19,7 +20,8 @@ const routes: Routes = [
     { path: 'users', component: UsersListPageComponent},
     { path: 'reservas', component: ReservasPageComponent},
     { path: 'productos', component: ProductosPageComponent},
-    { path: 'categorias', component: CategoriasPageComponent}
+    { path: 'categorias', component: CategoriasPageComponent},
+    { path: 'pedidos', component: PedidosPageComponent}
   ]},
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },

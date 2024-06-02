@@ -25,7 +25,6 @@ export class ProductosService {
       imagen: nuevoProducto.imagen,
       descripcion: nuevoProducto.descripcion,
       precio: nuevoProducto.precio,
-      enVenta: nuevoProducto.enVenta,
       idCategoria: nuevoProducto.idCategoria
     }, {
       headers: {
@@ -35,4 +34,18 @@ export class ProductosService {
     });
   }
   
+  editProducto(productoId: string, producto: AddProductoDto): Observable<AddProductoDto> {
+    return this.http.put<AddProductoDto>(`http://localhost:8080/producto/admin/edit/${productoId}`, {
+      nombre: producto.nombre,
+      imagen: producto.imagen,
+      descripcion: producto.descripcion,
+      precio: producto.precio,
+      idCategoria: producto.idCategoria
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
+    });
+  }
 }

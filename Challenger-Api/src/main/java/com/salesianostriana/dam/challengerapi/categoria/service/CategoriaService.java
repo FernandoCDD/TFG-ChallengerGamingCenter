@@ -2,6 +2,7 @@ package com.salesianostriana.dam.challengerapi.categoria.service;
 
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
+import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriasDesplegableDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.NewCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaConProductosException;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaNotFoundException;
@@ -76,5 +77,17 @@ public class CategoriaService {
             categoriaRepository.delete(cat);
         else
             throw new CategoriaConProductosException(idCategoria.toString());
+    }
+
+    public List<GetCategoriasDesplegableDto> getAllCategoriasParaElDesplegable(){
+        List<Categoria> categorias = categoriaRepository.findAll();
+
+        List<GetCategoriasDesplegableDto> categoriasDto = new ArrayList<>();
+
+        for (Categoria cat: categorias){
+            categoriasDto.add(GetCategoriasDesplegableDto.of(cat));
+        }
+
+        return categoriasDto;
     }
 }

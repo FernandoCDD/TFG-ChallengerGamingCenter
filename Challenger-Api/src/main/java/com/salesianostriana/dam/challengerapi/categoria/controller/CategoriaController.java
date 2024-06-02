@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.challengerapi.categoria.controller;
 
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaSinProductosDto;
-import com.salesianostriana.dam.challengerapi.categoria.dto.NewCategoriaDto;
+import com.salesianostriana.dam.challengerapi.categoria.dto.*;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -120,5 +118,10 @@ public class CategoriaController {
         categoriaService.deleteCategoria(idCategoria);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/admin/mostrarCategoriasDesplegable")
+    public List<GetCategoriasDesplegableDto> getCategoriasDesplegableDto (){
+        return categoriaService.getAllCategoriasParaElDesplegable();
     }
 }

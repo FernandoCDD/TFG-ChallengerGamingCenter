@@ -85,6 +85,7 @@ public class ProductoServicio {
         prodAEditar.setImagen(productoEditado.imagen());
         prodAEditar.setDescripcion(productoEditado.descripcion());
         prodAEditar.setPrecio(productoEditado.precio());
+        prodAEditar.setEnVenta(productoEditado.enVenta());
         prodAEditar.setCategoria(catEscogida);
 
         return productoRepository.save(prodAEditar);

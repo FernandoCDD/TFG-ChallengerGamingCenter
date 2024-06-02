@@ -3,6 +3,9 @@ import { Productos } from '../../models/product_list.interface';
 import { ProductosService } from '../../services/productos.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductoDto } from '../../models/add_producto_dto';
+import { CategoriaService } from '../../services/categoria.service';
+import { Categorias } from '../../models/categoria_list.interface';
+import { CategoriasDesplegableResponse } from '../../models/categorias_desplegable_list.interface';
 
 @Component({
   selector: 'app-productos-page',
@@ -10,8 +13,8 @@ import { AddProductoDto } from '../../models/add_producto_dto';
   styleUrl: './productos-page.component.css'
 })
 export class ProductosPageComponent {
-
   productosList: Productos[] = [];
+  categoriasList: CategoriasDesplegableResponse[] = [];
   numPagina = 0;
   totalProductos = 0;
   productosPorPagina = 0;
@@ -20,15 +23,19 @@ export class ProductosPageComponent {
   imagen = "";
   descripcion = "";
   precio = 0;
-  enVenta = false;
   categoria = "";
 
-  @ViewChild('addModal') addModalRef: TemplateRef<any> | undefined;
+  @ViewChild('addModalProducto') addModalRef!: TemplateRef<any>;
 
-  constructor(private productoService: ProductosService, private modalService: NgbModal) { }
+  constructor(
+    private productoService: ProductosService,
+    private categoriaService: CategoriaService,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this.cargarPagina();
+    this.getCategorias();
   }
 
   cargarPagina(): void {
@@ -39,29 +46,32 @@ export class ProductosPageComponent {
     });
   }
 
-  abrirModal(producto: Productos): void {
+  getCategorias(): void {
+    this.categoriaService.getAllCategoriasDelDesplegable().subscribe(resp => {
+      this.categoriasList = resp;
+    });
+  }
+
+  abrirModal(): void {
     this.modalService.open(this.addModalRef, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  cerrarModal(){
+  cerrarModal(): void {
     this.modalService.dismissAll();
   }
   
-  // onSubmit(): void {
-  //   const nuevoProducto: AddProductoDto = {
-  //     nombre: this.nombreProducto,
-  //     imagen: this.imagen,
-  //     descripcion: this.descripcion,
-  //     precio: this.precio,
-  //     enVenta: this.enVenta,
-  //     idCategoria: this.idCategoria
-  //   };
-
-  //   this.productoService.addProducto(nuevoProducto).subscribe(() => {
-  //     this.cargarPagina();
-  //     this.cerrarModal();
-  //   }, error => {
-  //     console.error("Error al añadir producto:", error);
-  //   });
-  // }
+  addProducto(): void {
+    const nuevoProducto: AddProductoDto = {
+      nombre: this.nombreProducto,
+      imagen: this.imagen,
+      descripcion: this.descripcion,
+      precio: this.precio,
+      enVenta: true,
+      idCategoria: this.categoria
+    };
+    this.productoService.addProducto(nuevoProducto).subscribe(() => {
+      this.cerrarModal();
+      this.cargarPagina();
+    });
+  }
 }

@@ -17,6 +17,8 @@ public record NewProductoDto(
 
         double precio,
 
+        boolean enVenta,
+
         UUID idCategoria
 ) {
 
@@ -27,6 +29,7 @@ public record NewProductoDto(
                 p.getImagen(),
                 p.getDescripcion(),
                 p.getPrecio(),
+                p.isEnVenta(),
                 p.getCategoria().getId()
         );
     }

@@ -23,6 +23,7 @@ import { ProductosPageComponent } from './ui/productos-page/productos-page.compo
 import { CategoriaRowComponent } from './components/categoria-row/categoria-row.component';
 import { CategoriaListComponent } from './components/categoria-list/categoria-list.component';
 import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.component';
+import { PedidosPageComponent } from './ui/pedidos-page/pedidos-page.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.co
     CategoriaRowComponent,
     CategoriaListComponent,
     CategoriasPageComponent,
+    PedidosPageComponent,
   ],
   imports: [
     BrowserModule,

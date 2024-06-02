@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="btnAddProducto">
-        <button type="submit" class="btn btn-block">Añadir Producto</button>
+        <button type="submit" class="btn btn-block" (click)="abrirModal()">Añadir Producto</button>
       </div>
       <div class="atributos mt-5">
         <div class="row">
@@ -65,43 +65,41 @@
     </div>
   </div>
 
-  <!-- <ng-template #addModalProducto let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Añadir Producto</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
+  <ng-template #addModalProducto let-modal>
+    <div class="modal-content">
+      <div class="modal-header bg-orange text-dark fw-bold">
+        <h5 class="modal-title">Añadir Producto</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addProducto()">
+          <div class="mb-3">
+            <label for="nombreProducto" class="form-label fw-bold" style="color: #E96C26;">Nombre</label>
+            <input type="text" id="nombreProducto" [(ngModel)]="nombreProducto" name="nombreProducto" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label fw-bold" style="color: #E96C26;">Imagen</label>
+            <input type="text" id="imagen" [(ngModel)]="imagen" name="imagen" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label fw-bold" style="color: #E96C26;">Descripción</label>
+            <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" class="form-control" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="precio" class="form-label fw-bold" style="color: #E96C26;">Precio</label>
+            <input type="number" id="precio" [(ngModel)]="precio" name="precio" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="idCategoria" class="form-label fw-bold" style="color: #E96C26;">Categoría</label>
+            <select id="idCategoria" [(ngModel)]="categoria" name="idCategoria" class="form-control" required>
+              <option *ngFor="let cat of categoriasList" [value]="cat.idCategoria">{{cat.nombreCategoria}}</option>
+            </select>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-dark mt-2">Añadir</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="modal-body">
-      <form (ngSubmit)="guardarModal()" #productForm="ngForm">
-        <div class="form-group">
-          <label for="nombreProducto">Nombre</label>
-          <input type="text" id="nombreProducto" [(ngModel)]="nombreProducto" name="nombreProducto" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="imagen">Imagen</label>
-          <input type="text" id="imagen" [(ngModel)]="imagen" name="imagen" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" class="form-control" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="precio">Precio</label>
-          <input type="number" id="precio" [(ngModel)]="precio" name="precio" class="form-control" required>
-        </div>
-        <div class="form-group">
-          <label for="enVenta">En Venta</label>
-          <input type="checkbox" id="enVenta" [(ngModel)]="enVenta" name="enVenta" class="form-check-input">
-        </div>
-        <div class="form-group">
-          <label for="idCategoria">Categoría</label>
-          <select id="idCategoria" [(ngModel)]="idCategoria" name="idCategoria" class="form-control" required>
-            <option *ngFor="let cat of categorias" [value]="cat">{{cat}}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-      </form>
-    </div>
-  </ng-template> -->
+  </ng-template>
   

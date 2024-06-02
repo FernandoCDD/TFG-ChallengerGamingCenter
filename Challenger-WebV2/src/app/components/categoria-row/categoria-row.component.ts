@@ -12,6 +12,7 @@ export class CategoriaRowComponent {
 
   @Input() categoria: Categorias | undefined;
   NuevoNombreCategoria = "";
+  mostrarError = false;
 
 
   @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined;
@@ -35,6 +36,18 @@ export class CategoriaRowComponent {
           this.cerrarModal();
         }
       );
+    }
+  }
+
+  eliminarCategoria(idCategoria: string) {
+    if(this.categoria?.cantProductos == 0){
+      this.categoriaService.deleteCategoria(idCategoria).subscribe();
+      window.location.href = "http://localhost:4200/admin/categorias";
+    }else{
+      this.mostrarError = true;
+      setTimeout(() => {
+        this.mostrarError = false;
+      }, 3000);
     }
   }
 }
