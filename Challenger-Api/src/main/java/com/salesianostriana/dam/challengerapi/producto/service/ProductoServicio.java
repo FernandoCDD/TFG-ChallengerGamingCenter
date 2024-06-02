@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.producto.service;
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaNotFoundException;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.repo.CategoriaRepository;
+import com.salesianostriana.dam.challengerapi.files.service.StorageService;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoAdminDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDetailsDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDto;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class ProductoServicio {
 
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
+    private final StorageService storageService;
 
     public Page<GetProductoDto> getAllProductos(Pageable pageable){
 
@@ -58,14 +61,14 @@ public class ProductoServicio {
         return productoRepository.getAllProductosDeUnaCategoria(idCategoria, pageable);
     }
 
-    public Producto addProducto (NewProductoDto nuevoProducto){
+    public Producto addProducto (NewProductoDto nuevoProducto, MultipartFile file){
 
         Producto prod = new Producto();
         Categoria catEscogida = categoriaRepository.findById(nuevoProducto.idCategoria())
                 .orElseThrow(() -> new CategoriaNotFoundException(nuevoProducto.idCategoria().toString()));
 
         prod.setNombre(nuevoProducto.nombre());
-        prod.setImagen(nuevoProducto.imagen());
+        prod.setImagen(storageService.store(file));
         prod.setDescripcion(nuevoProducto.descripcion());
         prod.setPrecio(nuevoProducto.precio());
         prod.setCategoria(catEscogida);
@@ -73,7 +76,7 @@ public class ProductoServicio {
         return productoRepository.save(prod);
     }
 
-    public Producto editProducto (NewProductoDto productoEditado, UUID idProducto){
+    public Producto editProducto (NewProductoDto productoEditado, UUID idProducto, MultipartFile file){
 
         Producto prodAEditar = productoRepository.findById(idProducto)
                 .orElseThrow(() -> new ProductoNotFoundException());
@@ -82,7 +85,7 @@ public class ProductoServicio {
                 .orElseThrow(() -> new CategoriaNotFoundException(productoEditado.idCategoria().toString()));
 
         prodAEditar.setNombre(productoEditado.nombre());
-        prodAEditar.setImagen(productoEditado.imagen());
+        prodAEditar.setImagen(storageService.store(file));
         prodAEditar.setDescripcion(productoEditado.descripcion());
         prodAEditar.setPrecio(productoEditado.precio());
         prodAEditar.setEnVenta(productoEditado.enVenta());

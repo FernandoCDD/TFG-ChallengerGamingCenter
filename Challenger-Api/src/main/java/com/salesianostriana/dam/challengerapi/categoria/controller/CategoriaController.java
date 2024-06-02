@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -68,8 +69,10 @@ public class CategoriaController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @PostMapping("/admin/add")
-    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestBody NewCategoriaDto nuevaCategoria){
-        Categoria cat = categoriaService.createCategoria(nuevaCategoria);
+    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestPart("nuevaCategoria")NewCategoriaDto nuevaCategoria,
+                                                                        @RequestPart("file")MultipartFile file){
+
+        Categoria cat = categoriaService.createCategoria(nuevaCategoria, file);
 
         return ResponseEntity.status(201).body(GetCategoriaSinProductosDto.of(cat));
     }
@@ -98,10 +101,10 @@ public class CategoriaController {
             )
     })
     @PutMapping("/admin/edit/{idCategoria}")
-    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestBody NewCategoriaDto categoriaEditada,
-                                         @PathVariable UUID idCategoria){
+    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestPart("categoriaEditada") NewCategoriaDto categoriaEditada,
+                                         @RequestPart("file") MultipartFile file, @PathVariable UUID idCategoria){
 
-        Categoria cat = categoriaService.editCategoria(categoriaEditada, idCategoria);
+        Categoria cat = categoriaService.editCategoria(categoriaEditada, idCategoria, file);
 
         return GetCategoriaSinProductosDto.of(cat);
 

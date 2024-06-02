@@ -3,13 +3,13 @@
     <div class="container" style="margin-top: -85px">
         <div class="row">
             <div class="col-6">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt=""
-                    class="profilePic w-25 ms-5" />
-                <h2 class="mt-5">Nombre de Usuario</h2>
+                <img [src]="usuario?.avatar" alt="Foto de perfil"
+                    class="profilePic" (click)="abrirModal()"/>
+                <h2 class="mt-3">{{ usuario?.username }}</h2>
                 <p class="fw-bold mt-5" style="color: rgb(100, 100, 100)">
-                    Miembro desde:
+                    Registrado desde:
                 </p>
-                <h3 class="mt-2">01/04/2024</h3>
+                <h3 class="mt-2">{{ usuario?.createdAt ? usuario?.createdAt : 'Desconocido' }}</h3>
 
                 <div style="margin-top: 100px;">
                     <a style="color: black; font-size: 30px; text-decoration: none">
@@ -55,14 +55,14 @@
                         Mostrar lista de Productos</a>
                 </div>
                 <div style="margin-top: 50px; margin-left: 80px;">
-                    <a [routerLink]="['/admin/reservas']" style="color: black; font-size: 30px; text-decoration: none">
+                    <a [routerLink]="['/admin/categorias']" style="color: black; font-size: 30px; text-decoration: none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
                           </svg>
                         Mostrar lista de Categorías</a>
                 </div>
                 <div style="margin-top: 50px; margin-left: 80px;">
-                    <a href="#" style="color: black; font-size: 30px; text-decoration: none">
+                    <a [routerLink]="['/admin/pedidos']" style="color: black; font-size: 30px; text-decoration: none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
                             <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
                           </svg>
@@ -72,3 +72,22 @@
         </div>
     </div>
 </div>
+
+<ng-template #editModal let-modal>
+    <div class="modal-header bg-orange text-dark fw-bold">
+      <h5 class="modal-title">Editar foto</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button> 
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="imagenURLInput" class="form-label fw-bold" style="color: #E96C26;">URL de la Imagen de la categoría</label>
+          <input type="text" class="form-control" id="imagenURL" name="imagenURL" [(ngModel)]="avatar">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Atrás</button>
+      <button type="button" class="btn text-white" style="background-color: #E96C26;" (click)="editarFotoDePerfil()">Aceptar</button>
+    </div>
+  </ng-template>

@@ -24,6 +24,8 @@ import { CategoriaRowComponent } from './components/categoria-row/categoria-row.
 import { CategoriaListComponent } from './components/categoria-list/categoria-list.component';
 import { CategoriasPageComponent } from './ui/categorias-page/categorias-page.component';
 import { PedidosPageComponent } from './ui/pedidos-page/pedidos-page.component';
+import { PedidosRowComponent } from './components/pedidos-row/pedidos-row.component';
+import { PedidosListComponent } from './components/pedidos-list/pedidos-list.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { PedidosPageComponent } from './ui/pedidos-page/pedidos-page.component';
     CategoriaListComponent,
     CategoriasPageComponent,
     PedidosPageComponent,
+    PedidosRowComponent,
+    PedidosListComponent,
   ],
   imports: [
     BrowserModule,

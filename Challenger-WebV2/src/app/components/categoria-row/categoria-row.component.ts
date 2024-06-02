@@ -14,7 +14,6 @@ export class CategoriaRowComponent {
   NuevoNombreCategoria = "";
   mostrarError = false;
 
-
   @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined;
 
   constructor(private modalService: NgbModal, private categoriaService: CategoriaService) {}

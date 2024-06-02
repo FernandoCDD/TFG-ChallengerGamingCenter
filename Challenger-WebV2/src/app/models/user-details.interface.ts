@@ -3,7 +3,7 @@
 export interface UserDetailsResponse {
     username:         string;
     email:            string;
-    avatar?:           string;
+    avatar:           string;
     horasDisponibles?: number;
     createdAt?:        Date;
 }

@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.challengerapi.usuario.service;
 
 import com.salesianostriana.dam.challengerapi.categoria.repo.CategoriaRepository;
+import com.salesianostriana.dam.challengerapi.files.service.StorageService;
 import com.salesianostriana.dam.challengerapi.usuario.dto.CreateUserDto;
 import com.salesianostriana.dam.challengerapi.usuario.dto.EditUsuarioDTO;
 import com.salesianostriana.dam.challengerapi.usuario.dto.GetUserDetailDto;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final CategoriaRepository categoriaRepository;
+    private final StorageService storageService;
 
     public Usuario createUser(CreateUserDto createUserDto, EnumSet<TipoUsuario> roles) {
 
@@ -74,11 +76,11 @@ public class UserService {
         return userRepository.findUsuarioByIdString(idUsuario).orElseThrow(() -> new UserNotFoundException(idUsuario));
     }
 
-    public Optional<Usuario> edit(Usuario user) {
+    public Optional<Usuario> editAvatar(Usuario user, MultipartFile file) {
 
         return userRepository.findById(user.getId())
                 .map(u -> {
-                    u.setAvatar(user.getAvatar());
+                    u.setAvatar(storageService.store(file));
                     return userRepository.save(u);
                 }).or(() -> Optional.empty());
 

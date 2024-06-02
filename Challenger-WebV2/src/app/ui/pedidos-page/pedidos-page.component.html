@@ -17,30 +17,27 @@
       </div>
       <div class="atributos mt-2">
         <div class="row">
-          <div class="col-2 text-center mt-2">
+          <div class="col-3 text-center mt-2">
             <p>Usuario</p>
           </div>
           <div class="col-3 text-center mt-2">
             <p>Fecha</p>
           </div>
-          <div class="col-2 text-center mt-2">
-            <p>Importe</p>
-          </div>
-          <div class="col-2 text-center mt-2">
+          <div class="col-3 text-center mt-2">
             <p>Estado del pedido</p>
           </div>
           <div class="col-3 text-center mt-2">
-            <p>Acciones</p>
+            <p>Importe Total</p>
           </div>
         </div>
       </div>
-      <!-- <div>
-        <app-categoria-list [categoriasList]="categoriasList"></app-categoria-list>
+      <div>
+        <app-pedidos-list [pedidosList]="pedidosList"></app-pedidos-list>
       </div>
       <nav class="d-flex justify-content-center mt-5">
-        <ngb-pagination [collectionSize]="totalCategorias" [pageSize]="productosPorPagina" [maxSize]="3" [rotate]="true"
+        <ngb-pagination [collectionSize]="totalPedidos" [pageSize]="pedidosPorPagina" [maxSize]="3" [rotate]="true"
           [(page)]="numPagina" (pageChange)="cargarPagina()" class="align-self-centers paginacion" style="color: #E96C26;"
           aria-label="Default pagination"></ngb-pagination>
       </nav>
-    </div> -->
+    </div>
   </div>

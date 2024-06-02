@@ -8,14 +8,13 @@ import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaConPr
 import com.salesianostriana.dam.challengerapi.categoria.exception.CategoriaNotFoundException;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.repo.CategoriaRepository;
-import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDto;
-import com.salesianostriana.dam.challengerapi.producto.model.Producto;
-import com.salesianostriana.dam.challengerapi.producto.repo.ProductoRepository;
+import com.salesianostriana.dam.challengerapi.files.service.StorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,7 @@ import java.util.UUID;
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
-    private final ProductoRepository productoRepository;
-
+    private final StorageService storageService;
 
     public Page<GetCategoriaDto> getCategoriasConCantidadProductos(Pageable pageable){
 
@@ -46,21 +44,23 @@ public class CategoriaService {
 
     }
 
-    public Categoria createCategoria (NewCategoriaDto nuevaCategoria){
+    public Categoria createCategoria (NewCategoriaDto nuevaCategoria, MultipartFile file){
 
         Categoria cat = new Categoria();
 
         cat.setNombre(nuevaCategoria.nombreCategoria());
+        cat.setImagenUrl(storageService.store(file));
 
         return categoriaRepository.save(cat);
     }
 
-    public Categoria editCategoria (NewCategoriaDto editCategoria, UUID idCategoria) {
+    public Categoria editCategoria (NewCategoriaDto editCategoria, UUID idCategoria, MultipartFile file) {
 
         Categoria cat = categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new CategoriaNotFoundException(idCategoria.toString()));
 
         cat.setNombre(editCategoria.nombreCategoria());
+        cat.setNombre(storageService.store(file));
 
         return categoriaRepository.save(cat);
 
