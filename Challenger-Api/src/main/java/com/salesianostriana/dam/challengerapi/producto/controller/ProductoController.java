@@ -24,6 +24,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -40,7 +41,7 @@ public class ProductoController {
     }
 
     @GetMapping("/admin/todos") //FUNCIONA
-    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 50)Pageable pageable){
+    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 6)Pageable pageable){
         return  productoServicio.getAllProductosAdmin(pageable);
     }
 
@@ -58,19 +59,20 @@ public class ProductoController {
     }
 
     @PostMapping("/admin/add") // FUNCIONA
-    public ResponseEntity<GetProductoDto> addProducto(@Valid @RequestBody NewProductoDto nuevoProducto){
+    public ResponseEntity<GetProductoDto> addProducto(@Valid @RequestPart("nuevoProducto") NewProductoDto nuevoProducto,
+                                                      @RequestPart("file")MultipartFile file){
 
-        Producto prod = productoServicio.addProducto(nuevoProducto);
+        Producto prod = productoServicio.addProducto(nuevoProducto, file);
 
         return ResponseEntity.status(201).body(GetProductoDto.of(prod));
 
     }
 
     @PutMapping("/admin/edit/{idProducto}") //FUNCIONA
-    public ResponseEntity<GetProductoDto> editProducto(@Valid @RequestBody NewProductoDto productoEditado,
-                                              @PathVariable UUID idProducto) {
+    public ResponseEntity<GetProductoDto> editProducto(@Valid @RequestPart("productoEditado") NewProductoDto productoEditado,
+                                              @PathVariable UUID idProducto, @RequestPart("nuevaFoto") MultipartFile file) {
 
-        Producto prodEditado = productoServicio.editProducto(productoEditado, idProducto);
+        Producto prodEditado = productoServicio.editProducto(productoEditado, idProducto, file);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(GetProductoDto.of(prodEditado));
 

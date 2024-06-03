@@ -37,7 +37,9 @@ public class Producto {
     private String descripcion;
     private double precio;
     private double valoracion;
-    private boolean enVenta;
+
+    @Builder.Default
+    private boolean enVenta = true;
 
     @ManyToOne
     private Categoria categoria;

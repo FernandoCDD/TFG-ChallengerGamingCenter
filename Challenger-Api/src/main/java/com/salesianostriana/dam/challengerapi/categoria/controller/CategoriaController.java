@@ -1,8 +1,6 @@
 package com.salesianostriana.dam.challengerapi.categoria.controller;
 
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
-import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaSinProductosDto;
+import com.salesianostriana.dam.challengerapi.categoria.dto.*;
 import com.salesianostriana.dam.challengerapi.categoria.model.Categoria;
 import com.salesianostriana.dam.challengerapi.categoria.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -47,7 +47,7 @@ public class CategoriaController {
     })
     @Operation(summary = "getAllCategorias", description = "Obtener una lista de categorías")
     @GetMapping("/")
-    public Page<GetCategoriaDto> getAllCategoriasConCantidadDeProductos(@PageableDefault(page=0, size =4) Pageable pageable){
+    public Page<GetCategoriaDto> getAllCategoriasConCantidadDeProductos(@PageableDefault(page=0, size =7) Pageable pageable){
 
         return categoriaService.getCategoriasConCantidadProductos(pageable);
     }
@@ -69,8 +69,10 @@ public class CategoriaController {
             @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content)
     })
     @PostMapping("/admin/add")
-    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestBody GetCategoriaDto nuevaCategoria){
-        Categoria cat = categoriaService.createCategoria(nuevaCategoria);
+    public ResponseEntity<GetCategoriaSinProductosDto> createCategoria (@Valid @RequestPart("nuevaCategoria")NewCategoriaDto nuevaCategoria,
+                                                                        @RequestPart("file")MultipartFile file){
+
+        Categoria cat = categoriaService.createCategoria(nuevaCategoria, file);
 
         return ResponseEntity.status(201).body(GetCategoriaSinProductosDto.of(cat));
     }
@@ -99,10 +101,10 @@ public class CategoriaController {
             )
     })
     @PutMapping("/admin/edit/{idCategoria}")
-    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestBody GetCategoriaDto categoriaEditada,
-                                         @PathVariable UUID idCategoria){
+    public GetCategoriaSinProductosDto editCategoria(@Valid @RequestPart("categoriaEditada") NewCategoriaDto categoriaEditada,
+                                         @RequestPart("file") MultipartFile file, @PathVariable UUID idCategoria){
 
-        Categoria cat = categoriaService.editCategoria(categoriaEditada, idCategoria);
+        Categoria cat = categoriaService.editCategoria(categoriaEditada, idCategoria, file);
 
         return GetCategoriaSinProductosDto.of(cat);
 
@@ -119,5 +121,10 @@ public class CategoriaController {
         categoriaService.deleteCategoria(idCategoria);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/admin/mostrarCategoriasDesplegable")
+    public List<GetCategoriasDesplegableDto> getCategoriasDesplegableDto (){
+        return categoriaService.getAllCategoriasParaElDesplegable();
     }
 }

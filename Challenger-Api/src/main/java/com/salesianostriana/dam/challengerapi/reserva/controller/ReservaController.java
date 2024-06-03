@@ -33,8 +33,8 @@ public class ReservaController {
         return ResponseEntity.status(201).body(res);
     }
 
-    @GetMapping("/admin/") //Funciona
-    public Page<GetReservasUserDTO> getAllReservas (@PageableDefault(page=0, size = 4) Pageable pageable){
+    @GetMapping("/admin") //Funciona
+    public Page<GetReservasUserDTO> getAllReservas (@PageableDefault(page=0, size = 6) Pageable pageable){
 
         return reservaService.getAllReservas(pageable);
     }

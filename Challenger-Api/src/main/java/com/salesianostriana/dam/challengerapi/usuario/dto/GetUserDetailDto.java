@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record GetUserDetailDto(String idUsuario, String username, String email, String avatar,
-                               int horasDisponibles, LocalDate createdAt) {
+                               int horasDisponibles, LocalDate createdAt, String rol, boolean activo) {
 
     public static GetUserDetailDto of(Usuario u){
         return new GetUserDetailDto(
@@ -16,7 +16,9 @@ public record GetUserDetailDto(String idUsuario, String username, String email, 
                 u.getEmail(),
                 u.getAvatar(),
                 u.getHorasDisponibles(),
-                u.getCreatedAt()
+                u.getCreatedAt(),
+                u.getRoles().stream().findFirst().map(Enum::toString).orElseThrow(() -> new RuntimeException()),
+                u.isEnabled()
         );
     }
 }

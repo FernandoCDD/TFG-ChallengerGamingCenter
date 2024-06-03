@@ -20,6 +20,8 @@ public record GetReservasUserDTO(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime hasta,
 
+        boolean activa,
+
         String tipoDispositivo
 ) {
 
@@ -30,6 +32,7 @@ public record GetReservasUserDTO(
                         res.getUsuario(),
                         res.getDesde(),
                         res.getHasta(),
+                        res.isActiva(),
                         res.getTipoDispositivo().toString()
                 );
         }
