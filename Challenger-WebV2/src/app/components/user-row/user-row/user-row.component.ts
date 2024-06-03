@@ -14,7 +14,7 @@ export class UserRowComponent {
   @Input() usuario: Usuarios | undefined;
   nuevasHoras = 0;
 
-  @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined
+  @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined;
 
   constructor(private modalService: NgbModal, private userService: UsersService) {}
 

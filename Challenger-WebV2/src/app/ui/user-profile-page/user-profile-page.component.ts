@@ -55,11 +55,6 @@ export class UserProfilePageComponent implements OnInit{
   }
 
   editarFotoDePerfil() {
-    this.fileService.getFile(this.usuario!.avatar).subscribe((blob: Blob) => {
-      const objectUrl = URL.createObjectURL(blob);
-      this.usuario!.avatar = objectUrl;
-    });
-
     this.adminService.editarFotoDePerfil().subscribe(resp => {
       this.getLoggedUser();
     });
@@ -69,6 +64,7 @@ export class UserProfilePageComponent implements OnInit{
     this.fileService.getFile(usuario.avatar).subscribe((blob: Blob) => {
       const objectUrl = URL.createObjectURL(blob);
       usuario.avatar = objectUrl;
+      console.log(usuario.avatar);
     });
   }
 }

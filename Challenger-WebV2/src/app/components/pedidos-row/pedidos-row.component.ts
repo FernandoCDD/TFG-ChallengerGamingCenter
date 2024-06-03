@@ -11,5 +11,4 @@ export class PedidosRowComponent {
 
   @Input() pedido: Pedidos | undefined;
 
-  constructor(private pedidoService: PedidosService) {}
 }
