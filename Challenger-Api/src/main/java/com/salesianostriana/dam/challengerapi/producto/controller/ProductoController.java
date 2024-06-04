@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.producto.controller;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaConProductosDto;
 import com.salesianostriana.dam.challengerapi.categoria.dto.GetCategoriaDto;
 import com.salesianostriana.dam.challengerapi.categoria.service.CategoriaService;
+import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoAdminDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDetailsDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.GetProductoDto;
 import com.salesianostriana.dam.challengerapi.producto.dto.NewProductoDto;
@@ -23,6 +24,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -33,11 +35,14 @@ public class ProductoController {
 
     private final ProductoServicio productoServicio;
 
-    private final CategoriaService categoriaService;
-
     @GetMapping("/todos") //FUNCIONA
     public Page<GetProductoDto> getAllProductos(@PageableDefault(page=0, size = 50)Pageable pageable){
         return  productoServicio.getAllProductos(pageable);
+    }
+
+    @GetMapping("/admin/todos") //FUNCIONA
+    public Page<GetProductoAdminDto> getAllProductosAdmin(@PageableDefault(page=0, size = 6)Pageable pageable){
+        return  productoServicio.getAllProductosAdmin(pageable);
     }
 
     @GetMapping("/detail/{idProducto}") //FUNCIONA
@@ -47,26 +52,27 @@ public class ProductoController {
 
     @GetMapping("/todos/{idCategoria}") //FUNCIONA
     public Page<GetProductoDto> getAllProductosDeUnaCategoria(@PathVariable UUID idCategoria,
-                                                              @PageableDefault(page=0, size = 6)Pageable pageable){
+                                                              @PageableDefault(page=0, size = 50)Pageable pageable){
 
         return productoServicio.getAllProductosDeUnaCategoria(idCategoria, pageable);
 
     }
 
     @PostMapping("/admin/add") // FUNCIONA
-    public ResponseEntity<GetProductoDto> addProducto(@Valid @RequestBody NewProductoDto nuevoProducto){
+    public ResponseEntity<GetProductoDto> addProducto(@Valid @RequestPart("nuevoProducto") NewProductoDto nuevoProducto,
+                                                      @RequestPart("file")MultipartFile file){
 
-        Producto prod = productoServicio.addProducto(nuevoProducto);
+        Producto prod = productoServicio.addProducto(nuevoProducto, file);
 
         return ResponseEntity.status(201).body(GetProductoDto.of(prod));
 
     }
 
     @PutMapping("/admin/edit/{idProducto}") //FUNCIONA
-    public ResponseEntity<GetProductoDto> editProducto(@Valid @RequestBody NewProductoDto productoEditado,
-                                              @PathVariable UUID idProducto) {
+    public ResponseEntity<GetProductoDto> editProducto(@Valid @RequestPart("productoEditado") NewProductoDto productoEditado,
+                                              @PathVariable UUID idProducto, @RequestPart("nuevaFoto") MultipartFile file) {
 
-        Producto prodEditado = productoServicio.editProducto(productoEditado, idProducto);
+        Producto prodEditado = productoServicio.editProducto(productoEditado, idProducto, file);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(GetProductoDto.of(prodEditado));
 

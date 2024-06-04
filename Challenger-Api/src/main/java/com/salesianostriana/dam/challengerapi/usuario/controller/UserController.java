@@ -2,6 +2,7 @@ package com.salesianostriana.dam.challengerapi.usuario.controller;
 
 import com.salesianostriana.dam.challengerapi.security.jwt.access.JwtProvider;
 import com.salesianostriana.dam.challengerapi.usuario.dto.*;
+import com.salesianostriana.dam.challengerapi.usuario.exception.UserNotFoundException;
 import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
 import com.salesianostriana.dam.challengerapi.usuario.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -118,17 +120,32 @@ public class UserController {
     }
 
     @GetMapping("/admin/users") //Funciona
-    public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 4) Pageable pageable){
+    public Page<GetUserDetailDto> getAllUsers(@PageableDefault(page=0, size = 7) Pageable pageable){
 
         return userService.getAllUsuarios(pageable);
+    }
+
+    @GetMapping("admin/user/{userID}")
+    public GetUserDetailDto getUserDetail (@PathVariable UUID userID){
+
+        return userService.getUsuarioDetails(userID);
     }
 
     @PutMapping("admin/editHoras/{userID}") //Funciona
     public GetUserDetailDto editarHorasDelUsuario (@PathVariable UUID userID, @Valid @RequestBody EditUsuarioDTO editUser){
 
-        Usuario user = userService.editUsuario(editUser, userID);
+        Usuario user = userService.editHorasDelUsuario(editUser, userID);
 
         return GetUserDetailDto.of(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/user/editAvatar")
+    public GetUserDetailDto editarAvatarDelUsuario (@AuthenticationPrincipal Usuario user,
+                                                    @RequestPart("nuevaFoto")MultipartFile file){
+
+       Usuario usuario = userService.editAvatar(user, file).orElseThrow(() -> new UserNotFoundException());
+
+       return GetUserDetailDto.of(usuario);
+    }
 }

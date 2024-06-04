@@ -14,6 +14,8 @@ public record  GetProductoDto(
 
         double precio,
 
+        double valoracion,
+
         boolean enVenta,
 
         String categoria
@@ -25,6 +27,7 @@ public record  GetProductoDto(
                 p.getNombre(),
                 p.getImagen(),
                 p.getPrecio(),
+                p.getValoracion(),
                 p.isEnVenta(),
                 p.getCategoria().getNombre()
         );

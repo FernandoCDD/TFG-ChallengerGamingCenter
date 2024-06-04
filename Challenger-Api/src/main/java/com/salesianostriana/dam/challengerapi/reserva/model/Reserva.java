@@ -40,6 +40,9 @@ public class Reserva {
     @CreatedBy
     private String usuario;
 
+    @Builder.Default
+    private boolean activa = true;
+
     @Enumerated(value = EnumType.STRING)
     private TipoDispositivo tipoDispositivo;
 
