@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.challengerapi.usuario.model;
 
-import com.salesianostriana.dam.challengerapi.torneo.model.Torneo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -51,10 +50,6 @@ public class Usuario implements UserDetails {
     private String avatar;
 
     private int horasDisponibles;
-
-    @ManyToOne
-    @JoinColumn(name = "torneo_id")
-    private Torneo torneoActual;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<TipoUsuario> roles;

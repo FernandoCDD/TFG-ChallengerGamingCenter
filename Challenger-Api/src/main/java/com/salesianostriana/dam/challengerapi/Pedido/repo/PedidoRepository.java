@@ -1,9 +1,8 @@
-package com.salesianostriana.dam.challengerapi.Pedido.repo;
+package com.salesianostriana.dam.challengerapi.pedido.repo;
 
-import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto;
-import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
-import com.salesianostriana.dam.challengerapi.Pedido.model.Pedido;
-import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
+import com.salesianostriana.dam.challengerapi.pedido.dto.GetPedidoDto;
+import com.salesianostriana.dam.challengerapi.pedido.model.LineaPedido;
+import com.salesianostriana.dam.challengerapi.pedido.model.Pedido;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
 
     @Query("""
-            SELECT new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
+            SELECT new com.salesianostriana.dam.challengerapi.pedido.dto.GetPedidoDto(
             CAST(p.id AS string),
             p.fecha,
              (SELECT u.username FROM Usuario u WHERE CAST(u.id AS string) = p.usuario),
@@ -29,7 +28,7 @@ public interface PedidoRepository extends JpaRepository<Pedido, UUID> {
     Page<GetPedidoDto> getAllPedidosConClientes(Pageable pageable);
 
     @Query("""
-            SELECT new com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto(
+            SELECT new com.salesianostriana.dam.challengerapi.pedido.dto.GetPedidoDto(
             CAST(p.id AS string),
             p.fecha,
             p.usuario,

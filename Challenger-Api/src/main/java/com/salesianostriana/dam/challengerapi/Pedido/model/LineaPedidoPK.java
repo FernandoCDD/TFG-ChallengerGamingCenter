@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.challengerapi.Pedido.model;
+package com.salesianostriana.dam.challengerapi.pedido.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

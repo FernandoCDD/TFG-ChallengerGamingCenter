@@ -19,7 +19,11 @@ export class UserProfilePageComponent implements OnInit{
   newPassword = '';
   verifyPassword = '';
 
-  @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined;
+  error = false;
+  mensajeError = '';  
+
+  @ViewChild('editModalFoto') editModalRef: TemplateRef<any> | undefined;
+  @ViewChild('editModalPassword') editModalPasswordRef: TemplateRef<any> | undefined;
 
   constructor(private adminService: AdminService, 
               private fileService: FileService,
@@ -31,7 +35,7 @@ export class UserProfilePageComponent implements OnInit{
   }
 
   abrirModal(): void {
-    this.modalService.open(this.editModalRef, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(this.editModalPasswordRef, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   cerrarModal(){
@@ -48,23 +52,27 @@ export class UserProfilePageComponent implements OnInit{
   changePassword() {
       if (this.newPassword === this.verifyPassword) {
         this.adminService.changePassword(this.oldPassword, this.newPassword, this.verifyPassword).subscribe(resp => {
+
+          this.mensajeError = '';
+          this.error = false;
+          window.location.href = "http://localhost:4200/login";
         });
       } else {
-        console.log('Passwords do not match');
+        this.error = true;
+        this.mensajeError = 'Las contraseñas no coinciden';
     }
   }
 
-  editarFotoDePerfil() {
-    this.adminService.editarFotoDePerfil().subscribe(resp => {
-      this.getLoggedUser();
-    });
-  }
+  // editarFotoDePerfil() {
+  //   this.adminService.editarFotoDePerfil().subscribe(resp => {
+  //     this.getLoggedUser();
+  //   });
+  // }
 
   cargarImagen(usuario: UserDetailsResponse): void {
     this.fileService.getFile(usuario.avatar).subscribe((blob: Blob) => {
       const objectUrl = URL.createObjectURL(blob);
       usuario.avatar = objectUrl;
-      console.log(usuario.avatar);
     });
   }
 }

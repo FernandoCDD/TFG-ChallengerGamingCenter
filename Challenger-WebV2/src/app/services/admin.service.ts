@@ -24,7 +24,7 @@ export class AdminService {
     }
 
     changePassword(oldPassword: string, newPassword: string, verifyPassword: string): Observable<ChangePasswordDto> {
-        return this.http.put<ChangePasswordDto>('http://localhost:8080/me/password', {
+        return this.http.put<ChangePasswordDto>('http://localhost:8080/user/changePassword', {
             oldPassword : oldPassword,
             newPassword : newPassword,
             veriyNewPassword: verifyPassword
