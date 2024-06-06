@@ -1,10 +1,9 @@
 package com.salesianostriana.dam.challengerapi.reserva.service;
 
-import com.salesianostriana.dam.challengerapi.reserva.DiasDistintosException;
+import com.salesianostriana.dam.challengerapi.reserva.exceptions.DiasDistintosException;
 import com.salesianostriana.dam.challengerapi.reserva.dto.GetReservasUserDTO;
 import com.salesianostriana.dam.challengerapi.reserva.dto.NewReservaDTO;
 import com.salesianostriana.dam.challengerapi.reserva.model.Reserva;
-import com.salesianostriana.dam.challengerapi.reserva.model.TipoDispositivo;
 import com.salesianostriana.dam.challengerapi.reserva.repo.ReservaRepository;
 import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
 import lombok.RequiredArgsConstructor;

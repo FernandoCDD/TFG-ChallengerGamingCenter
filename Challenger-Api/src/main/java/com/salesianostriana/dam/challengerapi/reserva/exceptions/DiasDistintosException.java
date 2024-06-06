@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.challengerapi.reserva;
+package com.salesianostriana.dam.challengerapi.reserva.exceptions;
 
 public class DiasDistintosException extends RuntimeException{
 
