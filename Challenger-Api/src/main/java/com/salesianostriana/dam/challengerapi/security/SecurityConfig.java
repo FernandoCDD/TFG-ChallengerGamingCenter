@@ -67,13 +67,8 @@ public class SecurityConfig {
 
         http
                 .cors(Customizer.withDefaults())
-                //.csrf().disable()
                 .csrf((csrf)-> csrf
                         .ignoringRequestMatchers(antMatcher("/**")))
-                /*
-                        .exceptionHandling()
-                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                                .accessDeniedHandler(jwtAccessDeniedHandler)*/
                 .exceptionHandling((exceptionHandling) -> exceptionHandling
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                         .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -81,13 +76,16 @@ public class SecurityConfig {
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authz) -> authz
-                                .requestMatchers(antMatcher("/admin/**")).hasRole("ADMIN")
+                                .requestMatchers(antMatcher("/categoria/admin/**"),
+                                        antMatcher("/pedido/admin/**"),
+                                        antMatcher("/producto/admin/**"),
+                                        antMatcher("/usuario/admin/**"),
+                                        antMatcher("/reserva/admin/**")).hasRole("ADMIN")
+
                                 .anyRequest().authenticated());
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-
-        //http.headers().frameOptions().disable();
         http.headers((headers) -> headers
                 .frameOptions(opt -> opt.disable()));
 

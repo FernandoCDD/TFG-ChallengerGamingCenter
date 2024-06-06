@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.challengerapi.Pedido.model;
+package com.salesianostriana.dam.challengerapi.pedido.model;
 
 import jakarta.persistence.*;
 import lombok.*;

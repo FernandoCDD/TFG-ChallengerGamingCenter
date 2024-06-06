@@ -1,8 +1,6 @@
-package com.salesianostriana.dam.challengerapi.Pedido.dto;
+package com.salesianostriana.dam.challengerapi.pedido.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record GetPedidoDetailsDto(

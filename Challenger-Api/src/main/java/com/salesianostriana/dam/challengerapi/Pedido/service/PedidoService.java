@@ -1,15 +1,15 @@
-package com.salesianostriana.dam.challengerapi.Pedido.service;
+package com.salesianostriana.dam.challengerapi.pedido.service;
 
-import com.salesianostriana.dam.challengerapi.Pedido.dto.GetLineaPedidoDetailsDto;
-import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDetailsDto;
-import com.salesianostriana.dam.challengerapi.Pedido.dto.GetPedidoDto;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.CarritoVacioException;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.PedidoNotFoundException;
 import com.salesianostriana.dam.challengerapi.Pedido.exception.ProductoNoEstaEnCarritoException;
-import com.salesianostriana.dam.challengerapi.Pedido.model.EstadoPedido;
-import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
-import com.salesianostriana.dam.challengerapi.Pedido.model.Pedido;
-import com.salesianostriana.dam.challengerapi.Pedido.repo.PedidoRepository;
+import com.salesianostriana.dam.challengerapi.pedido.dto.GetLineaPedidoDetailsDto;
+import com.salesianostriana.dam.challengerapi.pedido.dto.GetPedidoDetailsDto;
+import com.salesianostriana.dam.challengerapi.pedido.dto.GetPedidoDto;
+import com.salesianostriana.dam.challengerapi.pedido.model.EstadoPedido;
+import com.salesianostriana.dam.challengerapi.pedido.model.LineaPedido;
+import com.salesianostriana.dam.challengerapi.pedido.model.Pedido;
+import com.salesianostriana.dam.challengerapi.pedido.repo.PedidoRepository;
 import com.salesianostriana.dam.challengerapi.producto.exceptions.ProductoNotFoundException;
 import com.salesianostriana.dam.challengerapi.producto.model.Producto;
 import com.salesianostriana.dam.challengerapi.producto.repo.ProductoRepository;
@@ -79,21 +79,21 @@ public class PedidoService {
             return pedidoRepository.save(newPedidoOpen);
         }
 
-            Optional<LineaPedido> lineaEncontrada = pedidoRepository.findLineaPedidoByPedidoYProductos
-                    (pedidoPendiente.get().getId(), productoToAdd.getId());
+        Optional<LineaPedido> lineaEncontrada = pedidoRepository.findLineaPedidoByPedidoYProductos
+                (pedidoPendiente.get().getId(), productoToAdd.getId());
 
-            if (lineaEncontrada.isEmpty()) {
-                LineaPedido nuevaLineaPedido = LineaPedido.builder()
-                        .precioUnitario(productoToAdd.getPrecio())
-                        .cantidad(1)
-                        .producto(productoToAdd)
-                        .build();
-                pedidoPendiente.get().addLineaPedido(nuevaLineaPedido);
-            } else {
-                lineaEncontrada.get().setCantidad(lineaEncontrada.get().getCantidad() + 1);
-                pedidoPendiente.get().removeLineaPedido(lineaEncontrada.get());
-                pedidoPendiente.get().addLineaPedido(lineaEncontrada.get());
-            }
+        if (lineaEncontrada.isEmpty()) {
+            LineaPedido nuevaLineaPedido = LineaPedido.builder()
+                    .precioUnitario(productoToAdd.getPrecio())
+                    .cantidad(1)
+                    .producto(productoToAdd)
+                    .build();
+            pedidoPendiente.get().addLineaPedido(nuevaLineaPedido);
+        } else {
+            lineaEncontrada.get().setCantidad(lineaEncontrada.get().getCantidad() + 1);
+            pedidoPendiente.get().removeLineaPedido(lineaEncontrada.get());
+            pedidoPendiente.get().addLineaPedido(lineaEncontrada.get());
+        }
 
         return pedidoRepository.save(pedidoPendiente.get());
     }

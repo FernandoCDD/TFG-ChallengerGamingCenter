@@ -1,10 +1,7 @@
-package com.salesianostriana.dam.challengerapi.Pedido.dto;
+package com.salesianostriana.dam.challengerapi.pedido.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.salesianostriana.dam.challengerapi.Pedido.model.EstadoPedido;
-import com.salesianostriana.dam.challengerapi.Pedido.model.Pedido;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import com.salesianostriana.dam.challengerapi.pedido.model.Pedido;
 
 import java.time.LocalDateTime;
 

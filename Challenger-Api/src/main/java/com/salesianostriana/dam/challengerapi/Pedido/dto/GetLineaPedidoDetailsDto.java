@@ -1,6 +1,6 @@
-package com.salesianostriana.dam.challengerapi.Pedido.dto;
+package com.salesianostriana.dam.challengerapi.pedido.dto;
 
-import com.salesianostriana.dam.challengerapi.Pedido.model.LineaPedido;
+import com.salesianostriana.dam.challengerapi.pedido.model.LineaPedido;
 
 public record GetLineaPedidoDetailsDto(
 
