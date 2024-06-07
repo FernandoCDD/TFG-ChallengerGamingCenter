@@ -79,7 +79,8 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
                       children: [
                         // Nombre con longitud limitada y puntos suspensivos
                         Text(
-                          limitarLongitudNombre(widget.lineasPedido.nombreProducto!),
+                          limitarLongitudNombre(
+                              widget.lineasPedido.nombreProducto!),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -167,9 +168,9 @@ class _ItemCardCarritoState extends State<ItemCardCarrito> {
   }
 
   String limitarLongitudNombre(String nombre) {
-    const maxLength = 15; 
+    const maxLength = 15;
     return nombre.length > maxLength
-        ? '${nombre.substring(0, maxLength)}...' 
+        ? '${nombre.substring(0, maxLength)}...'
         : nombre;
   }
 }

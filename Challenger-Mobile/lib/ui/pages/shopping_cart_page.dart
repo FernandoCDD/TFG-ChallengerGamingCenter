@@ -118,10 +118,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                         ),
                         ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
+                            backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color.fromARGB(255, 255, 102, 0)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),

@@ -3,6 +3,7 @@ package com.salesianostriana.dam.challengerapi.reserva.service;
 import com.salesianostriana.dam.challengerapi.reserva.exceptions.DiasDistintosException;
 import com.salesianostriana.dam.challengerapi.reserva.dto.GetReservasUserDTO;
 import com.salesianostriana.dam.challengerapi.reserva.dto.NewReservaDTO;
+import com.salesianostriana.dam.challengerapi.reserva.exceptions.ListaDeReservasVaciaException;
 import com.salesianostriana.dam.challengerapi.reserva.model.Reserva;
 import com.salesianostriana.dam.challengerapi.reserva.repo.ReservaRepository;
 import com.salesianostriana.dam.challengerapi.usuario.model.Usuario;
@@ -47,10 +48,13 @@ public class ReservaService {
 
         Page <Reserva> reservasPage = reservaRepository.findAll(pageable);
 
-        List<GetReservasUserDTO> reservasDto = reservasPage.getContent().stream()
-                .map( GetReservasUserDTO::of).collect(Collectors.toList());
+        if (reservasPage.isEmpty()){
+            throw new ListaDeReservasVaciaException();
 
-        return new PageImpl<>(reservasDto, pageable, reservasPage.getTotalElements());
-
+        }else {
+            List<GetReservasUserDTO> reservasDto = reservasPage.getContent().stream()
+                    .map(GetReservasUserDTO::of).collect(Collectors.toList());
+            return new PageImpl<>(reservasDto, pageable, reservasPage.getTotalElements());
+        }
     }
 }

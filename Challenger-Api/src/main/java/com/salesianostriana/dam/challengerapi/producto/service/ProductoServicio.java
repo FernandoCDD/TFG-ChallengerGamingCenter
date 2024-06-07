@@ -53,7 +53,7 @@ public class ProductoServicio {
     }
 
     public Producto getProductoDetails(String idProducto){
-        return productoRepository.getProductoDetail(idProducto).orElseThrow(RuntimeException::new);
+        return productoRepository.getProductoDetail(idProducto).orElseThrow(ProductoNotFoundException::new);
     }
 
     public Page<GetProductoDto> getAllProductosDeUnaCategoria(UUID idCategoria, Pageable pageable){
