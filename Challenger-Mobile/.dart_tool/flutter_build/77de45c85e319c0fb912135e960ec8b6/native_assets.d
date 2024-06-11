@@ -1,0 +1,1 @@
+ C:\\Users\\ferna\\OneDrive\\Escritorio\\TFG-ChallengerGamingCenter\\Challenger-Mobile\\.dart_tool\\flutter_build\\77de45c85e319c0fb912135e960ec8b6\\native_assets.yaml: 

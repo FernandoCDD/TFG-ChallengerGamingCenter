@@ -7,15 +7,16 @@
     <div class="col-md-6 d-flex">
       <div class="w-100">
         <h1 class="text-center" style="margin-top: 20%;">Bienvenido, Administrador</h1>
-        <form style="margin-top: 10%;" method="post">
+        <form style="margin-top: 10%;" (ngSubmit)="login()">
           <div class="mb-3 p-2">
-            <label for="username" class="form-label" style="margin-left: 16%; font-size: large; font-weight: 600;" >Nombre de Usuario</label>
+            <label for="username" class="form-label" style="margin-left: 16%; font-size: large; font-weight: 600;">Nombre de Usuario</label>
             <input
               type="email"
               class="form-control"
               name="username"
               id="username"
               [(ngModel)]="username"
+              required
             />
           </div>
           <div class="mb-3 p-2">
@@ -26,12 +27,15 @@
               name="password"
               id="password"
               [(ngModel)]="password"
+              required
             />
           </div>
-          <button type="submit" class="btn btn-block mt-4" (click)="login()">INICIAR SESIÓN</button>
+          <div *ngIf="error" class="alert alert-danger w-75 mx-auto">
+            {{ mensajeError }}
+          </div>
+          <button type="submit" class="btn btn-block mt-4">INICIAR SESIÓN</button>
         </form>
       </div>
     </div>
   </div>
 </div>
-

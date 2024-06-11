@@ -4,6 +4,7 @@ import { Usuarios } from '../../models/user_list.interface';
 import { UserDetailsResponse } from '../../models/user-details.interface';
 import { FileService } from '../../services/file.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile-page',
@@ -14,13 +15,15 @@ export class UserProfilePageComponent implements OnInit{
 
   usuario: UserDetailsResponse | undefined;
 
-  avatar = '';
+  avatar: File | null = null;
+  errorFoto = false;
+  mensajeErrorFoto = '';
   oldPassword = '';
   newPassword = '';
   verifyPassword = '';
 
   error = false;
-  mensajeError = '';  
+  mensajeErrorPassword = '';  
 
   @ViewChild('editModalFoto') editModalRef: TemplateRef<any> | undefined;
   @ViewChild('editModalPassword') editModalPasswordRef: TemplateRef<any> | undefined;
@@ -34,8 +37,12 @@ export class UserProfilePageComponent implements OnInit{
     this.getLoggedUser();
   }
 
-  abrirModal(): void {
+  abrirModalPassword(): void {
     this.modalService.open(this.editModalPasswordRef, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  abrirModalFoto(): void {
+    this.modalService.open(this.editModalRef, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   cerrarModal(){
@@ -50,24 +57,58 @@ export class UserProfilePageComponent implements OnInit{
   }
 
   changePassword() {
-      if (this.newPassword === this.verifyPassword) {
-        this.adminService.changePassword(this.oldPassword, this.newPassword, this.verifyPassword).subscribe(resp => {
-
-          this.mensajeError = '';
-          this.error = false;
-          window.location.href = "http://localhost:4200/login";
-        });
-      } else {
-        this.error = true;
-        this.mensajeError = 'Las contraseñas no coinciden';
+    this.error = false;
+    this.mensajeErrorPassword = '';
+  
+    if (this.oldPassword == '') {
+      this.mensajeErrorPassword = 'La contraseña actual es obligatoria.';
+      this.error = true;
+    } else if (this.newPassword == '') {
+      this.mensajeErrorPassword = 'La nueva contraseña es obligatoria.';
+      this.error = true;
+    } else if (this.verifyPassword == '') {
+      this.mensajeErrorPassword = 'La verificación de la nueva contraseña es obligatoria.';
+      this.error = true;
+    } else if (this.newPassword != this.verifyPassword) {
+      this.mensajeErrorPassword = 'Las nuevas contraseñas no coinciden';
+      this.error = true;
     }
+
+    if (!this.error) {
+      this.adminService.changePassword(this.oldPassword, this.newPassword, this.verifyPassword).subscribe(resp => {
+        this.mensajeErrorPassword = '';
+        window.location.href = "http://localhost:4200/login";}
+      )}else{
+        this.error = true;
+      }
   }
 
-  // editarFotoDePerfil() {
-  //   this.adminService.editarFotoDePerfil().subscribe(resp => {
-  //     this.getLoggedUser();
-  //   });
-  // }
+  onFileSelected(event: any): void {
+    this.avatar = event.target.files[0];
+  }
+
+  cambiarFotoDePerfil(): void {
+    if (!this.avatar) {
+      this.errorFoto = true;
+      this.mensajeErrorFoto = 'Debe seleccionar una imagen.';
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('nuevaFoto', this.avatar, this.avatar.name);
+  
+    this.adminService.editarFotoDePerfil(formData).subscribe({
+      next: () => {
+        this.cerrarModal();
+        this.getLoggedUser();
+      },
+      error: (error) => {
+        this.errorFoto = true;
+        this.mensajeErrorFoto = 'Ocurrió un error al cambiar la foto de perfil. Por favor, inténtelo de nuevo.';
+        console.error(error);
+      }
+    });
+  }
 
   cargarImagen(usuario: UserDetailsResponse): void {
     this.fileService.getFile(usuario.avatar).subscribe((blob: Blob) => {

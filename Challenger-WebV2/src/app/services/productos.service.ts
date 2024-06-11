@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductListResponse } from '../models/product_list.interface';
@@ -18,34 +18,22 @@ export class ProductosService {
       }
     });
   }
-
-  addProducto(nuevoProducto: AddProductoDto): Observable<AddProductoDto> {
-    return this.http.post<AddProductoDto>('http://localhost:8080/producto/admin/add', {
-      nombre: nuevoProducto.nombre,
-      imagen: nuevoProducto.imagen,
-      descripcion: nuevoProducto.descripcion,
-      precio: nuevoProducto.precio,
-      idCategoria: nuevoProducto.idCategoria
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
-    });
-  }
   
-  editProducto(productoId: string, producto: AddProductoDto): Observable<AddProductoDto> {
-    return this.http.put<AddProductoDto>(`http://localhost:8080/producto/admin/edit/${productoId}`, {
-      nombre: producto.nombre,
-      imagen: producto.imagen,
-      descripcion: producto.descripcion,
-      precio: producto.precio,
-      idCategoria: producto.idCategoria
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
+
+  addProducto(formData: FormData): Observable<AddProductoDto> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
+
+    return this.http.post<AddProductoDto>('http://localhost:8080/producto/admin/add', formData, { headers });
+  }
+
+
+  editProducto(productoId: string, formData: FormData): Observable<AddProductoDto> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.put<AddProductoDto>(`http://localhost:8080/producto/admin/edit/${productoId}`, formData, { headers });
   }
 }

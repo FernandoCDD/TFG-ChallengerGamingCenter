@@ -4,14 +4,9 @@
         <div class="row">
             <div class="col-6">
                 <img [src]="usuario?.avatar" alt="Foto de perfil"
-                    class="profilePic" (click)="abrirModal()"/>
+                    class="profilePic" (click)="abrirModalFoto()"/>
                 <h2 class="mt-3">{{ usuario?.username }}</h2>
-                <p class="fw-bold mt-5" style="color: rgb(100, 100, 100)">
-                    Registrado desde:
-                </p>
-                <h3 class="mt-2">{{ usuario?.createdAt ? usuario?.createdAt : 'Desconocido' }}</h3>
-
-                <div style="margin-top: 100px;">
+                <div style="margin-top: 50px;">
                     <a [routerLink]="['/login']"style="color: black; font-size: 30px; text-decoration: none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="black"
                             class="bi bi-box-arrow-left" viewBox="0 0 16 16">
@@ -23,7 +18,7 @@
                         Cerrar Sesión</a>
                 </div>
                 <div style="margin-top: 20px;">
-                  <a style="color: black; font-size: 30px; text-decoration: none" (click)="abrirModal()">
+                  <a style="color: black; font-size: 30px; text-decoration: none" (click)="abrirModalPassword()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-file-lock" viewBox="0 0 16 16">
                       <path d="M8 5a1 1 0 0 1 1 1v1H7V6a1 1 0 0 1 1-1m2 2.076V6a2 2 0 1 0-4 0v1.076c-.54.166-1 .597-1 1.224v2.4c0 .816.781 1.3 1.5 1.3h3c.719 0 1.5-.484 1.5-1.3V8.3c0-.627-.46-1.058-1-1.224M6.105 8.125A.64.64 0 0 1 6.5 8h3a.64.64 0 0 1 .395.125c.085.068.105.133.105.175v2.4c0 .042-.02.107-.105.175A.64.64 0 0 1 9.5 11h-3a.64.64 0 0 1-.395-.125C6.02 10.807 6 10.742 6 10.7V8.3c0-.042.02-.107.105-.175"/>
                       <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1"/>
@@ -74,24 +69,28 @@
     </div>
 </div>
 
-<!-- <ng-template #editModalFoto let-modal>
+<ng-template #editModalFoto let-modal>
+  <div class="modal-content">
     <div class="modal-header bg-orange text-dark fw-bold">
-      <h5 class="modal-title">Editar foto</h5>
-      <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button> 
+      <h5 class="modal-title">Editar Foto de Perfil</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
     </div>
     <div class="modal-body">
-      <form>
+      <form (ngSubmit)="cambiarFotoDePerfil()">
         <div class="mb-3">
-          <label for="imagenURLInput" class="form-label fw-bold" style="color: #E96C26;">URL de la Imagen de la categoría</label>
-          <input type="text" class="form-control" id="imagenURL" name="imagenURL" [(ngModel)]="avatar">
+          <label for="fotoPerfil" class="form-label fw-bold" style="color: #E96C26;">Seleccionar Imagen</label>
+          <input type="file" id="fotoPerfil" (change)="onFileSelected($event)" class="form-control" required>
+          <div *ngIf="errorFoto" class="alert alert-danger" role="alert">
+            {{ mensajeErrorFoto }}
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-dark mt-2" style="background-color: #E96C26;">Cambiar</button>
         </div>
       </form>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Atrás</button>
-      <button type="button" class="btn text-white" style="background-color: #E96C26;" (click)="editarFotoDePerfil()">Aceptar</button>
-    </div>
-  </ng-template> -->
+  </div>
+</ng-template>
 
   <ng-template #editModalPassword let-modal>
     <div class="modal-dialog modal-xl">
@@ -103,7 +102,7 @@
         <div class="modal-body" style="width: 400px;">
           <form (ngSubmit)="changePassword()">
             <div *ngIf="error" class="alert alert-danger" role="alert">
-              {{ mensajeError }}
+              {{ mensajeErrorPassword }}
             </div>
             <div class="mb-3">
               <label for="oldPassword" class="form-label fw-bold" style="color: #E96C26;">Antigua Contraseña</label>

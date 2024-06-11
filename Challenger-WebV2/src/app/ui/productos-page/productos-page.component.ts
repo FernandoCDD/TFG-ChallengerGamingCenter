@@ -4,7 +4,6 @@ import { ProductosService } from '../../services/productos.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductoDto } from '../../models/add_producto_dto';
 import { CategoriaService } from '../../services/categoria.service';
-import { Categorias } from '../../models/categoria_list.interface';
 import { CategoriasDesplegableResponse } from '../../models/categorias_desplegable_list.interface';
 
 @Component({
@@ -18,12 +17,15 @@ export class ProductosPageComponent {
   numPagina = 0;
   totalProductos = 0;
   productosPorPagina = 0;
-  
+
   nombreProducto = "";
-  imagen = "";
   descripcion = "";
   precio = 0;
   categoria = "";
+  selectedFile: File | null = null;
+
+  error = false;
+  mensajeError = '';
 
   @ViewChild('addModalProducto') addModalRef!: TemplateRef<any>;
 
@@ -59,17 +61,35 @@ export class ProductosPageComponent {
   cerrarModal(): void {
     this.modalService.dismissAll();
   }
-  
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   addProducto(): void {
+
+    if (!this.nombreProducto || !this.descripcion || this.precio === null || !this.categoria) {
+      this.mensajeError = 'Todos los campos son obligatorios.';
+      this.error = true;
+      return;
+    }
+
     const nuevoProducto: AddProductoDto = {
       nombre: this.nombreProducto,
-      imagen: this.imagen,
+      imagen: this.selectedFile ? this.selectedFile.name : "",
       descripcion: this.descripcion,
       precio: this.precio,
       enVenta: true,
       idCategoria: this.categoria
     };
-    this.productoService.addProducto(nuevoProducto).subscribe(() => {
+
+    const formData: FormData = new FormData();
+    formData.append('nuevoProducto', new Blob([JSON.stringify(nuevoProducto)], { type: 'application/json' }));
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
+
+    this.productoService.addProducto(formData).subscribe(() => {
       this.cerrarModal();
       this.cargarPagina();
     });

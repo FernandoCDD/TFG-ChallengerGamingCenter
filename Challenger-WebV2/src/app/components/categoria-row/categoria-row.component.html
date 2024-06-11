@@ -28,9 +28,16 @@
     </div>
     <div class="modal-body">
         <form>
+            <div *ngIf="error" class="alert alert-danger" role="alert">
+                {{ mensajeError }}
+              </div>
             <div class="mb-3">
                 <label for="nombreInput" class="form-label fw-bold" style="color: #E96C26;">Nuevo nombre de la categoría</label>
                 <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" [(ngModel)]="NuevoNombreCategoria">
+            </div>
+            <div class="mb-3">
+                <label for="imagen" class="form-label fw-bold" style="color: #E96C26;">Imagen</label>
+                <input type="file" id="imagen" (change)="onFileSelected($event)" name="imagen" class="form-control">
             </div>
         </form>
     </div>

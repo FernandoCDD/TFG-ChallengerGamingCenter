@@ -11,21 +11,24 @@ import { AddProductoDto } from '../../models/add_producto_dto';
   templateUrl: './productos-row.component.html',
   styleUrl: './productos-row.component.css'
 })
-export class ProductosRowComponent implements OnInit{
+export class ProductosRowComponent implements OnInit {
 
   @Input() producto: Productos | undefined;
   categoriasList: CategoriasDesplegableResponse[] = [];
 
   nuevoNombre = "";
-  nuevaImagen = "";
   nuevaDescripcion = "";
   nuevoPrecio = 0;
   nuevaCategoria = "";
+  selectedFile: File | null = null;
+
+  error = false;
+  mensajeError = '';
 
   @ViewChild('editModal') editModalRef: TemplateRef<any> | undefined;
 
   constructor(
-    private productoSevice: ProductosService,
+    private productoService: ProductosService,
     private modalService: NgbModal,
     private categoriaService: CategoriaService
   ) { }
@@ -48,14 +51,12 @@ export class ProductosRowComponent implements OnInit{
     });
   }
 
-  abrirModal(): void {
-    if (this.producto) {
-      this.nuevoNombre = this.producto.nombre;
-      this.nuevaImagen = this.producto.imagen;
-      this.nuevaDescripcion = this.producto.descripcion;
-      this.nuevoPrecio = this.producto.precio;
-      this.nuevaCategoria = this.producto.categoria;
-    }
+  abrirModal(producto: Productos): void {
+    this.nuevoNombre = producto.nombre;
+    this.nuevaDescripcion = producto.descripcion;
+    this.nuevoPrecio = producto.precio;
+    this.nuevaCategoria = producto.categoria;
+    
     this.modalService.open(this.editModalRef, { ariaLabelledBy: 'modal-basic-title' });
   }
 
@@ -63,16 +64,34 @@ export class ProductosRowComponent implements OnInit{
     this.modalService.dismissAll();
   }
 
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
   editProducto(): void {
+
+    if (this.nuevoNombre == '' || this.nuevaDescripcion == '' || this.nuevoPrecio === 0 || !this.nuevaCategoria) {
+      this.mensajeError = 'Todos los campos son obligatorios';
+      this.error = true;
+      return;
+    }
+
     const productoEditado: AddProductoDto = {
       nombre: this.nuevoNombre,
-      imagen: this.nuevaImagen,
+      imagen: this.selectedFile ? this.selectedFile.name : this.producto!.imagen,
       descripcion: this.nuevaDescripcion,
       precio: this.nuevoPrecio,
       enVenta: this.producto!.enVenta,
       idCategoria: this.nuevaCategoria
     };
-    this.productoSevice.editProducto(this.producto!.id, productoEditado).subscribe(resp => {
+
+    const formData: FormData = new FormData();
+    formData.append('productoEditado', new Blob([JSON.stringify(productoEditado)], { type: 'application/json' }));
+    if (this.selectedFile) {
+      formData.append('nuevaFoto', this.selectedFile);
+    }
+
+    this.productoService.editProducto(this.producto!.id, formData).subscribe(resp => {
       this.producto!.nombre = productoEditado.nombre;
       this.producto!.imagen = productoEditado.imagen;
       this.producto!.descripcion = productoEditado.descripcion;
@@ -80,11 +99,8 @@ export class ProductosRowComponent implements OnInit{
       this.producto!.enVenta = productoEditado.enVenta;
       this.producto!.categoria = productoEditado.idCategoria;
       this.cerrarModal();
+      window.location.href = "http://localhost:4200/admin/productos";
     });
-    window.location.href = "http://localhost:4200/admin/productos";
+
   }
 }
-
-
-
-

@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginResponse } from '../models/login.interface';
 import { ChangePasswordDto } from '../models/change_password_dto';
 import { UserListResponse, Usuarios } from '../models/user_list.interface';
@@ -36,15 +36,13 @@ export class AdminService {
         });
     }
 
-    editarFotoDePerfil(foto: File): Observable<LoginResponse> {
-        return this.http.put<LoginResponse>('http://localhost:8080/admin/editarFoto', {
-            foto: foto
-        }, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            }
+    editarFotoDePerfil(formData: FormData): Observable<any> {
+        const headers = new HttpHeaders({
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         });
-    }
+      
+        return this.http.put<any>('http://localhost:8080/user/editAvatar', formData, { headers });
+      }
 
 }
+

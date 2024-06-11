@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoriaListResponse } from '../models/categoria_list.interface';
 import { Observable } from 'rxjs';
@@ -20,28 +20,24 @@ export class CategoriaService {
     });
   }
 
-  editCategoria(categoriaId: string, nombreCategoria: string): Observable<AddCategoriaDto> {
-    return this.http.put<AddCategoriaDto>(`http://localhost:8080/categoria/admin/edit/${categoriaId}`, {
-      nombreCategoria: nombreCategoria,
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
+  editCategoria(categoriaId:string, formData: FormData): Observable<AddCategoriaDto> {  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
     });
+
+    return this.http.put<AddCategoriaDto>(`http://localhost:8080/categoria/admin/edit/${categoriaId}`, formData, { headers });
+      
   }
 
-  addCategoria(nombreCategoria: string, imagenUrl: string): Observable<AddCategoriaDto> {
-    return this.http.post<AddCategoriaDto>(`http://localhost:8080/categoria/admin/add`, {
-      nombreCategoria: nombreCategoria,
-      imagenUrl: imagenUrl
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      }
+  addCategoria(formData: FormData): Observable<AddCategoriaDto> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
     });
+
+    return this.http.post<AddCategoriaDto>(`http://localhost:8080/categoria/admin/add`, formData, { headers });
   }
+
+
 
   deleteCategoria(idCategoria: string) {
     return this.http.delete(`http://localhost:8080/categoria/admin/delete/${idCategoria}`, {

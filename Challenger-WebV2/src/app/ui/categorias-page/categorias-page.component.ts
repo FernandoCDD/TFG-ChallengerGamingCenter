@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { Categorias } from '../../models/categoria_list.interface';
 import { CategoriaService } from '../../services/categoria.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddCategoriaDto } from '../../models/add_categoria_dto';
 
 @Component({
   selector: 'app-categorias-page',
@@ -16,7 +17,10 @@ export class CategoriasPageComponent {
   productosPorPagina = 0;
 
   nombreCategoria = "";
-  imagenURL = "";
+  selectedFile: File | null = null;
+
+  error = false;
+  mensajeError = '';
 
   @ViewChild('addModal') addModalRef!: TemplateRef<any>;
 
@@ -42,10 +46,36 @@ export class CategoriasPageComponent {
     this.modalService.dismissAll();
   }
 
-  addCategoria(): void {
-    this.categoriaService.addCategoria(this.nombreCategoria, this.imagenURL).subscribe(() => {
-      this.cerrarModal();
-      this.cargarPagina();
-    });
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
+
+  addCategoria() { 
+    if(this.nombreCategoria === "") {
+      this.mensajeError = 'El nombre de la categoría no puede estar vacío';
+      this.error = true;
+      return;
+    }
+    
+    const nuevaCategoria: AddCategoriaDto = {
+      nombreCategoria: this.nombreCategoria,
+      imagenUrl: this.selectedFile ? this.selectedFile.name : "",
+    };
+
+    const formData: FormData = new FormData();
+    formData.append('nuevaCategoria', new Blob([JSON.stringify(nuevaCategoria)], { type: 'application/json' }));
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
+    
+    if (nuevaCategoria.imagenUrl && nuevaCategoria.nombreCategoria !== "") {
+      this.categoriaService.addCategoria(formData).subscribe(resp =>{
+          this.cerrarModal();
+          this.cargarPagina();
+        }
+      );
+    }
+    window.location.href = "http://localhost:4200/admin/categorias";
   }
 }
+ 
