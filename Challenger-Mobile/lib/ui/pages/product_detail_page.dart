@@ -57,6 +57,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       child: Image.network(
                         product.imagen ?? '',
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                      return Image.network(
+                        'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      );
+                    },
                       ),
                     ),
                   ),
@@ -110,9 +118,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         margin: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
+                            backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color.fromARGB(255, 255, 102, 0)),
-                            shape: MaterialStateProperty.all<
+                            shape: WidgetStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
@@ -165,7 +173,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                       ),
                       const Spacer(),
-                      Text('${product.precio}€',
+                      Text('${product.precio!.toStringAsFixed(2)}€',
                           style: const TextStyle(
                               fontSize: 30,
                               color: Color.fromARGB(255, 255, 102, 0),

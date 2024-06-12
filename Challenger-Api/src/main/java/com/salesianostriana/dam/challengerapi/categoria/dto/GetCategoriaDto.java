@@ -8,6 +8,8 @@ public record GetCategoriaDto (
 
         String nombre,
 
+        String imagen,
+
         int cantProductos
 ){
 
@@ -16,6 +18,7 @@ public record GetCategoriaDto (
         return new GetCategoriaDto(
                 categoria.getId().toString(),
                 categoria.getNombre(),
+                categoria.getImagenUrl(),
                 cantProductos
         );
     }

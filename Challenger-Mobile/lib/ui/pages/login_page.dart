@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:challenger_api_front/blocs/login/login_bloc.dart';
 import 'package:challenger_api_front/repositories/auth/auth_repo.dart';
 import 'package:challenger_api_front/repositories/auth/auth_repo_impl.dart';
 import 'package:challenger_api_front/ui/pages/home_page.dart';
 import 'package:challenger_api_front/ui/pages/register_page.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,11 +15,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formLogin = GlobalKey<FormState>();
-  final userTextController = TextEditingController(text: 'FernandoCD');
-  final passTextController = TextEditingController(text: '1234');
+  final userTextController = TextEditingController();
+  final passTextController = TextEditingController();
 
   late AuthRepository authRepository;
   late LoginBloc _loginBloc;
+  String? errorMessage;
 
   @override
   void initState() {
@@ -55,9 +56,11 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 builder: (context, state) {
                   if (state is DoLoginError) {
-                    return const Text('Login error');
+                    errorMessage = state.errorMessage;
                   } else if (state is DoLoginLoading) {
                     return const Center(child: CircularProgressIndicator());
+                  } else {
+                    errorMessage = null;
                   }
                   return Center(child: _buildLoginForm());
                 },
@@ -80,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  _buildLoginForm() {
+  Widget _buildLoginForm() {
     return Form(
       key: _formLogin,
       child: Column(
@@ -94,11 +97,27 @@ class _LoginPageState extends State<LoginPage> {
           const SizedBox(
             height: 25,
           ),
+          if (errorMessage != null)
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                border: Border.all(color: Colors.red),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                errorMessage!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
+          const SizedBox(
+            height: 25,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Email',
+                'Username',
                 style: TextStyle(
                     fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
               ),
@@ -152,8 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                     const Color.fromARGB(255, 255, 102, 0)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10.0), // Valor del radio
+                    borderRadius: BorderRadius.circular(10.0), // Valor del radio
                   ),
                 ),
               ),
@@ -209,6 +227,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-/*
-
-*/

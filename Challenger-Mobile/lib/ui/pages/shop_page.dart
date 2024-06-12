@@ -94,48 +94,6 @@ class _ShopPageState extends State<ShopPage> {
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Padding(padding: EdgeInsets.only(left: 8.0)),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE96C26),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Filtrar',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 120.0, right: 5.0, top: 5.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Buscar...',
-                                    border: InputBorder.none,
-                                    prefixIcon: Icon(Icons.search),
-                                    contentPadding: EdgeInsets.all(10),
-                                  ),
-                                  onChanged: (value) {
-                                    // Lógica para búsqueda
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       const Padding(padding: EdgeInsets.only(top: 15.0)),
                       ListView.builder(
                         shrinkWrap: true,

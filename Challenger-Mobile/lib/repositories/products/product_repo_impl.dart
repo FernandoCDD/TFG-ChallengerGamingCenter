@@ -27,4 +27,25 @@ class ProductRepositoryImpl extends ProductRepository {
           'Error al obtener los productos: ${response.reasonPhrase}');
     }
   }
+
+  @override
+  Future<ProductListResponse> getProductosDeUnaCategoria(
+      String category) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    String? token = _prefs.getString('token');
+
+    final response = await _httpClient.get(
+        Uri.parse('http://10.0.2.2:8080/producto/todos/$category'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
+    if (response.statusCode == 200) {
+      return ProductListResponse.fromJson(response.body);
+    } else {
+      throw Exception(
+          'Error al obtener los productos de la categoría $category: ${response.reasonPhrase}');
+    }
+  }
 }

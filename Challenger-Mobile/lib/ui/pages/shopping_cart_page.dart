@@ -75,6 +75,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
+  void _actualizarCarrito() {
+    _shoppingCartBloc.add(GetShoppingCartEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -98,7 +102,10 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       itemBuilder: (context, index) {
                         final lineaPedido = shoppingCart.lineasPedido![index];
                         return ItemCardCarrito(
-                            lineasPedido: lineaPedido, index: index);
+                          lineasPedido: lineaPedido,
+                          index: index,
+                          onUpdate: _actualizarCarrito, 
+                        );
                       },
                     ),
                   ),
@@ -108,7 +115,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                       children: [
                         Expanded(
                           child: Text(
-                            'Total: ${shoppingCart.total}€',
+                            'Total: ${shoppingCart.total!.toStringAsFixed(2)}€',
                             style: const TextStyle(
                               color: Color.fromARGB(255, 255, 102, 0),
                               fontSize: 22,

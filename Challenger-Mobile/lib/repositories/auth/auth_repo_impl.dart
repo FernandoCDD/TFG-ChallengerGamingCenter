@@ -11,10 +11,8 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<LoginResponse> login(LoginDto loginDto) async {
-    // final SharedPreferences prefs = await _prefs;
     final jsonBody = jsonEncode(loginDto.toJson());
-    final response = //await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/login'),
-        await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/login'),
+    final response = await _httpClient.post(Uri.parse('http://10.0.2.2:8080/auth/login'),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },
@@ -22,6 +20,10 @@ class AuthRepositoryImpl extends AuthRepository {
 
     if (response.statusCode == 201) {
       return LoginResponse.fromJson(response.body);
+    } else if (response.statusCode == 401) {
+      throw Exception('Credenciales incorrectas');
+    } else if (response.statusCode == 403) {
+      throw Exception('No puedes acceder a esta página siendo administrador');
     } else {
       throw Exception('Failed to login');
     }

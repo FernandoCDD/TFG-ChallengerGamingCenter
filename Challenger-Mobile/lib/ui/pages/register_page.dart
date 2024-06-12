@@ -1,4 +1,3 @@
-import 'package:challenger_api_front/ui/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:challenger_api_front/blocs/register/register_bloc.dart';
@@ -6,6 +5,7 @@ import 'package:challenger_api_front/blocs/register/register_event.dart';
 import 'package:challenger_api_front/blocs/register/register_state.dart';
 import 'package:challenger_api_front/repositories/auth/auth_repo.dart';
 import 'package:challenger_api_front/repositories/auth/auth_repo_impl.dart';
+import 'package:challenger_api_front/ui/pages/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -24,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   late AuthRepository authRepository;
   late RegisterBloc _registerBloc;
+  String? errorMessage;
 
   @override
   void initState() {
@@ -49,33 +50,36 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: Scaffold(
-        body: SingleChildScrollView(
-          child: BlocProvider.value(
-            value: _registerBloc,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: BlocConsumer<RegisterBloc, RegisterState>(
-                buildWhen: (context, state) {
-                  return state is RegisterInitial ||
-                      state is DoRegisterSuccess ||
-                      state is DoRegisterError;
-                },
-                builder: (context, state) {
-                  if (state is DoRegisterSuccess) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
-                  } else if (state is DoRegisterError) {
-                    return const Text('Register error');
-                  } else if (state is DoRegisterLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  return Center(child: _buildRegisterForm());
-                },
-                listener: (BuildContext context, RegisterState state) {},
-              ),
+      body: SingleChildScrollView(
+        child: BlocProvider.value(
+          value: _registerBloc,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: BlocConsumer<RegisterBloc, RegisterState>(
+              buildWhen: (context, state) {
+                return state is RegisterInitial || state is DoRegisterError;
+              },
+              builder: (context, state) {
+                if (state is DoRegisterError) {
+                  errorMessage = state.errorMessage;
+                } else if (state is DoRegisterLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  errorMessage = null;
+                }
+                return Center(child: _buildRegisterForm());
+              },
+              listenWhen: (context, state) {
+                return state is DoRegisterSuccess;
+              },
+              listener: (BuildContext context, RegisterState state) {
+                if (state is DoRegisterSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                }
+              },
             ),
           ),
         ),
@@ -94,16 +98,27 @@ class _RegisterPageState extends State<RegisterPage> {
             'Formulario de Registro',
             style: TextStyle(fontSize: 20),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
+          if (errorMessage != null)
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(0.1),
+                border: Border.all(color: Colors.red),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                errorMessage!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
+          const SizedBox(height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Username',
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
+                style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
               ),
               const Padding(padding: EdgeInsets.only(top: 10.0)),
               TextFormField(
@@ -118,16 +133,13 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Email',
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
+                style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
               ),
               const Padding(padding: EdgeInsets.only(top: 10.0)),
               TextFormField(
@@ -137,45 +149,37 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  return null;
-                },
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'avatar',
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
-              ),
-              const Padding(padding: EdgeInsets.only(top: 10.0)),
-              TextFormField(
-                controller: avatarTextController,
-                decoration: const InputDecoration(border: OutlineInputBorder()),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an URL image.';
+                  final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                  if (!emailRegex.hasMatch(value)) {
+                    return 'Please enter a valid email';
                   }
                   return null;
                 },
               ),
             ],
           ),
-          const SizedBox(
-            height: 30,
+          const SizedBox(height: 30),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Avatar',
+                style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 10.0)),
+              TextFormField(
+                controller: avatarTextController,
+                decoration: const InputDecoration(border: OutlineInputBorder())
+              ),
+            ],
           ),
+          const SizedBox(height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Password',
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
+                style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
               ),
               const Padding(padding: EdgeInsets.only(top: 10.0)),
               TextFormField(
@@ -186,21 +190,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a password';
                   }
+                  if (value.length < 5 || value.length > 14) {
+                    return 'Password must be between 5 and 14 characters';
+                  }
                   return null;
                 },
               ),
             ],
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Verify password',
-                style: TextStyle(
-                    fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
+                'Verify Password',
+                style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 126, 126, 126)),
               ),
               const Padding(padding: EdgeInsets.only(top: 10.0)),
               TextFormField(
@@ -209,27 +213,30 @@ class _RegisterPageState extends State<RegisterPage> {
                 decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter verify your password';
+                    return 'Please verify your password';
+                  }
+                  if (value.length < 5 || value.length > 14) {
+                    return 'Password must be between 5 and 14 characters';
+                  }
+                  if (value != passwordTextController.text) {
+                    return 'Passwords do not match';
                   }
                   return null;
                 },
               ),
             ],
           ),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40),
           SizedBox(
             width: double.infinity,
             height: 60,
             child: ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
+                backgroundColor: WidgetStateProperty.all<Color>(
                     const Color.fromARGB(255, 255, 102, 0)),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(10.0), // Valor del radio
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
               ),

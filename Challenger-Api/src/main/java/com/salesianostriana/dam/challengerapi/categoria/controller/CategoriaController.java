@@ -61,7 +61,7 @@ public class CategoriaController {
                                     value = """
                                             {
                                                 "nombre": "Bebidas",
-                                                "imagenUrl": "imagenUrl.jpg"
+                                                "imagenUrl": "imagenUrl.jpg"                                            
                                             }
                                             """
                             )}

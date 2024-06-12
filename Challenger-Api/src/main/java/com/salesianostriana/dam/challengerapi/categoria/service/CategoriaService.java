@@ -60,7 +60,7 @@ public class CategoriaService {
                 .orElseThrow(() -> new CategoriaNotFoundException(idCategoria.toString()));
 
         cat.setNombre(editCategoria.nombreCategoria());
-        cat.setNombre(storageService.store(file));
+        cat.setImagenUrl(storageService.store(file));
 
         return categoriaRepository.save(cat);
 

@@ -2,4 +2,5 @@ import 'package:challenger_api_front/models/response/product_list_response/produ
 
 abstract class ProductRepository {
   Future<ProductListResponse> getAllProducts();
+  Future<ProductListResponse> getProductosDeUnaCategoria(String category);
 }

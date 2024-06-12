@@ -43,6 +43,14 @@ class ItemCard extends StatelessWidget {
                     width: 100,
                     height: 100,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.network(
+                        'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
               ),
