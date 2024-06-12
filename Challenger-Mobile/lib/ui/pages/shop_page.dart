@@ -1,4 +1,6 @@
+import 'package:challenger_api_front/blocs/products/getProductosDeUnaCategoria/get_productos_de_una_categoria_bloc.dart';
 import 'package:challenger_api_front/blocs/products/products_bloc.dart';
+import 'package:challenger_api_front/models/response/product_list_response/product_list_response.dart';
 import 'package:challenger_api_front/repositories/products/product_repo.dart';
 import 'package:challenger_api_front/repositories/products/product_repo_impl.dart';
 import 'package:challenger_api_front/ui/pages/shopping_cart_page.dart';
@@ -15,20 +17,21 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   late ProductRepository _productRepository;
-  late ProductsBloc _productsBloc;
-  bool isPressed = false;
+  late GetProductosDeUnaCategoriaBloc _getProductosDeUnaCategoriaBloc;
+  String _selectedCategory = 'Funko-Pops'; // Inicialmente seleccionamos Funko-Pops
 
   @override
   void initState() {
-    _productRepository = ProductRepositoryImpl();
-    _productsBloc = ProductsBloc(_productRepository)..add(GetProductsEvent());
     super.initState();
+    _productRepository = ProductRepositoryImpl();
+    _getProductosDeUnaCategoriaBloc = GetProductosDeUnaCategoriaBloc(_productRepository);
+    _getProductosDeUnaCategoriaBloc.add(DoGetProductosDeUnaCategoriaEvent('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0')); // ID de Funko-Pops
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: _productsBloc,
+      value: _getProductosDeUnaCategoriaBloc,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Productos'),
@@ -38,85 +41,103 @@ class _ShopPageState extends State<ShopPage> {
               icon: const Icon(Icons.shopping_cart),
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ShoppingCartPage()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ShoppingCartPage(),
+                  ),
+                );
               },
             )
           ],
         ),
-        body: BlocBuilder<ProductsBloc, ProductsState>(
-          builder: (context, state) {
-            if (state is DoProductsSuccess) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFE96C26),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text('Todos',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 255, 255))),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 255, 255),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text('Funko-Pops',
-                                style: TextStyle(color: Color(0xFFE96C26))),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  const Color.fromARGB(255, 255, 255, 255),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text('Periféricos',
-                                style: TextStyle(color: Color(0xFFE96C26))),
-                          ),
-                        ],
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategory = 'Funko-Pops';
+                      });
+                      _getProductosDeUnaCategoriaBloc.add(DoGetProductosDeUnaCategoriaEvent('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0')); // ID de los Funko-Pops
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _selectedCategory == 'Funko-Pops' ? const Color.fromARGB(255, 255, 102, 0) : Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 15.0)),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.products.content!.length,
-                        itemBuilder: (context, index) {
-                          final producto = state.products.content![index];
-                          return ItemCard(productos: producto, index: index);
-                        },
+                    ),
+                    child: const Text(
+                      'Funko-Pops',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            } else if (state is DoProductsError) {
-              return Text('Algo ha fallado... ${state.errorMessage}');
-            } else if (state is DoProductsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return Container();
-          },
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _selectedCategory = 'Periféricos';
+                      });
+                      _getProductosDeUnaCategoriaBloc.add(DoGetProductosDeUnaCategoriaEvent('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1')); // ID de los Periféricos
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _selectedCategory == 'Periféricos' ? const Color.fromARGB(255, 255, 102, 0) : Colors.grey,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Periféricos',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: BlocBuilder<GetProductosDeUnaCategoriaBloc, GetProductosDeUnaCategoriaState>(
+                bloc: _getProductosDeUnaCategoriaBloc,
+                builder: (context, categoriaState) {
+                  if (categoriaState is DoGetProductosDeUnaCategoriaLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (categoriaState is DoGetProductosDeUnaCategoriaSuccess) {
+                    return _buildProductList(categoriaState.productListResponse);
+                  } else if (categoriaState is DoGetProductosDeUnaCategoriaError) {
+                    return Text('Error al cargar productos: ${categoriaState.errorMessage}');
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _buildProductList(ProductListResponse response) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        itemCount: response.content!.length,
+        itemBuilder: (context, index) {
+          final producto = response.content![index];
+          return ItemCard(productos: producto, index: index);
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _getProductosDeUnaCategoriaBloc.close();
+    super.dispose();
   }
 }
