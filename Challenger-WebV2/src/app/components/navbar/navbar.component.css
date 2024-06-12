@@ -1,0 +1,13 @@
+a{
+    color: #FF5C00;
+}
+
+.navbar a:hover{
+    color: rgb(0, 0, 0);
+}
+
+li{
+    font-size: x-large;
+    margin-right: 120px;
+    padding: 5px;
+}

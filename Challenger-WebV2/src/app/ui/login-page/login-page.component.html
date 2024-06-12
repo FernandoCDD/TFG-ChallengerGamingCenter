@@ -1,0 +1,41 @@
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+    <div class="col-md-6 bg-color d-flex align-items-center">
+      <img src="https://challengergamingcenter.com/wp-content/uploads/brizy/2/assets/images/iW=256&iH=359&oX=0&oY=0&cW=256&cH=359/b31d2939559c1fb9a2e8ea70c9d23548.png"
+       alt="Challenger Gaming Center" width="500" class="mx-auto">
+    </div>
+    <div class="col-md-6 d-flex">
+      <div class="w-100">
+        <h1 class="text-center" style="margin-top: 20%;">Bienvenido, Administrador</h1>
+        <form style="margin-top: 10%;" (ngSubmit)="login()">
+          <div class="mb-3 p-2">
+            <label for="username" class="form-label" style="margin-left: 16%; font-size: large; font-weight: 600;">Nombre de Usuario</label>
+            <input
+              type="email"
+              class="form-control"
+              name="username"
+              id="username"
+              [(ngModel)]="username"
+              required
+            />
+          </div>
+          <div class="mb-3 p-2">
+            <label for="password" class="form-label" style="margin-left: 16%; font-size: large; font-weight: 600;">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="password"
+              [(ngModel)]="password"
+              required
+            />
+          </div>
+          <div *ngIf="error" class="alert alert-danger w-75 mx-auto">
+            {{ mensajeError }}
+          </div>
+          <button type="submit" class="btn btn-block mt-4">INICIAR SESIÓN</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

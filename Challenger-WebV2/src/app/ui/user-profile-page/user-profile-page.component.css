@@ -1,0 +1,22 @@
+.color{
+    width: 1920px;
+    height: 150px;
+}
+
+a:hover{
+    cursor: pointer;
+    color: orange;
+}
+
+.profilePic{
+    margin-top: -20px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profilePic:hover{
+    cursor: pointer;
+    border: 2px solid black;
+}
