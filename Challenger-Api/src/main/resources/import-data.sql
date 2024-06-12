@@ -9,6 +9,8 @@ INSERT INTO usuario_roles(roles, usuario_id) VALUES (1, '9cd0c43a-6a72-4967-a629
 INSERT INTO categoria (id, nombre, imagen_url) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0', 'Funko-Pops', 'pikachu-funko.jpg');
 INSERT INTO categoria (id, nombre, imagen_url) VALUES ('6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1', 'Periféricos', 'ratonLogitech.jpg');
 
+INSERT INTO reserva (id, desde, hasta, usuario, activa, tipo_dispositivo) VALUES ('9a5f704d-17e5-43a8-8039-cfd6d8bf38ea', '2024-06-10 14:30:00', '2024-06-10 16:30:00', 'Luismi', true, 'ORDENADOR');
+
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, en_venta, categoria_id) VALUES ('3300c13e-cbd5-4870-8738-71bfceb2ba67', 'Funko-Pop: Pikachu', 'pikachu-funko.jpg', 'Funko-Pop de pikachu', 19.99, 4.2, true, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0');
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, en_venta, categoria_id) VALUES ('07bf149e-0701-41bd-b73d-977848b06d9e', 'Gaming Mouse Logitech G203', 'ratonLogitech.jpg', 'Logitech G203 LIGHTSYNC Ratón USB Gaming con Iluminación RGB Personalizable, 6 Botones Programables, Captor 8K para Gaming, Seguimiento de hasta 8,000 DPI, Ultra-ligero - Negro', 24.99, 4.6, true, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a1');
 INSERT INTO producto (id, nombre, imagen, descripcion, precio, valoracion, en_venta, categoria_id) VALUES ('39f50c41-1746-4c1e-8e3d-b5e00818e49e', 'Funko-Pop: Vegeta', 'funko-pop-10-25-cm-super-sized-vegeta-exclusivo-dragon-ball.jpg', 'Funko-Pop de Vegeta', 12.99, 4.7, true, '6f5fecf2-a032-434b-9d6f-ed18e4f7d4a0');
