@@ -15,8 +15,8 @@ class ReservaConfirmadaPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.network(
-                'https://www.clipartmax.com/png/middle/182-1823686_wedding-confetti-icon-stock-illustration-confetti-png.png',
-                height: 200, // Ajusta el tamaño de la imagen
+                'https://cdn-icons-png.flaticon.com/512/2242/2242681.png',
+                height: 200,
               ),
               const SizedBox(height: 20),
               const Text(
@@ -33,9 +33,9 @@ class ReservaConfirmadaPage extends StatelessWidget {
               const SizedBox(height: 30),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
+                  backgroundColor: WidgetStateProperty.all<Color>(
                       const Color.fromARGB(255, 255, 102, 0)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.circular(10.0), // Valor del radio
