@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-center align-items-center vh-100 fondo">
+    <div class="contenedor">
+      <div class="titulo">
+        <div class="row">
+          <div class="col-6 p-5 fw-bold">
+            <h2>Historial de Pedidos</h2>
+          </div>
+        </div>
+      </div>
+      <div class="atributos mt-2">
+        <div class="row">
+          <div class="col-3 text-center mt-2">
+            <p>Usuario</p>
+          </div>
+          <div class="col-3 text-center mt-2">
+            <p>Fecha</p>
+          </div>
+          <div class="col-3 text-center mt-2">
+            <p>Estado del pedido</p>
+          </div>
+          <div class="col-3 text-center mt-2">
+            <p>Importe Total</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <app-pedidos-list [pedidosList]="pedidosList"></app-pedidos-list>
+      </div>
+      <nav class="d-flex justify-content-center mt-5">
+        <ngb-pagination [collectionSize]="totalPedidos" [pageSize]="pedidosPorPagina" [maxSize]="3" [rotate]="true"
+          [(page)]="numPagina" (pageChange)="cargarPagina()" class="align-self-centers paginacion" style="color: #E96C26;"
+          aria-label="Default pagination"></ngb-pagination>
+      </nav>
+    </div>
+  </div>

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center align-items-center vh-100 fondo">
+    <div class="contenedor">
+      <div class="titulo">
+        <div class="row">
+          <div class="col-6 p-5 fw-bold">
+            <h2>Lista de Reservas</h2>
+        </div>
+      </div>
+      <div class="atributos">
+        <div class="row">
+          <div class="col-2 text-center mt-2">
+            <p>Username</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Desde</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Hasta</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Dispositivo</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Estado Res.</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Acciones</p>
+          </div>
+        </div>
+      </div>
+      <div>
+            <app-reservas-list [reservasList]="reservasList"></app-reservas-list>
+      </div>
+      <nav class="d-flex justify-content-center mt-2">
+        <ngb-pagination [collectionSize]="totalReservas" [pageSize]="reservasPorPagina" [maxSize]="3" [rotate]="true"
+            [(page)]="numPaginas" (pageChange)="cargarPagina()" class="align-self-centers paginacion" style="color: #E96C26;"
+            aria-label="Default pagination"></ngb-pagination>
+      </nav>
+    </div>
+  </div>
+  

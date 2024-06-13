@@ -1,0 +1,17 @@
+.fondo {
+    background-color: #ffbea9;
+    margin: 0 auto;
+}
+.contenedor {
+    width: 90%;
+    height: 95%;
+    background-color: #ffffff;
+    border-radius: 2%;
+}
+
+.atributos{
+    color: #E96C26;
+    font-weight: bold;
+    margin: 0 auto;
+}
+

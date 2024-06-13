@@ -1,0 +1,39 @@
+.fondo {
+    background-color: #ffbea9;
+    margin: 0 auto;
+}
+.contenedor {
+    width: 90%;
+    height: 95%;
+    background-color: #ffffff;
+    border-radius: 2%;
+}
+
+.atributos{
+    color: #E96C26;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.btn{
+    margin-left: 35px;
+    margin-top: -30px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    font-size: large; 
+    font-weight: 500;
+    background-color: #E96C26;
+}
+  
+.btn-orange {
+    background-color: orange;
+    border-color: orange;
+}
+  
+.btn-orange:hover {
+    background-color: darkorange;
+    border-color: darkorange;
+}
+  
+

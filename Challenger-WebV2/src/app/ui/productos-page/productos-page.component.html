@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center align-items-center vh-100 fondo">
+    <div class="contenedor">
+      <div class="titulo">
+        <div class="row">
+          <div class="col-6 p-5 fw-bold">
+            <h2>Lista de Productos</h2>
+          </div>
+        </div>
+      </div>
+      <div class="btnAddProducto">
+        <button type="submit" class="btn btn-block" (click)="abrirModal()">Añadir Producto</button>
+      </div>
+      <div class="atributos mt-5">
+        <div class="row">
+          <div class="col-2 text-center mt-2">
+            <p>Producto</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Valoración</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Precio</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Categoría</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Estado</p>
+          </div>
+          <div class="col-2 text-center mt-2">
+            <p>Acciones</p>
+          </div>
+        </div>
+      </div>
+      <div>
+          <app-productos-list [productosList]="productosList"></app-productos-list>
+      </div>
+      <nav class="d-flex justify-content-center mt-5">
+        <ngb-pagination [collectionSize]="totalProductos" [pageSize]="productosPorPagina" [maxSize]="3" [rotate]="true"
+            [(page)]="numPagina" (pageChange)="cargarPagina()" class="align-self-centers paginacion" style="color: #E96C26;"
+            aria-label="Default pagination"></ngb-pagination>
+      </nav>
+    </div>
+  </div>
+
+  <ng-template #addModalProducto let-modal>
+    <div class="modal-content">
+      <div class="modal-header bg-orange text-dark fw-bold">
+        <h5 class="modal-title">Añadir Producto</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cerrarModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addProducto()">
+          <div class="mb-3">
+            <label for="nombreProducto" class="form-label fw-bold" style="color: #E96C26;">Nombre</label>
+            <input type="text" id="nombreProducto" [(ngModel)]="nombreProducto" name="nombreProducto" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label fw-bold" style="color: #E96C26;">Imagen</label>
+            <input type="file" id="imagen" (change)="onFileSelected($event)" name="imagen" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="descripcion" class="form-label fw-bold" style="color: #E96C26;">Descripción</label>
+            <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" class="form-control" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="precio" class="form-label fw-bold" style="color: #E96C26;">Precio</label>
+            <input type="number" id="precio" [(ngModel)]="precio" name="precio" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="idCategoria" class="form-label fw-bold" style="color: #E96C26;">Categoría</label>
+            <select id="idCategoria" [(ngModel)]="categoria" name="idCategoria" class="form-control" required>
+              <option *ngFor="let cat of categoriasList" [value]="cat.idCategoria">{{cat.nombreCategoria}}</option>
+            </select>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-dark mt-2" >Añadir</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+  
+  
